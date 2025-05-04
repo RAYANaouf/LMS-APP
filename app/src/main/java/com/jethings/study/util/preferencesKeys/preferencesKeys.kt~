@@ -1,0 +1,42 @@
+package com.jethings.study.util.preferencesKeys
+
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+
+
+object preferencesKeys {
+
+    const val USER_SETTING = "user_setting"
+    const val APP_ENTRY    = "app_entry"
+
+
+
+
+    val app_entry = booleanPreferencesKey(name = APP_ENTRY)
+
+
+
+
+
+    /************** user **************/
+
+    const val USER_ID            = "userId"
+    const val USER_FIRST_NAME    = "userFirstName"
+    const val USER_LAST_NAME     = "userLastName"
+    const val USER_VERIFIED      = "userVerified"
+    const val USER_PHONE         = "userPhone"
+    const val USER_EMAIL         = "userEmail"
+    const val USER_PASSWORD      = "userPassword"
+
+    val userId        = longPreferencesKey(    name = USER_ID)
+    val userFirstName = stringPreferencesKey(  name = USER_FIRST_NAME)
+    val userLastName  = stringPreferencesKey(  name = USER_LAST_NAME)
+    val userVerified  = booleanPreferencesKey( name = USER_VERIFIED)
+    val userPhone     = stringPreferencesKey( name = USER_PHONE)
+    val userPassword  = stringPreferencesKey( name = USER_PASSWORD)
+    val userEmail     = stringPreferencesKey( name = USER_EMAIL)
+
+
+}
+
