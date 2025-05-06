@@ -1,4 +1,5 @@
-package com.jetapptech.business.presentation.view.screens.logIn.responsiveLayout.tablet
+package com.jethings.study.presentation.view.screens.logIn.responsiveLayout.phone
+
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,6 +37,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jethings.study.R
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.signUpScreen
+import com.jethings.study.presentation.ui.theme.background_color_0
+import com.jethings.study.presentation.ui.theme.customBlack8
+import com.jethings.study.presentation.ui.theme.customWhite0
+import com.jethings.study.presentation.ui.theme.p_color1
+import com.jethings.study.presentation.ui.theme.p_color2
+import com.jethings.study.presentation.view.material.AlphaButton
+import com.jethings.study.presentation.view.screens.logIn.LogInScreen
+import com.jethings.study.util.objects.TextStyles
 
 
 @Composable
@@ -45,6 +56,7 @@ fun TabletLayout(
     password : String,
     onPasswordChange : (String)->Unit = {},
     onNavigate : (AppScreen)->Unit = {},
+    onLogIn  : ()->Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -85,16 +97,16 @@ fun TabletLayout(
                                 fontWeight = FontWeight.ExtraBold
                             )
                         ){
-                            append("J ")
+                            append("E ")
                         }
                         withStyle(
                             style = SpanStyle(
-                                color = p_color2,
+                                color = p_color1,
                                 fontSize = 40.sp,
                                 fontWeight = FontWeight.Bold
                             )
                         ){
-                            append("Store")
+                            append("Learning")
                         }
                     }
                 )
@@ -187,7 +199,8 @@ fun TabletLayout(
                     "Log In",
                     backgroundColor = p_color1,
                     onClick = {
-                        onNavigate(homeScreen)
+                        //onNavigate(homeScreen)
+                        onLogIn()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

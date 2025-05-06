@@ -1,4 +1,4 @@
-package com.jetapptech.business.presentation.view.material
+package com.jethings.study.presentation.view.material
 
 import android.graphics.Color.parseColor
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jetapptech.business.util.TextStyles
+import com.jethings.study.util.objects.TextStyles
 
 @Composable
 fun AlphaButton(

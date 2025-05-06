@@ -41,14 +41,14 @@ val customBlack7 = Color(0xFF707070)
 val customBlack8 = Color(0xFF8A8A8A)
 
 
-val background_color_0 = Color(0xFFD1D9FF)
+val background_color_0 = Color(0xFFEDF0FF)
 
 
 
 /********/
 
 val p_color1 = Color(0xFF1E319D)
-val p_color2 = Color(0xFF0F8B8D)
+val p_color2 = Color(0xFFFC2D7A)
 val p_color3 = Color(0xFF18DFE3)
 val p_color4 = Color(0xFFEC9A29)
 val p_color5 = Color(0xFFA8201A)

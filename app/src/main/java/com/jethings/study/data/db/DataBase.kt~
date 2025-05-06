@@ -1,0 +1,19 @@
+package com.jethings.study.data.db
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.jetapptech.business.data.db.entities.entities.Account
+
+
+@Database(entities = [Account::class , POSInvoice::class , Store::class  , POSInvoiceItem::class  , LocalCustomer::class ,  AccountStoreCrossRef::class , Product_entity::class , ProductItem_entity::class], version = 2)
+@TypeConverters(Converters::class)
+abstract class AppDataBase : RoomDatabase() {
+
+    abstract fun accountDao()        : AccountDao
+    abstract fun productDao()        : ProductDao
+    abstract fun storeDao()          : StoreDao
+    abstract fun localCustomerDao()  : LocalCustomerDao
+    abstract fun orderDao()          : OrderDao
+
+}

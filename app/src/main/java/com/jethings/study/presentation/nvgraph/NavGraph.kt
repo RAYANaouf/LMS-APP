@@ -54,6 +54,24 @@ fun NavGraph(
 
 
 
+        /***************************** home ****************************/
+
+        composable<homeScreen> {
+
+            SideEffect {
+                currentPage(homeScreen)
+            }
+
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Text(text = "Home")
+            }
+        }
+
 
 
         /***************************** log in ****************************/
@@ -75,12 +93,12 @@ fun NavGraph(
             LogInScreen(
                 modifier = Modifier
                     .padding(paddingValues),
-                onEvent = {
-
-                },
+                onEvent = viewModel::onEvent,
                 onNavigate = {
                     when(it){
-
+                        homeScreen -> {
+                            navController.navigate(homeScreen)
+                        }
                     }
                 },
                 windowInfo = windowInfo

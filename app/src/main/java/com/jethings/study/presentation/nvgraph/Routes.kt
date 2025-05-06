@@ -18,3 +18,9 @@ object onBoardingScreen : AppScreen()
 
 
 
+
+
+@Serializable
+object homeScreen : AppScreen()
+
+

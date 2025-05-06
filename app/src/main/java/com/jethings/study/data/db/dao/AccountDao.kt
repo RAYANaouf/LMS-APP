@@ -1,0 +1,24 @@
+package com.jethings.study.data.db.dao
+
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Upsert
+import com.jethings.study.data.db.entities.Account
+
+
+@Dao
+interface AccountDao {
+
+    @Query("SELECT * FROM Account")
+    suspend fun getAll():List<Account>
+
+    @Upsert
+    suspend fun add(account: Account) : Long
+
+
+    @Query("SELECT * FROM Account where email = :email and password = :password")
+    suspend fun getAccount(email : String , password : String) : Account?
+
+
+}

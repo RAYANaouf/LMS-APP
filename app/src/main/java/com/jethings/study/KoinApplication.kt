@@ -1,0 +1,26 @@
+package com.jethings.study
+
+import android.app.Application
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import com.jethings.study.di.koinModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.startKoin
+
+class KoinApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+
+        startKoin {
+            androidLogger()
+            androidContext(this@KoinApplication)
+            modules(koinModule)
+        }
+
+    }
+}

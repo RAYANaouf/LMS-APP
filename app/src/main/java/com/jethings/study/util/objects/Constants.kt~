@@ -6,7 +6,7 @@ object Constants {
 
 
     //API
-    const val BASE_URL = "https://bookmark-6uk7.onrender.com"
+    const val BASE_URL = "https://bookmark-6uk7.onrender.com/"
     //to review
     const val SIGN_UP  = "/users/create"
     const val LOG_IN   = "/auth/login"

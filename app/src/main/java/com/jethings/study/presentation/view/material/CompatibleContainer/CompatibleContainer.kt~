@@ -1,0 +1,26 @@
+package com.jetapptech.business.presentation.view.material.CompatibleContainer
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.jetapptech.business.util.responsiveScreenTools.WindowInfo
+import com.jetapptech.business.util.responsiveScreenTools.rememberWindowInfo
+
+@Composable
+fun CompatibleContainer(
+    compactContent : @Composable ()->Unit = {},
+    mediumContent : @Composable ()->Unit = {},
+    expandedContent : @Composable ()->Unit = {},
+) {
+    val windowInfo = rememberWindowInfo()
+
+    if(windowInfo.screenWidthInfo is WindowInfo.WindowType.Compact){
+        compactContent()
+    }
+    else if(windowInfo.screenWidthInfo is WindowInfo.WindowType.Medium){
+        mediumContent()
+    }
+    else{
+        expandedContent()
+    }
+
+}

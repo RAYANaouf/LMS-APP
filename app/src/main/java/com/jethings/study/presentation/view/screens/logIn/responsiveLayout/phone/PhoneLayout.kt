@@ -1,5 +1,6 @@
-package com.jetapptech.business.presentation.view.screens.logIn.responsiveLayout.phone
+package com.jethings.study.presentation.view.screens.logIn
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +22,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,26 +38,39 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.signUpScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack8
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color2
+import com.jethings.study.presentation.view.material.AlphaButton
 import com.jethings.study.util.objects.TextStyles
 
 @Composable
 fun PhoneLayout(
-    gmail : String,
-    onGmailChange : (String)->Unit = {},
-    password : String,
+    gmail            : String,
+    onGmailChange    : (String)->Unit = {},
+    password         : String,
     onPasswordChange : (String)->Unit = {},
-    onNavigate : (AppScreen)->Unit = {},
-    modifier: Modifier = Modifier
+    onNavigate       : (AppScreen)->Unit = {},
+    onLogIn          : (onFailure : ()-> Unit)->Unit = {},
+    modifier         : Modifier = Modifier
 ) {
 
 
+    val context = LocalContext.current
+
+    var search by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -91,7 +109,7 @@ fun PhoneLayout(
                                 fontWeight = FontWeight.ExtraBold
                             )
                         ){
-                            append("J ")
+                            append("E ")
                         }
                         withStyle(
                             style = SpanStyle(
@@ -100,7 +118,7 @@ fun PhoneLayout(
                                 fontWeight = FontWeight.Bold
                             )
                         ){
-                            append("Store")
+                            append("Learning")
                         }
                     }
                 )
@@ -170,7 +188,7 @@ fun PhoneLayout(
                     .clickable {
 
                     }
-                    .padding(top = 5.dp , end = 5.dp)
+                    .padding(top = 5.dp, end = 5.dp)
             ) {
                 Text(
                     text = "Forgot the password",
@@ -180,16 +198,38 @@ fun PhoneLayout(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            AlphaButton(
-                "Log In",
-                backgroundColor = p_color1,
-                onClick = {
-                    //onNavigate(homeScreen)
-                },
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp)
-            )
+            ) {
+                if (!search){
+                    AlphaButton(
+                        "Log In",
+                        backgroundColor = p_color1,
+                        onClick = {
+                            search = true
+                            onLogIn {
+                                search = false
+                                Toast.makeText(context , "Log In Failed" , Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }else{
+
+                    val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.loading))
+                    val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
+
+                    LottieAnimation(
+                        composition = composition ,
+                        progress = progress.value ,
+                        modifier = Modifier.fillMaxSize()
+                    )
+
+                }
+            }
 
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -201,7 +241,7 @@ fun PhoneLayout(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
                     .clickable {
-                        //onNavigate(signUpScreen)
+                        onNavigate(signUpScreen)
                     }
             ) {
                 Text(
