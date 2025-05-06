@@ -26,6 +26,30 @@ class MainViewModel (
         private set
 
 
+    //topbar
+    var show_topbar    by mutableStateOf(false)
+        private set
+    var topbar_shadow  by mutableStateOf(0.dp)
+        private set
+    var topBarImg by mutableStateOf<Int?>(null)
+        private set
+    var topBarTxt by mutableStateOf<String>("")
+        private set
+
+
+    var current_screen : AppScreen by mutableStateOf(homeScreen)
+        private set
+    var current_scene  : String    by mutableStateOf("")
+        private set
+
+
+    //bottom bar
+    var show_bottombar by mutableStateOf(false)
+        private set
+    var bottombar_shadow  by mutableStateOf(0.dp)
+        private set
+
+
     init {
 
         viewModelScope.launch {
@@ -35,6 +59,41 @@ class MainViewModel (
 
 
 
+    private fun setTopBarInfo(img : Int?, txt : String?) {
+        if (img != null)
+            topBarImg = img
+        if (txt != null)
+            topBarTxt = txt
+
+    }
+
+
+    private fun setCurrentScreen( appScreen : AppScreen) {
+        current_screen = appScreen
+        when(current_screen){
+            homeScreen->{
+                //top bar
+                show_topbar      =  true
+                topbar_shadow    =  2.dp
+                setTopBarInfo(img = R.drawable.app_store_logo_none_background , txt = "Dirassa" )
+
+                //bottom bar
+                show_bottombar   =  true
+                bottombar_shadow =  0.dp
+            }
+            logInScreen ->{
+                //top bar
+                show_topbar      =  false
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+            }
+
+        }
+    }
+
+
 
 
     fun onEvent(event : MainEvent, onSuccees : () -> Unit = {}){
@@ -42,6 +101,10 @@ class MainViewModel (
             is MainEvent.LogOutEvent -> {
 
             }
+            is MainEvent.ScreenChangeEvent -> {
+                setCurrentScreen(event.screen)
+            }
+
         }
     }
 

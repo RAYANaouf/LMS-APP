@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jethings.study.presentation.ui.theme.background_color_0
+import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
 import com.jethings.study.util.responsiveScreenTools.WindowInfo
@@ -63,6 +64,8 @@ fun NavGraph(
             }
 
 
+            set_system_bars_color(customWhite0 , background_color_0)
+
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -97,7 +100,11 @@ fun NavGraph(
                 onNavigate = {
                     when(it){
                         homeScreen -> {
-                            navController.navigate(homeScreen)
+                            navController.navigate(homeScreen){
+                                popUpTo(logInScreen){
+                                    inclusive = true
+                                }
+                            }
                         }
                     }
                 },
@@ -114,6 +121,7 @@ fun NavGraph(
             SideEffect {
                 currentPage(onBoardingScreen)
             }
+
 
             Box(
                 contentAlignment = Alignment.Center,

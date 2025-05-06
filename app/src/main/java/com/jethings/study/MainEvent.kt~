@@ -6,6 +6,6 @@ sealed class MainEvent {
 
     class LogOutEvent() : MainEvent()
 
-    class ScreenChangeEvent(val screen : AppScreen) : MainEvent()
+    class ScreenChangeEvent(data : AppScreen) : MainEvent()
 
 }

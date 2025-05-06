@@ -97,7 +97,7 @@ fun mainScreen(
             Column {
                 AnimatedVisibility(visible = viewModel.show_bottombar && windowInfo.screenWidthInfo !is WindowInfo.WindowType.Expanded , modifier = Modifier.height(350.dp + 45.dp)) {
                     AddFAB(onNavigate = {
-
+                        
                     })
 
                 }
