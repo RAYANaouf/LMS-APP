@@ -89,7 +89,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            img = painterResource(id = R.drawable.close),
+            img = painterResource(id = R.drawable.add),
             modifier = Modifier
                 .scale(LinearEasing.transform(animationProgress))
                 .clip(CircleShape),

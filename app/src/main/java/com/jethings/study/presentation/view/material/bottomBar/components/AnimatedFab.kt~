@@ -1,6 +1,5 @@
 package com.jethings.study.presentation.view.material.bottomBar.components
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -34,9 +33,7 @@ fun AnimatedFab(
             Icon(
                 painter = it,
                 contentDescription = null,
-                tint = Color.White.copy(alpha = opacity),
-                modifier = Modifier
-                    .size(30.dp)
+                tint = Color.White.copy(alpha = opacity)
             )
         }
     }
