@@ -9,8 +9,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.createAcademyScreen
+import com.jethings.study.presentation.nvgraph.createSuperAdminScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.logInScreen
+import com.jethings.study.presentation.nvgraph.profileScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -81,9 +84,35 @@ class MainViewModel (
                 show_bottombar   =  true
                 bottombar_shadow =  0.dp
             }
+            profileScreen->{
+                //top bar
+                show_topbar      =  true
+                topbar_shadow    =  2.dp
+                setTopBarInfo(img = R.drawable.app_store_logo_none_background , txt = "Dirassa" )
+
+                //bottom bar
+                show_bottombar   =  true
+                bottombar_shadow =  0.dp
+            }
             logInScreen ->{
                 //top bar
                 show_topbar      =  false
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+            }
+            createAcademyScreen ->{
+                //top bar
+                show_topbar      =  true
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+            }
+            createSuperAdminScreen ->{
+                //top bar
+                show_topbar      =  true
                 topbar_shadow    =  0.dp
                 //bottom bar
                 show_bottombar   =  false

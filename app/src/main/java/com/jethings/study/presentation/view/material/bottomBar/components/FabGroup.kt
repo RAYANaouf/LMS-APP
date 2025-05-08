@@ -26,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.jethings.study.R
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.createAcademyScreen
 import com.jethings.study.presentation.ui.theme.customWhite7
 import com.jethings.study.presentation.ui.theme.p_color2
 
@@ -34,7 +36,8 @@ import com.jethings.study.presentation.ui.theme.p_color2
 fun FabGroup(
     animationProgress: Float = 0f,
     renderEffect: androidx.compose.ui.graphics.RenderEffect? = null,
-    toggleAnimation: () -> Unit = { }
+    toggleAnimation: () -> Unit = { },
+    onNavigate : (AppScreen) -> Unit = {}
 ) {
 
 
@@ -57,7 +60,10 @@ fun FabGroup(
                 )
                 .clip(CircleShape),
             backgroundColor = p_color2,
-            opacity = LinearEasing.transform(animationProgress)
+            opacity = LinearEasing.transform(animationProgress),
+            onClick = {
+                onNavigate(createAcademyScreen)
+            }
 
         )
 
@@ -71,7 +77,10 @@ fun FabGroup(
                 )
                 .clip(CircleShape),
             backgroundColor = p_color2,
-            opacity = LinearEasing.transform( animationProgress)
+            opacity = LinearEasing.transform( animationProgress),
+            onClick = {
+                onNavigate(createAcademyScreen)
+            }
         )
 
         AnimatedFab(
@@ -85,8 +94,12 @@ fun FabGroup(
                 )
                 .clip(CircleShape),
             backgroundColor = p_color2,
-            opacity = LinearEasing.transform( animationProgress)
+            opacity = LinearEasing.transform( animationProgress),
+            onClick = {
+
+            }
         )
+
 
         AnimatedFab(
             img = painterResource(id = R.drawable.close),
@@ -108,5 +121,7 @@ fun FabGroup(
             onClick = toggleAnimation,
             backgroundColor = customWhite7
         )
+
+
     }
 }

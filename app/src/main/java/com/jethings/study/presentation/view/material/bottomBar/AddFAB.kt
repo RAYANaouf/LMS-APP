@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.jethings.study.R
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
+import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.ui.theme.StudyTheme
 import com.jethings.study.presentation.ui.theme.customWhite7
 import com.jethings.study.presentation.ui.theme.p_color1
@@ -72,6 +73,7 @@ private fun getRenderEffect(): RenderEffect {
 @Composable
 fun AddFAB(
     bottomBarType : Int = 0,
+    showFAB  : Boolean = true,
     addIndicator  : Boolean = false,
     onNavigate    : (AppScreen)->Unit = {}
 ) {
@@ -101,6 +103,7 @@ fun AddFAB(
     }
 
     AddFAB(
+        showFAB = showFAB,
         renderEffect = renderEffect,
         fabAnimationProgress = fabAnimationProgress,
         addIndicator         = addIndicator,
@@ -114,6 +117,7 @@ fun AddFAB(
 @Composable
 fun AddFAB(
     renderEffect           : androidx.compose.ui.graphics.RenderEffect?,
+    showFAB  : Boolean = true,
     fabAnimationProgress   : Float = 0f,
     clickAnimationProgress : Float = 0f,
     addIndicator          : Boolean    ,
@@ -143,24 +147,33 @@ fun AddFAB(
         }
 
 
-        Circle(
-            color = p_color2.copy(alpha = 0.5f),
-            animationProgress = 0.5f
-        )
+        if (showFAB){
+            Circle(
+                color = p_color2.copy(alpha = 0.5f),
+                animationProgress = 0.5f
+            )
 
-        FabGroup(
-            renderEffect = renderEffect,
-            animationProgress = fabAnimationProgress
-        )
-        FabGroup(
-            renderEffect = null,
-            animationProgress = fabAnimationProgress,
-            toggleAnimation = toggleAnimation
-        )
-        Circle(
-            color = p_color2,
-            animationProgress = clickAnimationProgress
-        )
+            FabGroup(
+                renderEffect = renderEffect,
+                animationProgress = fabAnimationProgress,
+                onNavigate = {
+                    onNavigate(it)
+                }
+            )
+            FabGroup(
+                renderEffect = null,
+                animationProgress = fabAnimationProgress,
+                toggleAnimation = toggleAnimation,
+                onNavigate = {
+                    onNavigate(it)
+                }
+            )
+            Circle(
+                color = p_color2,
+                animationProgress = clickAnimationProgress
+            )
+        }
+
     }
 }
 
@@ -201,7 +214,7 @@ fun AddFABBody(
                                 }
 
                                 Icons.Filled.Person -> {
-                                    //onNavigate(profileScreen)
+                                    onNavigate(profileScreen)
                                 }
                             }
                         }

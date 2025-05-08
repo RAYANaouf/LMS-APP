@@ -24,3 +24,14 @@ object onBoardingScreen : AppScreen()
 object homeScreen : AppScreen()
 
 
+@Serializable
+object profileScreen : AppScreen()
+
+@Serializable
+object createAcademyScreen : AppScreen()
+@Serializable
+object createSuperAdminScreen : AppScreen()
+
+
+
+

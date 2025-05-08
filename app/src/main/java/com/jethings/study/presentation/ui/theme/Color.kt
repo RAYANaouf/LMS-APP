@@ -46,6 +46,7 @@ val background_color_0 = Color(0xFFEDF0FF)
 
 
 /********/
+val p_color1_dark = Color(0xFF15226E)
 
 val p_color1 = Color(0xFF1E319D)
 val p_color2 = Color(0xFFFC2D7A)

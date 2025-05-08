@@ -307,7 +307,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                             .padding(8.dp)
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.academy_icon),
+                            painter = painterResource(id = R.drawable.teacher),
                             tint = customWhite1,
                             contentDescription = null
                         )

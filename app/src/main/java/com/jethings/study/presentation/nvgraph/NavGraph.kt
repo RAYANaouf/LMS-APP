@@ -28,9 +28,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
+import com.jethings.study.presentation.view.screens.createAcademy.CreateAcademyScreen
+import com.jethings.study.presentation.view.screens.createAcademy.CreateSuperAdminScreen
 import com.jethings.study.presentation.view.screens.home.HomeScreen
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
+import com.jethings.study.presentation.view.screens.profile.ProfileScreen
 import com.jethings.study.util.responsiveScreenTools.WindowInfo
 import org.koin.androidx.compose.koinViewModel
 
@@ -71,6 +74,74 @@ fun NavGraph(
             set_system_bars_color(customWhite0 , background_color_0)
 
             HomeScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                    )
+            )
+        }
+
+        /***************************** profile ****************************/
+
+        composable<profileScreen> {
+
+            SideEffect {
+                currentPage(profileScreen)
+            }
+
+
+            set_system_bars_color(customWhite0 , background_color_0)
+
+            ProfileScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                    )
+            )
+        }
+
+        /***************************** create academy ****************************/
+
+        composable<createAcademyScreen> {
+
+            SideEffect {
+                currentPage(createAcademyScreen)
+            }
+
+
+            set_system_bars_color(customWhite0 , background_color_0)
+
+            CreateAcademyScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                    )
+            )
+        }
+
+
+
+        /***************************** create Super Admin ****************************/
+
+        composable<createAcademyScreen> {
+
+            SideEffect {
+                currentPage(createAcademyScreen)
+            }
+
+
+            set_system_bars_color(customWhite0 , background_color_0)
+
+            CreateSuperAdminScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(

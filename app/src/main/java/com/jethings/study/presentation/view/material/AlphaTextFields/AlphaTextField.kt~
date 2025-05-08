@@ -1,4 +1,4 @@
-package com.jethings.study.presentation.view.material.AlphaTextFields
+package com.jethings.study.presentation.view.material.
 import android.graphics.Color.parseColor
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

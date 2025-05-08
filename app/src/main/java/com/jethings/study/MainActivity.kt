@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.NavGraph
 import com.jethings.study.presentation.nvgraph.logInScreen
+import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.ui.theme.StudyTheme
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.view.material.AddFAB
@@ -96,10 +97,12 @@ fun mainScreen(
         bottomBar = {
             Column {
                 AnimatedVisibility(visible = viewModel.show_bottombar && windowInfo.screenWidthInfo !is WindowInfo.WindowType.Expanded , modifier = Modifier.height(350.dp + 45.dp)) {
-                    AddFAB(onNavigate = {
-
-                    })
-
+                    AddFAB(
+                        showFAB = viewModel.current_screen != profileScreen,
+                        onNavigate = {
+                             navController.navigate(it)
+                        }
+                    )
                 }
             }
         },
