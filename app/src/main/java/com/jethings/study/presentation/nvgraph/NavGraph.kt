@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,12 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
+import com.jethings.study.presentation.view.screens.home.HomeScreen
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
 import com.jethings.study.util.responsiveScreenTools.WindowInfo
@@ -66,13 +70,15 @@ fun NavGraph(
 
             set_system_bars_color(customWhite0 , background_color_0)
 
-            Box(
-                contentAlignment = Alignment.Center,
+            HomeScreen(
                 modifier = Modifier
                     .fillMaxSize()
-            ) {
-                Text(text = "Home")
-            }
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                    )
+            )
         }
 
 

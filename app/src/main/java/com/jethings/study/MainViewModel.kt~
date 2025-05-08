@@ -22,7 +22,7 @@ class MainViewModel (
 ): ViewModel() {
 
 
-    var startDestination by mutableStateOf<AppScreen>(homeScreen)
+    var startDestination by mutableStateOf<AppScreen>(logInScreen)
         private set
 
 
