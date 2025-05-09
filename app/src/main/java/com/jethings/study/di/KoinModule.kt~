@@ -8,6 +8,7 @@ import androidx.room.Room
 import com.jethings.study.MainViewModel
 import com.jethings.study.data.db.AppDataBase
 import com.jethings.study.data.db.dao.AccountDao
+import com.jethings.study.data.manager.AcademyManager_imp
 import com.jethings.study.data.manager.AppEntryManager_imp
 import com.jethings.study.data.manager.LocalAccountManager_imp
 import com.jethings.study.data.manager.RemoteAccountManager_imp
@@ -63,7 +64,8 @@ val koinModule = module{
     }
 
 
-    
+
+    /**************   HttpClient   ***********************/
 
     single<HttpClient> {
         HttpClient(Android){
@@ -96,6 +98,12 @@ val koinModule = module{
 
     single<AppEntryManager>{
         AppEntryManager_imp()
+    }
+
+    single<AcademyManager_imp> {
+        AcademyManager_imp(
+            client = get()
+        )
     }
 
 

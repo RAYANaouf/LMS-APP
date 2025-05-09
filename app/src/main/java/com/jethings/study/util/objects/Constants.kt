@@ -10,6 +10,8 @@ object Constants {
     //to review
     const val SIGN_UP  = "/users/create"
     const val LOG_IN   = "/auth/login"
+    //academy
+    const val CREATE_ACADEMY   = "/academy/create"
 
 
     val topBarMenu = listOf( "Help" , "Settings"  , "App Info" ,  "About Us" , "Log Out")

@@ -14,9 +14,9 @@ data class CreateAcademyRequest(
 //response
 
 sealed class CreateAcademyResponse{
-    class Success(val data : LogInSuccessResponse)  : LogInResponse()
-    class Failure(val data : LogInFailureResponse)  : LogInResponse()
-    class Exception(val data : kotlin.Exception)    : LogInResponse()
+    class Success(val data : LogInSuccessResponse)  : CreateAcademyResponse()
+    class Failure(val data : LogInFailureResponse)  : CreateAcademyResponse()
+    class Exception(val data : kotlin.Exception)    : CreateAcademyResponse()
 }
 
 @Serializable

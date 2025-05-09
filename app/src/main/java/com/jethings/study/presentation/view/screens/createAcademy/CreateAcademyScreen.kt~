@@ -1,4 +1,4 @@
-package com.jethings.study.presentation.view.screens.createSuperAdmin
+package com.jethings.study.presentation.view.screens.createAcademy
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,21 +30,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jethings.study.R
 import com.jethings.study.presentation.ui.theme.background_color_0
-import com.jethings.study.presentation.ui.theme.customBlack2
-import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customBlack5
-import com.jethings.study.presentation.ui.theme.customBlack6
-import com.jethings.study.presentation.ui.theme.customBlack8
 import com.jethings.study.presentation.ui.theme.customWhite0
-import com.jethings.study.presentation.ui.theme.customWhite1
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color1_dark
-import com.jethings.study.presentation.view.material.AlphaTextFields.AlphaTextField
 import com.jethings.study.util.objects.TextStyles
 
 
 @Composable
-fun CreateSuperAdminScreen(
+fun CreateAcademyScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -80,7 +74,7 @@ fun CreateSuperAdminScreen(
                 textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack5),
                 label         = {
                     Text(
-                        text = "Academy name",
+                        text = "Super Admin name",
                         style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = p_color1),
                     )
                 },
@@ -105,7 +99,7 @@ fun CreateSuperAdminScreen(
                 textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack5),
                 label         = {
                     Text(
-                        text = "Academy Password",
+                        text = "Super Admin Password",
                         style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = p_color1),
                     )
                 },
@@ -152,7 +146,7 @@ fun CreateSuperAdminScreen(
 @Preview
 @Composable
 private fun CreateAcademyScreen_preview() {
-    CreateSuperAdminScreen(
+    CreateAcademyScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(background_color_0)
