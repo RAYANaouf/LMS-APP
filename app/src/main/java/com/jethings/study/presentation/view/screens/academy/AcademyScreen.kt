@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.academy
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,8 +20,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customWhite1
@@ -34,11 +37,13 @@ import com.jethings.study.util.objects.TextStyles
 @Composable
 fun AcademyScreen(
     academyId : Int,
+    academy   : Academy? = null,
     onEvent : (AcademyEvent , ()->Unit , ()->Unit)->Unit = {_,_,_->},
     modifier: Modifier = Modifier
 ) {
 
-
+    /*** vars ***/
+    val context = LocalContext.current
 
 
     /*** effect  ***/
@@ -47,9 +52,9 @@ fun AcademyScreen(
             AcademyEvent.GetAcademyDetails(
                 academy_id = academyId
             ),{
-
+                Toast.makeText(context , "Academy details refreshed." , Toast.LENGTH_SHORT).show()
             },{
-
+                Toast.makeText(context , "Error in getting Academy details." , Toast.LENGTH_SHORT).show()
             }
         )
     }
@@ -86,7 +91,7 @@ fun AcademyScreen(
                         .widthIn(max = 150.dp)
                 ) {
                     Text(
-                        text = "Academy name",
+                        text = academy?.name  ?: "Loading..."     ,
                         style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
                     )
                 }

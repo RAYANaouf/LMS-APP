@@ -3,12 +3,14 @@ package com.jethings.study.data.manager
 import android.util.Log
 import com.jethings.study.data.api.req_res_classes.CreateAcademyRequest
 import com.jethings.study.data.api.req_res_classes.CreateAcademyResponse
+import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
 import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesFailureResponse
 import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesResponse
 import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesSuccessResponse
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
+import com.jethings.study.util.objects.Constants.GET_ACADEMY_BY_ID
 import com.jethings.study.util.objects.Constants.GET_ALL_ACADEMIES
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
@@ -60,6 +62,23 @@ class AcademyManager_imp(
 
         } catch (e: Exception) {
             GetAllAcademiesResponse.Exception(e)
+        }
+    }
+
+    override suspend fun getAcademyById(academyId: Int): GetAcademyByIdResponse {
+        return try {
+
+            val response = client.get( BASE_URL + GET_ACADEMY_BY_ID + academyId ){
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status == HttpStatusCode.OK ) {
+                GetAcademyByIdResponse.Success(response.body())
+            }else{
+                GetAcademyByIdResponse.Failure(response.body())
+            }
+
+        }catch (e : Exception){
+            GetAcademyByIdResponse.Exception(e)
         }
     }
 }

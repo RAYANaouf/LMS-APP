@@ -112,6 +112,7 @@ fun NavGraph(
             val viewModel : AcademyViewModel = koinViewModel()
 
             AcademyScreen(
+                academy = viewModel.academy,
                 academyId = args.academy_id,
                 onEvent = viewModel::onEvent,
                 modifier = Modifier
