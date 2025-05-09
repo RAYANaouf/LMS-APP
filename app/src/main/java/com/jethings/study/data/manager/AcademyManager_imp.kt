@@ -1,13 +1,19 @@
 package com.jethings.study.data.manager
 
+import android.util.Log
 import com.jethings.study.data.api.req_res_classes.CreateAcademyRequest
 import com.jethings.study.data.api.req_res_classes.CreateAcademyResponse
+import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesFailureResponse
+import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesResponse
+import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesSuccessResponse
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
+import com.jethings.study.util.objects.Constants.GET_ALL_ACADEMIES
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
 import io.ktor.client.call.body
+import io.ktor.client.request.get
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
@@ -24,6 +30,9 @@ class AcademyManager_imp(
                 setBody(createAcademyRequest)
             }
 
+            Log.d("response Body ", response.body())
+            Log.d("response status ", "onEvent: ${response.status}")
+
             if ( response.status == HttpStatusCode.Created ) {
                 CreateAcademyResponse.Success(response.body())
             }else{
@@ -36,4 +45,19 @@ class AcademyManager_imp(
         }
     }
 
+    override suspend fun getAllAcademies(): GetAllAcademiesResponse {
+        return try {
+            val response = client.get(BASE_URL + GET_ALL_ACADEMIES) {
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status == HttpStatusCode.OK ) {
+                GetAllAcademiesResponse.Success(response.body())
+            } else  {
+                GetAllAcademiesResponse.Failure(response.body())
+            }
+
+        } catch (e: Exception) {
+            GetAllAcademiesResponse.Exception(e)
+        }
+    }
 }

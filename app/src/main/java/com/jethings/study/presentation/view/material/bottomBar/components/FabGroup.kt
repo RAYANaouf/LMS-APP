@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.jethings.study.R
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.createAcademyScreen
+import com.jethings.study.presentation.nvgraph.createSuperAdminScreen
 import com.jethings.study.presentation.ui.theme.customWhite7
 import com.jethings.study.presentation.ui.theme.p_color2
 
@@ -79,7 +80,7 @@ fun FabGroup(
             backgroundColor = p_color2,
             opacity = LinearEasing.transform( animationProgress),
             onClick = {
-                onNavigate(createAcademyScreen)
+                onNavigate(createSuperAdminScreen)
             }
         )
 

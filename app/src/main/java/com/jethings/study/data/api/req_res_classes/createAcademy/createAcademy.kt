@@ -14,17 +14,17 @@ data class CreateAcademyRequest(
 //response
 
 sealed class CreateAcademyResponse{
-    class Success(val data : LogInSuccessResponse)  : CreateAcademyResponse()
-    class Failure(val data : LogInFailureResponse)  : CreateAcademyResponse()
+    class Success(val data : CreateAcademySuccessResponse)  : CreateAcademyResponse()
+    class Failure(val data : CreateAcademyFailureResponse)  : CreateAcademyResponse()
     class Exception(val data : kotlin.Exception)    : CreateAcademyResponse()
 }
 
 @Serializable
 data class CreateAcademySuccessResponse(
-    val id         : String,
+    val id         : Int,
     val name       : String,
-    val email      : String,
-    val phone      : String
+    val phone      : String?,
+    val email      : String?
 )
 
 @Serializable

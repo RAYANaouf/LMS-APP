@@ -12,10 +12,12 @@ import com.jethings.study.data.manager.AcademyManager_imp
 import com.jethings.study.data.manager.AppEntryManager_imp
 import com.jethings.study.data.manager.LocalAccountManager_imp
 import com.jethings.study.data.manager.RemoteAccountManager_imp
+import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.AppEntryManager
 import com.jethings.study.domain.manager.LocalAccountManager
 import com.jethings.study.domain.manager.RemoteAccountManager
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
+import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
 import com.jethings.study.util.preferencesKeys.preferencesKeys.USER_SETTING
 import io.ktor.client.HttpClient
@@ -101,7 +103,7 @@ val koinModule = module{
         AppEntryManager_imp()
     }
 
-    single<AcademyManager_imp> {
+    single<AcademyManager> {
         AcademyManager_imp(
             client = get()
         )
@@ -128,6 +130,13 @@ val koinModule = module{
         CreateAcademyViewModel(
             academyManager = get()
         )
+    }
+
+    viewModel {
+        HomeViewModel(
+            academyManager = get()
+        )
+
     }
 
 

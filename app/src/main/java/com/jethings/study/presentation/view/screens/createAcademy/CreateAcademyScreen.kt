@@ -36,11 +36,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jethings.study.R
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack5
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color1_dark
+import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.view.screens.createAcademy.events.CreateAcademyEvents
 import com.jethings.study.util.objects.TextStyles
 
@@ -48,6 +51,7 @@ import com.jethings.study.util.objects.TextStyles
 @Composable
 fun CreateAcademyScreen(
     modifier: Modifier = Modifier,
+    onNavigate : (AppScreen) -> Unit = {},
     onEvent : (event : CreateAcademyEvents , onSuccess : () -> Unit , onFailure : () -> Unit) -> Unit = {_,_,_->}
 ) {
 
@@ -98,7 +102,7 @@ fun CreateAcademyScreen(
                 textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack5),
                 label         = {
                     Text(
-                        text = "Super Admin name",
+                        text = "Academy name",
                         style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = p_color1),
                     )
                 },
@@ -115,28 +119,28 @@ fun CreateAcademyScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(
-                value         = "",
-                onValueChange = {
-
-                },
-                textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack5),
-                label         = {
-                    Text(
-                        text = "Super Admin Password",
-                        style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = p_color1),
-                    )
-                },
-                leadingIcon = {
-                    Icon(painter = painterResource(id = R.drawable.password), contentDescription = null , tint = p_color1 , modifier = Modifier.size(26.dp))
-                },
-                shape = RoundedCornerShape(12.dp),
-                colors = TextFieldDefaults.colors().copy(focusedContainerColor = customWhite0 , unfocusedContainerColor = customWhite0 , focusedLabelColor = p_color1 , focusedIndicatorColor = p_color1 , cursorColor = p_color1 ),
-                modifier       = Modifier
-                    .heightIn(min = 45.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
+//            OutlinedTextField(
+//                value         = "",
+//                onValueChange = {
+//
+//                },
+//                textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack5),
+//                label         = {
+//                    Text(
+//                        text = "Academy Password",
+//                        style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = p_color1),
+//                    )
+//                },
+//                leadingIcon = {
+//                    Icon(painter = painterResource(id = R.drawable.password), contentDescription = null , tint = p_color1 , modifier = Modifier.size(26.dp))
+//                },
+//                shape = RoundedCornerShape(12.dp),
+//                colors = TextFieldDefaults.colors().copy(focusedContainerColor = customWhite0 , unfocusedContainerColor = customWhite0 , focusedLabelColor = p_color1 , focusedIndicatorColor = p_color1 , cursorColor = p_color1 ),
+//                modifier       = Modifier
+//                    .heightIn(min = 45.dp)
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 16.dp)
+//            )
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -158,6 +162,7 @@ fun CreateAcademyScreen(
                     onEvent(
                         CreateAcademyEvents.CreateAcademy(name = name),{
                             Toast.makeText(context , "Academy Created Successfully" , Toast.LENGTH_SHORT).show()
+                            onNavigate(homeScreen)
                         },{
                             Toast.makeText(context , "Failed To Create Academy" , Toast.LENGTH_SHORT).show()
                         }

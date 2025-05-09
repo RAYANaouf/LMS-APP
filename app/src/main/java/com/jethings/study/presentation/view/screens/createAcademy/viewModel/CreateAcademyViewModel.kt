@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.createAcademy.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.data.api.req_res_classes.CreateAcademyRequest

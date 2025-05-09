@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,10 +33,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,11 +56,30 @@ import com.jethings.study.presentation.ui.theme.customWhite5
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.ui.theme.p_color5
+import com.jethings.study.presentation.view.screens.home.events.HomeEvents
 import com.jethings.study.util.objects.TextStyles
 import java.time.format.TextStyle
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    onEvent : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
+    modifier: Modifier = Modifier
+) {
+
+    /*** vars ***/
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = true) {
+        onEvent(
+            HomeEvents.refreshAcademyList,
+            {
+                Toast.makeText(context , "Academy list refreshed." , Toast.LENGTH_SHORT).show()
+            },
+            {
+                Toast.makeText(context , "Error on Academy list refreshing." , Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

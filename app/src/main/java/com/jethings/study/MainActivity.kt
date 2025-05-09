@@ -1,6 +1,7 @@
 package com.jethings.study
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -95,12 +97,13 @@ fun mainScreen(
             }
         },
         bottomBar = {
+            val context = LocalContext.current
             Column {
                 AnimatedVisibility(visible = viewModel.show_bottombar && windowInfo.screenWidthInfo !is WindowInfo.WindowType.Expanded , modifier = Modifier.height(350.dp + 45.dp)) {
                     AddFAB(
                         showFAB = viewModel.current_screen != profileScreen,
                         onNavigate = {
-                             navController.navigate(it)
+                            navController.navigate(it)
                         }
                     )
                 }

@@ -29,10 +29,10 @@ import androidx.navigation.compose.rememberNavController
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.createAcademy.CreateAcademyScreen
-import com.jethings.study.presentation.view.screens.createAcademy.CreateSuperAdminScreen
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.CreateSuperAdminScreen
 import com.jethings.study.presentation.view.screens.home.HomeScreen
+import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
 import com.jethings.study.presentation.view.screens.profile.ProfileScreen
@@ -75,7 +75,10 @@ fun NavGraph(
 
             set_system_bars_color(customWhite0 , background_color_0)
 
+            val viewModel : HomeViewModel = koinViewModel()
+
             HomeScreen(
+                onEvent = viewModel::onEvent,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
@@ -123,6 +126,20 @@ fun NavGraph(
 
             CreateAcademyScreen(
                 onEvent = viewModel::onEvent,
+                onNavigate = {
+                    when(it){
+                        homeScreen -> {
+                            navController.navigate(homeScreen) {
+                                popUpTo(createAcademyScreen) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+                        else ->{
+
+
+                        }                        }
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
@@ -137,10 +154,10 @@ fun NavGraph(
 
         /***************************** create Super Admin ****************************/
 
-        composable<createAcademyScreen> {
+        composable<createSuperAdminScreen> {
 
             SideEffect {
-                currentPage(createAcademyScreen)
+                currentPage(createSuperAdminScreen)
             }
 
 
