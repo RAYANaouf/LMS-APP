@@ -41,10 +41,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jethings.study.R
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -62,6 +65,7 @@ import java.time.format.TextStyle
 
 @Composable
 fun HomeScreen(
+    academyList : List<Academy> = emptyList(),
     onEvent : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
     modifier: Modifier = Modifier
 ) {
@@ -256,7 +260,7 @@ fun HomeScreen(
 
 
 
-            for ( i in 1..5){
+            for ( academy in academyList){
                 Surface(
                     shadowElevation = 2.dp,
                     shape = RoundedCornerShape(12.dp),
@@ -269,22 +273,42 @@ fun HomeScreen(
                         .height(160.dp)
                         .width(120.dp)
                 ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
                         Box(
+                            contentAlignment = Alignment.Center,
                             modifier = Modifier
-                                .size(60.dp)
-                                .clip(CircleShape)
-                                .border(
-                                    width = 1.dp,
-                                    color = p_color1,
-                                    shape = CircleShape
-                                )
-                                .background(customWhite1)
-                        )
+                                .fillMaxWidth()
+                                .weight(2f)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(60.dp)
+                                    .clip(CircleShape)
+                                    .border(
+                                        width = 1.dp,
+                                        color = p_color1,
+                                        shape = CircleShape
+                                    )
+                                    .background(customWhite1)
+                            )
+                        }
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .padding(horizontal = 6.dp)
+                        ) {
+                            Text(
+                                text = academy.name,
+                                style = androidx.compose.ui.text.TextStyle(lineBreak = LineBreak.Simple , textAlign = TextAlign.Center),
+                                maxLines = 2
+                            )
+                        }
                     }
                 }
 

@@ -78,8 +78,9 @@ fun NavGraph(
             val viewModel : HomeViewModel = koinViewModel()
 
             HomeScreen(
-                onEvent = viewModel::onEvent,
-                modifier = Modifier
+                academyList = viewModel.academyList,
+                onEvent     = viewModel::onEvent,
+                modifier    = Modifier
                     .fillMaxSize()
                     .padding(
                         top = paddingValues.calculateTopPadding(),

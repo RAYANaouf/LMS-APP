@@ -50,8 +50,10 @@ class AcademyManager_imp(
             val response = client.get(BASE_URL + GET_ALL_ACADEMIES) {
                 contentType(ContentType.Application.Json)
             }
+            Log.d("response get all academies : status : " , response.status.toString())
+            Log.d("response get all academies : " , response.body())
             if (response.status == HttpStatusCode.OK ) {
-                GetAllAcademiesResponse.Success(response.body())
+                GetAllAcademiesResponse.Success(GetAllAcademiesSuccessResponse(response.body()))
             } else  {
                 GetAllAcademiesResponse.Failure(response.body())
             }
