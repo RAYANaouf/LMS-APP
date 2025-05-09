@@ -16,6 +16,7 @@ import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.AppEntryManager
 import com.jethings.study.domain.manager.LocalAccountManager
 import com.jethings.study.domain.manager.RemoteAccountManager
+import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
@@ -136,7 +137,12 @@ val koinModule = module{
         HomeViewModel(
             academyManager = get()
         )
+    }
 
+    viewModel {
+        AcademyViewModel(
+            academyManager = get()
+        )
     }
 
 

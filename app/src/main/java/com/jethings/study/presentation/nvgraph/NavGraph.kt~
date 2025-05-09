@@ -30,7 +30,6 @@ import androidx.navigation.toRoute
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.academy.AcademyScreen
-import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
 import com.jethings.study.presentation.view.screens.createAcademy.CreateAcademyScreen
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.CreateSuperAdminScreen
@@ -109,11 +108,8 @@ fun NavGraph(
 
             set_system_bars_color(customWhite0 , background_color_0)
 
-            val viewModel : AcademyViewModel = koinViewModel()
-
+            //val viewModel : HomeViewModel = koinViewModel()
             AcademyScreen(
-                academyId = args.academy_id,
-                onEvent = viewModel::onEvent,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(

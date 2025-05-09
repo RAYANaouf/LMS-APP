@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.nvgraph.createAcademyScreen
 import com.jethings.study.presentation.nvgraph.createSuperAdminScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
@@ -111,6 +112,14 @@ class MainViewModel (
                 bottombar_shadow =  0.dp
             }
             createSuperAdminScreen ->{
+                //top bar
+                show_topbar      =  true
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+            }
+            academyScreen ->{
                 //top bar
                 show_topbar      =  true
                 topbar_shadow    =  0.dp

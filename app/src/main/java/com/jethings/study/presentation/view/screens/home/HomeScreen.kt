@@ -48,6 +48,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -66,7 +68,8 @@ import java.time.format.TextStyle
 @Composable
 fun HomeScreen(
     academyList : List<Academy> = emptyList(),
-    onEvent : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
+    onEvent     : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
+    onNavigate  : (AppScreen) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -272,6 +275,9 @@ fun HomeScreen(
                     modifier = Modifier
                         .height(160.dp)
                         .width(120.dp)
+                        .clickable {
+                            onNavigate(academyScreen(academy_id = academy.id))
+                        }
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
