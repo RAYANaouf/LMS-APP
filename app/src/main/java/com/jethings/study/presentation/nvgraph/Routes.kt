@@ -31,6 +31,8 @@ object profileScreen : AppScreen()
 object createAcademyScreen : AppScreen()
 @Serializable
 object createSuperAdminScreen : AppScreen()
+@Serializable
+object academyScreen : AppScreen()
 
 
 

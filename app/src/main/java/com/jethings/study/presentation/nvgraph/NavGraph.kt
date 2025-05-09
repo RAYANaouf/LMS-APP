@@ -90,6 +90,22 @@ fun NavGraph(
             )
         }
 
+        /***************************** academy ****************************/
+
+        composable<academyScreen> {
+
+            SideEffect {
+                currentPage(academyScreen)
+            }
+
+
+            set_system_bars_color(customWhite0 , background_color_0)
+
+            //val viewModel : HomeViewModel = koinViewModel()
+
+
+        }
+
         /***************************** profile ****************************/
 
         composable<profileScreen> {
