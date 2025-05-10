@@ -4,17 +4,15 @@ import kotlinx.serialization.Serializable
 
 
 // request
-
+@Serializable
 data class CreateSuperAdminRequest(
     val email : String ,
     val password : String
 )
 
 
-
-
 //response
-
+@Serializable
 sealed class CreateSuperAdminResponse{
     class Success(val data : CreateSuperAdminSuccessResponse)  : CreateSuperAdminResponse()
     class Failure(val data : CreateSuperAdminFailureResponse)  : CreateSuperAdminResponse()
@@ -23,10 +21,7 @@ sealed class CreateSuperAdminResponse{
 
 @Serializable
 data class CreateSuperAdminSuccessResponse(
-    val id         : Int,
-    val name       : String,
-    val phone      : String?,
-    val email      : String?
+    val access_token : String
 )
 
 @Serializable
