@@ -119,7 +119,7 @@ class MainViewModel (
                 show_bottombar   =  false
                 bottombar_shadow =  0.dp
             }
-            academyScreen ->{
+            is academyScreen ->{
                 //top bar
                 show_topbar      =  true
                 topbar_shadow    =  0.dp

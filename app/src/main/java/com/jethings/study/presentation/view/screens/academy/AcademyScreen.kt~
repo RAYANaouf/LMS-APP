@@ -347,7 +347,7 @@ fun AcademyScreen(
 
 
 
-        Spacer(modifier = Modifier.height(450.dp))
+        Spacer(modifier = Modifier.height(350.dp))
 
     }
 }
