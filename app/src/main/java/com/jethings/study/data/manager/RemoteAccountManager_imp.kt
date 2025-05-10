@@ -1,5 +1,6 @@
 package com.jethings.study.data.manager
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.jethings.study.data.api.req_res_classes.LogInRequest
@@ -29,9 +30,14 @@ class RemoteAccountManager_imp(
                 setBody(request)
             }
 
+
+            Log.d("response status ", "onEvent: ${response.status}")
+            Log.d("response status ", "onEvent: ${response}")
+
             if ( response.status == HttpStatusCode.Created ) {
                 SignUpResponse.Success(response.body())
             }else{
+                Log.d("response failure  ", "onEvent: ${response}")
                 SignUpResponse.Failure(response.body())
             }
         }catch (e : Exception){
@@ -46,14 +52,20 @@ class RemoteAccountManager_imp(
                 setBody(request)
             }
 
+
             if ( response.status == HttpStatusCode.OK ) {
                 LogInResponse.Success(response.body())
             }else{
+
                 LogInResponse.Failure(response.body())
+
             }
         }catch (e : Exception){
             LogInResponse.Exception(e)
         }
     }
+
+
+
 
 }

@@ -23,7 +23,7 @@ sealed class SignUpResponse{
 
 @Serializable
 data class SignUpSuccessResponse(
-    val account : Account
+    val access_token : String
 )
 
 @Serializable

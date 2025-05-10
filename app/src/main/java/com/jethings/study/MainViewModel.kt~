@@ -26,7 +26,7 @@ class MainViewModel (
 ): ViewModel() {
 
 
-    var startDestination by mutableStateOf<AppScreen>(logInScreen)
+    var startDestination by mutableStateOf<AppScreen>(s)
         private set
 
 

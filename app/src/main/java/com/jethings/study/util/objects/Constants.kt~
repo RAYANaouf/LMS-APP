@@ -11,7 +11,7 @@ object Constants {
     const val SIGN_UP  = "/auth/signup"
     const val LOG_IN   = "/auth/login"
     //super admin
-    const val CREATE_SUPER_ADMIN  = "/auth/createSuperAdmin"
+    const val CREATE_SUPER_ADMIN  = "/auth/create"
     //academy
     const val CREATE_ACADEMY      = "/academy/create"
     const val GET_ALL_ACADEMIES   = "/academy/all"

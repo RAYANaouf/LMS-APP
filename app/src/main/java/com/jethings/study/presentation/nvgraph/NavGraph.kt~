@@ -279,13 +279,6 @@ fun NavGraph(
 
             SignUpScreen(
                 onEvent = viewModel::onEvent,
-                onNavigation = {
-                    navController.navigate(it){
-                        popUpTo(signUpScreen){
-                            inclusive = true
-                        }
-                    }
-                },
                 modifier = Modifier
                     .padding(paddingValues),
             )
