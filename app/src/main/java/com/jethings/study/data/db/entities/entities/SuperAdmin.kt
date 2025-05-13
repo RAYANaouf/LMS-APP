@@ -8,10 +8,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity
-data class Academy (
+data class SuperAdmin (
     @PrimaryKey()
-    val id : Int = 0,
-    val name : String = "",
-    val phone : String? = null,
-    val email : String? = null
+    val id        : Int = 0,
+    val firstName : String = "",
+    val lastName  : String = "",
+
 )

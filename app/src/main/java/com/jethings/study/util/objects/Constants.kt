@@ -10,8 +10,9 @@ object Constants {
     //to review
     const val SIGN_UP  = "/auth/signup"
     const val LOG_IN   = "/auth/login"
-    //super admin
     const val CREATE_SUPER_ADMIN  = "/auth/createSuperAdmin"
+    //super admin
+    const val GET_ALL_SUPER_ADMIN  = "/super-admin/all"
     //academy
     const val CREATE_ACADEMY      = "/academy/create"
     const val GET_ALL_ACADEMIES   = "/academy/all"

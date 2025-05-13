@@ -225,6 +225,7 @@ fun CreateSuperAdminScreen(
                 .clip(RoundedCornerShape(12.dp))
                 .background(p_color1)
                 .clickable {
+                    Toast.makeText(context, "clic : $CreateSuperAdminRequest", Toast.LENGTH_SHORT).show()
                     onEvent(
                         CreateSuperAdminEvents.CreateSuperAdmin(
                             CreateSuperAdminRequest(

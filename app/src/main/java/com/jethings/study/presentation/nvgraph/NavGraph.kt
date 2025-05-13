@@ -32,6 +32,8 @@ import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.academy.AcademyScreen
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
+import com.jethings.study.presentation.view.screens.academyOwnerList.AcademyOwnerList
+import com.jethings.study.presentation.view.screens.addOwner.AddOwnerScreen
 import com.jethings.study.presentation.view.screens.createAcademy.CreateAcademyScreen
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.CreateSuperAdminScreen
@@ -85,6 +87,7 @@ fun NavGraph(
             val viewModel : HomeViewModel = koinViewModel()
 
             HomeScreen(
+                superAdminList = viewModel.superAdminList,
                 academyList = viewModel.academyList,
                 onEvent     = viewModel::onEvent,
                 onNavigate = {
@@ -117,8 +120,14 @@ fun NavGraph(
 
             AcademyScreen(
                 academy = viewModel.academy,
+
                 academyId = args.academy_id,
                 onEvent = viewModel::onEvent,
+                onNavigate = {
+                    navController.navigate(it){
+
+                    }
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
@@ -208,6 +217,56 @@ fun NavGraph(
 
             CreateSuperAdminScreen(
                 onEvent = viewModel::onEvent,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                    )
+            )
+        }
+
+
+
+
+        /***************************** add academy owner ****************************/
+
+        composable<addOwnerScreen> {
+
+            SideEffect {
+                currentPage(addOwnerScreen)
+            }
+
+
+            set_system_bars_color(customWhite0 , background_color_0)
+
+
+            AddOwnerScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                    )
+            )
+        }
+
+
+        /*****************************  academy owner List ****************************/
+
+        composable<academyOwnerList> {
+
+            SideEffect {
+                currentPage(academyOwnerList)
+            }
+
+
+            set_system_bars_color(customWhite0 , background_color_0)
+
+
+            AcademyOwnerList(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(

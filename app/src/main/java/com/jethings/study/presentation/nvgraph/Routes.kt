@@ -38,3 +38,9 @@ data class academyScreen(val academy_id: Int) : AppScreen()
 
 
 
+
+@Serializable
+object addOwnerScreen  : AppScreen()
+
+@Serializable
+object academyOwnerList  : AppScreen()

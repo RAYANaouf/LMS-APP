@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity
 data class Account(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     val accountId  : Long    = 0,
     val firstName  : String  = "",
     val lastName   : String  = "",

@@ -1,0 +1,292 @@
+package com.jethings.study.presentation.view.screens.home.components.academySection
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.jethings.study.R
+import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.presentation.nvgraph.academyScreen
+import com.jethings.study.presentation.ui.theme.customBlack2
+import com.jethings.study.presentation.ui.theme.customBlack5
+import com.jethings.study.presentation.ui.theme.customWhite0
+import com.jethings.study.presentation.ui.theme.customWhite1
+import com.jethings.study.presentation.ui.theme.customWhite5
+import com.jethings.study.presentation.ui.theme.p_color1
+import com.jethings.study.presentation.ui.theme.p_color5
+import com.jethings.study.util.objects.TextStyles
+
+
+@Composable
+fun academySection(
+    academyList : List<Academy> = emptyList(),
+    onAcademyClick : (Int)->Unit ,
+    modifier: Modifier = Modifier
+) {
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        Surface(
+            shape = RoundedCornerShape(10.dp),
+            shadowElevation = 2.dp,
+            onClick = {
+
+            },
+            color = customWhite0,
+            modifier = Modifier
+                .fillMaxWidth(0.75f)
+                .height(50.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(34.dp)
+                            .clip(CircleShape)
+                            .background(p_color1)
+                            .padding(8.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.academy_icon),
+                            tint = customWhite1,
+                            contentDescription = null
+                        )
+                    }
+
+                    Box(
+                        contentAlignment = Alignment.CenterStart,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(40.dp)
+                            .padding(start = 16.dp)
+                    ) {
+                        Text(
+                            text = "Academies" ,
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack5)
+                        )
+                    }
+
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .background(p_color5)
+                    ) {
+                        Text(
+                            text = academyList.size.toString(),
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customWhite0),
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+
+
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        ) {
+
+            Spacer(modifier = Modifier.width(16.dp))
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .border(
+                        width = 2.dp,
+                        color = p_color1,
+                        shape = CircleShape
+                    )
+                    .clickable {
+
+                    }
+                    .padding(horizontal = 7.dp, vertical = 2.dp)
+
+
+            ) {
+                Text(
+                    text = "created",
+                    style = androidx.compose.ui.text.TextStyle(fontWeight = FontWeight(600) , fontSize = 12.sp, color = p_color1),
+                )
+            }
+            Spacer(modifier = Modifier.width(6.dp))
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable {
+
+                    }
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+
+
+            ) {
+                Text(
+                    text = "pending",
+                    style = androidx.compose.ui.text.TextStyle(fontWeight = FontWeight(500) , fontSize = 12.sp, color = customBlack2),
+                )
+            }
+
+            Spacer(modifier = Modifier.width(6.dp))
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable {
+
+                    }
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+
+
+            ) {
+                Text(
+                    text = "refused",
+                    style = androidx.compose.ui.text.TextStyle(fontWeight = FontWeight(500) , fontSize = 12.sp, color = customBlack2),
+                )
+            }
+
+            Spacer(modifier = Modifier.width(6.dp))
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable {
+
+                    }
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    text = "deactivated",
+                    style = androidx.compose.ui.text.TextStyle(fontWeight = FontWeight(500) , fontSize = 12.sp, color = customBlack2),
+                )
+            }
+
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+                .horizontalScroll(rememberScrollState())
+        ) {
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+
+
+
+
+
+            for ( academy in academyList){
+                Surface(
+                    shadowElevation = 2.dp,
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = customWhite5
+                    ),
+                    color = customWhite0,
+                    modifier = Modifier
+                        .height(160.dp)
+                        .width(120.dp)
+                        .clickable {
+                            onAcademyClick(academy.id)
+                        }
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(2f)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(60.dp)
+                                    .clip(CircleShape)
+                                    .border(
+                                        width = 1.dp,
+                                        color = p_color1,
+                                        shape = CircleShape
+                                    )
+                                    .background(customWhite1)
+                            )
+                        }
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .padding(horizontal = 6.dp)
+                        ) {
+                            Text(
+                                text = academy.name,
+                                style = androidx.compose.ui.text.TextStyle(lineBreak = LineBreak.Simple , textAlign = TextAlign.Center),
+                                maxLines = 2
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+            }
+
+
+
+        }
+    }
+
+}

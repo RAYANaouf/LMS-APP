@@ -33,6 +33,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.academyOwnerList
+import com.jethings.study.presentation.nvgraph.addOwnerScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -41,9 +44,11 @@ import com.jethings.study.presentation.ui.theme.customWhite2
 import com.jethings.study.presentation.ui.theme.customWhite3
 import com.jethings.study.presentation.ui.theme.customWhite5
 import com.jethings.study.presentation.ui.theme.p_color1
+import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.ui.theme.p_color3
 import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.view.screens.academy.events.AcademyEvent
+import com.jethings.study.presentation.view.screens.addOwner.AddOwnerScreen
 import com.jethings.study.util.objects.TextStyles
 
 @Composable
@@ -51,6 +56,7 @@ fun AcademyScreen(
     academyId : Int,
     academy   : Academy? = null,
     onEvent : (AcademyEvent , ()->Unit , ()->Unit)->Unit = {_,_,_->},
+    onNavigate : (AppScreen)->Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -124,11 +130,15 @@ fun AcademyScreen(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f)
+                    .clickable {
+                        onNavigate(academyOwnerList)
+                    }
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .weight(1f)
+
                 ){
                     Text(
                         text = "Owner",
@@ -151,6 +161,8 @@ fun AcademyScreen(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f)
+                    .clickable {
+                    }
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -178,6 +190,8 @@ fun AcademyScreen(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f)
+                    .clickable {
+                    }
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -205,6 +219,8 @@ fun AcademyScreen(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f)
+                    .clickable {
+                    }
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -350,6 +366,8 @@ fun AcademyScreen(
         Spacer(modifier = Modifier.height(450.dp))
 
     }
+
+
 }
 
 

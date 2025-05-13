@@ -82,7 +82,7 @@ val koinModule = module{
             }
 
             install(ContentNegotiation) {
-                json()
+                json(get()) // 👈 Inject my custom Json instance here
             }
 
         }
@@ -151,7 +151,8 @@ val koinModule = module{
 
     viewModel {
         HomeViewModel(
-            academyManager = get()
+            academyManager = get(),
+            superAdminManager = get()
         )
     }
 
