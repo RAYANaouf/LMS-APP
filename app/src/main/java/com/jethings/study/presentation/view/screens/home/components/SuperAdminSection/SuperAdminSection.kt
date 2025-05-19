@@ -142,7 +142,7 @@ fun SuperAdminSection(
                     Spacer(modifier = Modifier.height(10.dp))
                     Box {
                         Text(
-                            text =  superAdmin.firstName + " - " + superAdmin.lastName,
+                            text =  superAdmin.firstName + " " + superAdmin.lastName,
                             style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack5 , textAlign = TextAlign.Center)
                         )
                     }

@@ -18,7 +18,10 @@ class CreateAcademyViewModel(
         when (event) {
             is CreateAcademyEvents.CreateAcademy -> {
                 viewModelScope.launch {
-                    val response = academyManager.createAcademy(CreateAcademyRequest(event.name))
+                    val response = academyManager.createAcademy(
+                        CreateAcademyRequest(event.name),
+                        event.logo
+                    )
                     if (response is CreateAcademyResponse.Success) {
                         onSuccess()
                     } else if (response is CreateAcademyResponse.Failure) {

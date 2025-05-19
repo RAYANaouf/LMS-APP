@@ -1,6 +1,7 @@
 package com.jethings.study.data.api.req_res_classes
 
 import kotlinx.serialization.Serializable
+import java.io.File
 
 
 //request

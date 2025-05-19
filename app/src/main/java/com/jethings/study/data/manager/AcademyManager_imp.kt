@@ -4,7 +4,6 @@ import android.util.Log
 import com.jethings.study.data.api.req_res_classes.CreateAcademyRequest
 import com.jethings.study.data.api.req_res_classes.CreateAcademyResponse
 import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
-import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesFailureResponse
 import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesResponse
 import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesSuccessResponse
 import com.jethings.study.domain.manager.AcademyManager
@@ -15,21 +14,38 @@ import com.jethings.study.util.objects.Constants.GET_ALL_ACADEMIES
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
 import io.ktor.client.call.body
+import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import java.io.File
 
 class AcademyManager_imp(
     private val client : HttpClient
 ) : AcademyManager {
 
-    override suspend fun createAcademy(createAcademyRequest: CreateAcademyRequest): CreateAcademyResponse {
+    override suspend fun createAcademy(createAcademyRequest: CreateAcademyRequest, logo : File?): CreateAcademyResponse {
         return try {
             val response = client.post(BASE_URL + CREATE_ACADEMY) {
-                contentType(ContentType.Application.Json)
-                setBody(createAcademyRequest)
+                setBody(
+                    MultiPartFormDataContent(
+                        formData {
+                            append("name" , createAcademyRequest.name)
+
+                            //only append image if file is not null
+                            logo?.let{
+                                append("file" , it.readBytes() , Headers.build {
+                                    append(HttpHeaders.ContentDisposition , "filename=${logo.name}")
+                                })
+                            }
+                        }
+                    )
+                )
             }
 
             Log.d("response Body ", response.body())

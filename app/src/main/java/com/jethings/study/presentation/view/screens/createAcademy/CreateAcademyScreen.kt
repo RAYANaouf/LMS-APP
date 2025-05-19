@@ -1,6 +1,10 @@
 package com.jethings.study.presentation.view.screens.createAcademy
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -35,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.jethings.study.R
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
@@ -46,6 +51,7 @@ import com.jethings.study.presentation.ui.theme.p_color1_dark
 import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.view.screens.createAcademy.events.CreateAcademyEvents
 import com.jethings.study.util.objects.TextStyles
+import java.io.File
 
 
 @Composable
@@ -62,10 +68,19 @@ fun CreateAcademyScreen(
     var name by remember {
         mutableStateOf("")
     }
+    var logo by remember {
+        mutableStateOf<Uri?>(null)
+    }
 
 
-
-
+    /****** launchers *******/
+    
+    var launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            logo = uri
+        }
+        
+    }
 
 
 
@@ -77,12 +92,22 @@ fun CreateAcademyScreen(
         Spacer(modifier = Modifier.height(55.dp))
 
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
                 .background(customWhite0)
+                .clickable {
+                    launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                }
         ) {
 
+            AsyncImage(
+                model = logo,
+                contentDescription = null ,
+                modifier = Modifier
+                    .size(95.dp)
+            )
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -160,11 +185,19 @@ fun CreateAcademyScreen(
                 .background(p_color1)
                 .clickable {
                     onEvent(
-                        CreateAcademyEvents.CreateAcademy(name = name),{
-                            Toast.makeText(context , "Academy Created Successfully" , Toast.LENGTH_SHORT).show()
+                        CreateAcademyEvents.CreateAcademy(name = name), {
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Academy Created Successfully",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
                             onNavigate(homeScreen)
-                        },{
-                            Toast.makeText(context , "Failed To Create Academy" , Toast.LENGTH_SHORT).show()
+                        }, {
+                            Toast
+                                .makeText(context, "Failed To Create Academy", Toast.LENGTH_SHORT)
+                                .show()
                         }
 
                     )

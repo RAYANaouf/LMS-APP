@@ -1,7 +1,9 @@
 package com.jethings.study.data.manager
 
 import android.util.Log
+import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminFailureResponse
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminResponse
+import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminSuccessResponse
 import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminRequest
 import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminResponse
 import com.jethings.study.domain.manager.SuperAdminManager
@@ -49,9 +51,14 @@ class SuperAcademyManager_imp(
             Log.d("ow response obj", "createSuperAdmin: ${response}")
 
             if(response.status.value == 200){
+                Log.d("ow response obj", "createSuperAdmin: ${response.body<GetAllSuperAdminSuccessResponse>()}")
                 GetAllSuperAdminResponse.Success(data = response.body())
+
             }else{
+                Log.d("ow response obj", "createSuperAdmin: ${response.body<GetAllSuperAdminFailureResponse>()}")
+
                 GetAllSuperAdminResponse.Failure(data = response.body())
+
             }
 
         }catch (e : Exception){
