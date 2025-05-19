@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.createAcademy
 
+import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -52,6 +53,8 @@ import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.view.screens.createAcademy.events.CreateAcademyEvents
 import com.jethings.study.util.objects.TextStyles
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 
 @Composable
@@ -184,8 +187,9 @@ fun CreateAcademyScreen(
                 .clip(RoundedCornerShape(12.dp))
                 .background(p_color1)
                 .clickable {
+                    val file = logo?.let { uriToFile(context, it)   }
                     onEvent(
-                        CreateAcademyEvents.CreateAcademy(name = name), {
+                        CreateAcademyEvents.CreateAcademy(name = name , logo = file), {
                             Toast
                                 .makeText(
                                     context,
@@ -212,6 +216,19 @@ fun CreateAcademyScreen(
         Spacer(modifier = Modifier.height(65.dp))
 
     }
+}
+
+
+
+fun uriToFile(context: Context, uri: Uri): File? {
+    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+    val file = File(context.cacheDir, "academy_logo.jpg") // You can customize the name
+    inputStream?.use { input ->
+        FileOutputStream(file).use { output ->
+            input.copyTo(output)
+        }
+    }
+    return file
 }
 
 
