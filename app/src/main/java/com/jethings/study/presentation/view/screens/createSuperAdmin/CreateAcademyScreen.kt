@@ -1,6 +1,10 @@
 package com.jethings.study.presentation.view.screens.createSuperAdmin
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.jethings.study.R
 import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminRequest
 import com.jethings.study.presentation.ui.theme.background_color_0
@@ -73,7 +79,22 @@ fun CreateSuperAdminScreen(
         mutableStateOf("")
     }
 
+    var logo by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+
     val context = LocalContext.current
+
+
+    /****** launchers *******/
+
+    var launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            logo = uri
+        }
+
+    }
 
     
     Column(
@@ -89,12 +110,26 @@ fun CreateSuperAdminScreen(
                 .size(120.dp)
                 .clip(CircleShape)
                 .background(customWhite0)
+                .clickable {
+                    launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                }
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.admin),
-                contentDescription = null,
-                tint = p_color1,
-                modifier = Modifier.size(80.dp)
+
+            if ( logo == null ){
+                Icon(
+                    painter = painterResource(id = R.drawable.admin),
+                    contentDescription = null,
+                    tint = p_color1,
+                    modifier = Modifier.size(80.dp)
+                )
+            }
+
+            AsyncImage(
+                model = logo,
+                contentDescription = null ,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
             )
         }
         Spacer(modifier = Modifier.height(20.dp))

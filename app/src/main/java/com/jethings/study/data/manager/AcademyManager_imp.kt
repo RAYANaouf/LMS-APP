@@ -16,8 +16,10 @@ import io.ktor.client.request.post
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
+import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
@@ -30,25 +32,25 @@ class AcademyManager_imp(
 ) : AcademyManager {
 
     override suspend fun createAcademy(createAcademyRequest: CreateAcademyRequest, logo : File?): CreateAcademyResponse {
+
         return try {
-            val response = client.post(BASE_URL + CREATE_ACADEMY) {
-                setBody(
-                    MultiPartFormDataContent(
-                        formData {
-                            append("name" , createAcademyRequest.name)
+            val response = client.submitFormWithBinaryData(
+                url = BASE_URL + CREATE_ACADEMY,
+                formData = formData {
+                    append("name" , createAcademyRequest.name)
 
-                            //only append image if file is not null
-                            logo?.let{
-                                append("file" , it.readBytes() , Headers.build {
-                                    append(HttpHeaders.ContentDisposition , "filename=${logo.name}")
-                                })
-                            }
-                        }
-                    )
-                )
-            }
+                    //only append image if file is not null
+                    logo?.let{
+                        append("logo" , it.readBytes() , Headers.build {
+                            append(HttpHeaders.ContentType , "image/jpg")
+                            append(HttpHeaders.ContentDisposition , "filename=${logo.name}")
+                        })
+                    }
+                }
+            )
 
-            Log.d("response Body ", response.body())
+
+            Log.d("response Body ", response.bodyAsText())
             Log.d("response status ", "onEvent: ${response.status}")
 
             if ( response.status == HttpStatusCode.Created ) {

@@ -256,7 +256,7 @@ fun academySection(
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(85.dp)
+                                    .size(60.dp)
                                     .clip(CircleShape)
                                     .border(
                                         width = 1.dp,

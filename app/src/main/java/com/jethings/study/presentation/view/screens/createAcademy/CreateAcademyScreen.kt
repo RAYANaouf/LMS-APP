@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -47,6 +48,7 @@ import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack5
 import com.jethings.study.presentation.ui.theme.customWhite0
+import com.jethings.study.presentation.ui.theme.customWhite1
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color1_dark
 import com.jethings.study.presentation.ui.theme.p_color4
@@ -105,11 +107,22 @@ fun CreateAcademyScreen(
                 }
         ) {
 
+            if( logo == null ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.academy_icon),
+                    contentDescription = null,
+                    tint = p_color1,
+                    modifier = Modifier
+                        .fillMaxSize(0.6f)
+                )
+            }
+
             AsyncImage(
                 model = logo,
                 contentDescription = null ,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(95.dp)
+                    .fillMaxSize()
             )
         }
 
