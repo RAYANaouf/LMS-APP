@@ -86,19 +86,19 @@ fun HomeScreen(
         onEvent(
             HomeEvents.refreshAcademyList,
             {
-                Toast.makeText(context , "Academy list refreshed." , Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context , "Academy list refreshed." , Toast.LENGTH_SHORT).show()
             },
             {
-                Toast.makeText(context , "Error on Academy list refreshing." , Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context , "Error on Academy list refreshing." , Toast.LENGTH_SHORT).show()
             }
         )
         onEvent(
             HomeEvents.refreshSuperAdminList,
             {
-                Toast.makeText(context , "super Admin list refreshed. ${superAdminList}" , Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context , "super Admin list refreshed. ${superAdminList}" , Toast.LENGTH_SHORT).show()
             },
             {
-                Toast.makeText(context , "Error on Super Admin list refreshing." , Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context , "Error on Super Admin list refreshing." , Toast.LENGTH_SHORT).show()
             }
         )
     }

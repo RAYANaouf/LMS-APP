@@ -29,9 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyOwnerList
@@ -70,9 +72,9 @@ fun AcademyScreen(
             AcademyEvent.GetAcademyDetails(
                 academy_id = academyId
             ),{
-                Toast.makeText(context , "Academy details refreshed." , Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context , "Academy details refreshed. ${academy?.logo}" , Toast.LENGTH_SHORT).show()
             },{
-                Toast.makeText(context , "Error in getting Academy details." , Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context , "Error in getting Academy details." , Toast.LENGTH_SHORT).show()
             }
         )
     }
@@ -101,6 +103,13 @@ fun AcademyScreen(
                         .clip(CircleShape)
                         .background(customWhite5)
                 ) {
+                    AsyncImage(
+                        model = academy?.logo,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Box(

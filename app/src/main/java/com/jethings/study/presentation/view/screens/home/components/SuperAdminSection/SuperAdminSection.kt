@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,9 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -133,11 +136,29 @@ fun SuperAdminSection(
                         }
                 ) {
                     Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .size(80.dp)
                             .clip(CircleShape)
                             .background(customWhite3)
                     ) {
+                        if (superAdmin.profilePhoto != null && superAdmin.profilePhoto != "") {
+                            AsyncImage(
+                                model = superAdmin.profilePhoto,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }else{
+                            Icon(
+                                painter = painterResource(id = R.drawable.admin),
+                                contentDescription = null,
+                                tint = p_color1,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
+
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Box {

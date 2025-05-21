@@ -12,25 +12,44 @@ import com.jethings.study.util.objects.Constants.CREATE_SUPER_ADMIN
 import com.jethings.study.util.objects.Constants.GET_ALL_SUPER_ADMIN
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.forms.formData
+import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import java.io.File
 
 class SuperAcademyManager_imp(
     private val client : HttpClient
 ) : SuperAdminManager {
 
-    override suspend fun createSuperAdmin(createSuperAdminRequest : CreateSuperAdminRequest) : CreateSuperAdminResponse {
+    override suspend fun createSuperAdmin(createSuperAdminRequest : CreateSuperAdminRequest , profilePhoto : File?) : CreateSuperAdminResponse {
             return try{
 
-                val response  = client.post(  BASE_URL + CREATE_SUPER_ADMIN ){
-                    contentType(ContentType.Application.Json)
-                    setBody(createSuperAdminRequest)
-                }
+                val response  = client.submitFormWithBinaryData(
+                    url = BASE_URL + CREATE_SUPER_ADMIN ,
+                    formData = formData {
+                        append("firstName" , createSuperAdminRequest.firstName ?: "")
+                        append("lastName"  , createSuperAdminRequest.lastName  ?: "")
+                        append("email"     , createSuperAdminRequest.email     ?: "")
+                        append("password"  , createSuperAdminRequest.password  ?: "")
 
-                if (response.status.value == 201){
+                        //only append image if file is not null
+                        profilePhoto?.let{
+                            append("profilePhoto" , it.readBytes() , Headers.build {
+                                append(HttpHeaders.ContentType , "image/jpg")
+                                append(HttpHeaders.ContentDisposition , "filename=${profilePhoto.name}")
+                            })
+                        }
+                    }
+                )
+
+                if (response.status.value == HttpStatusCode.Created.value){
                     CreateSuperAdminResponse.Success( data = response.body())
                 }else{
                     CreateSuperAdminResponse.Failure(response.body())

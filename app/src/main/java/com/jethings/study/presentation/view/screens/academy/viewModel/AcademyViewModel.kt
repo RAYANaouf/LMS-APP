@@ -25,7 +25,7 @@ class AcademyViewModel(
                 viewModelScope.launch {
                     val result = academyManager.getAcademyById(event.academy_id)
                     if(result is GetAcademyByIdResponse.Success){
-                        academy = Academy(id = result.data.id, name = result.data.name , email = result.data.email , phone = result.data.phone )
+                        academy = Academy(id = result.data.id, name = result.data.name , email = result.data.email , phone = result.data.phone , logo = result.data.logo)
                         onSuccess()
                     }else if(result is GetAcademyByIdResponse.Failure){
                         onFailure()

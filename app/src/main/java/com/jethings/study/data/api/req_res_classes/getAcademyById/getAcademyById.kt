@@ -16,7 +16,8 @@ data class GetAcademyByIdSuccessResponse(
     val id         : Int,
     val name       : String,
     val phone      : String?,
-    val email      : String?
+    val email      : String?,
+    val logo      : String?
 )
 
 @Serializable

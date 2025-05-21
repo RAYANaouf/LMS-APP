@@ -9,9 +9,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity
 data class SuperAdmin (
-    @PrimaryKey()
-    val id        : Int = 0,
-    val firstName : String = "",
-    val lastName  : String = "",
-
+    @PrimaryKey
+    val id           : Int = 0,
+    val firstName    : String = "",
+    val lastName     : String = "",
+    val profilePhoto : String? = ""
 )

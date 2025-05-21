@@ -19,7 +19,7 @@ class CreateSuperAdminViewModel(
         when(event){
             is CreateSuperAdminEvents.CreateSuperAdmin -> {
                 viewModelScope.launch {
-                    val result = createSuperAdminManager.createSuperAdmin(event.createSuperAdminRequest)
+                    val result = createSuperAdminManager.createSuperAdmin(event.createSuperAdminRequest , event.profilePhoto)
                     if(result is CreateSuperAdminResponse.Success){
                         result.data
                         onSuccessed()

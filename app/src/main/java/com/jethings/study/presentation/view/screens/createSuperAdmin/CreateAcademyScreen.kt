@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.createSuperAdmin
 
+import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.jethings.study.R
 import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminRequest
+import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack4
@@ -57,6 +59,9 @@ import com.jethings.study.presentation.ui.theme.p_color1_dark
 import com.jethings.study.presentation.view.material.AlphaTextFields.AlphaTextField
 import com.jethings.study.presentation.view.screens.createSuperAdmin.events.CreateSuperAdminEvents
 import com.jethings.study.util.objects.TextStyles
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 
 @Composable
@@ -79,7 +84,7 @@ fun CreateSuperAdminScreen(
         mutableStateOf("")
     }
 
-    var logo by remember {
+    var profilePhoto by remember {
         mutableStateOf<Uri?>(null)
     }
 
@@ -91,7 +96,7 @@ fun CreateSuperAdminScreen(
 
     var launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
-            logo = uri
+            profilePhoto = uri
         }
 
     }
@@ -115,7 +120,7 @@ fun CreateSuperAdminScreen(
                 }
         ) {
 
-            if ( logo == null ){
+            if ( profilePhoto == null ){
                 Icon(
                     painter = painterResource(id = R.drawable.admin),
                     contentDescription = null,
@@ -125,7 +130,7 @@ fun CreateSuperAdminScreen(
             }
 
             AsyncImage(
-                model = logo,
+                model = profilePhoto,
                 contentDescription = null ,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -260,6 +265,7 @@ fun CreateSuperAdminScreen(
                 .clip(RoundedCornerShape(12.dp))
                 .background(p_color1)
                 .clickable {
+                    val file = profilePhoto?.let { uriToFile(context, it)   }
                     onEvent(
                         CreateSuperAdminEvents.CreateSuperAdmin(
                             CreateSuperAdminRequest(
@@ -267,7 +273,8 @@ fun CreateSuperAdminScreen(
                                 password = password,
                                 firstName = firstName,
                                 lastName = lastName
-                            )
+                            ),
+                            file
                         ),{
                             Toast
                                 .makeText(
@@ -297,6 +304,19 @@ fun CreateSuperAdminScreen(
         Spacer(modifier = Modifier.height(65.dp))
 
     }
+}
+
+
+
+fun uriToFile(context: Context, uri: Uri): File? {
+    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+    val file = File(context.cacheDir, "academy_logo.jpg") // You can customize the name
+    inputStream?.use { input ->
+        FileOutputStream(file).use { output ->
+            input.copyTo(output)
+        }
+    }
+    return file
 }
 
 
