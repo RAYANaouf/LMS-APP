@@ -24,6 +24,7 @@ import com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel.C
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
 import com.jethings.study.presentation.view.screens.signUp.signUpViewModel.SignUpViewModel
+import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAdminViewModel
 import com.jethings.study.util.preferencesKeys.preferencesKeys.USER_SETTING
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -165,6 +166,12 @@ val koinModule = module{
     viewModel {
         CreateSuperAdminViewModel(
             createSuperAdminManager = get()
+        )
+    }
+
+    viewModel {
+        SuperAdminViewModel(
+            superAdminManager = get()
         )
     }
 

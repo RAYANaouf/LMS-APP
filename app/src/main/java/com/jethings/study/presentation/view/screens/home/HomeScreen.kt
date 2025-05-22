@@ -51,6 +51,7 @@ import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
+import com.jethings.study.presentation.nvgraph.superAdminScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -113,6 +114,9 @@ fun HomeScreen(
 
         SuperAdminSection(
             superAdminList = superAdminList,
+            onSuperAdminClick =  {
+                onNavigate(superAdminScreen(superAdmin_id = it))
+            },
             modifier = Modifier
                 .fillMaxWidth()
         )

@@ -15,6 +15,7 @@ import com.jethings.study.presentation.nvgraph.createSuperAdminScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.logInScreen
 import com.jethings.study.presentation.nvgraph.profileScreen
+import com.jethings.study.presentation.nvgraph.superAdminScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -120,6 +121,14 @@ class MainViewModel (
                 bottombar_shadow =  0.dp
             }
             is academyScreen ->{
+                //top bar
+                show_topbar      =  true
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+            }
+            is superAdminScreen ->{
                 //top bar
                 show_topbar      =  true
                 topbar_shadow    =  0.dp

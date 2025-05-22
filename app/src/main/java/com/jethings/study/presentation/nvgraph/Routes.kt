@@ -32,8 +32,12 @@ object createAcademyScreen  : AppScreen()
 @Serializable
 object createSuperAdminScreen  : AppScreen()
 
+
+
 @Serializable
 data class academyScreen(val academy_id: Int) : AppScreen()
+@Serializable
+data class superAdminScreen(val superAdmin_id: Int) : AppScreen()
 
 
 

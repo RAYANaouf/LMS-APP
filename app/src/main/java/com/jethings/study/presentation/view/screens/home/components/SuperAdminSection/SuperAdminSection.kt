@@ -42,6 +42,7 @@ import com.jethings.study.util.objects.TextStyles
 @Composable
 fun SuperAdminSection(
     superAdminList : List<SuperAdmin> = emptyList(),
+    onSuperAdminClick : (Int)->Unit ,
     modifier: Modifier = Modifier
 ) {
 
@@ -132,7 +133,7 @@ fun SuperAdminSection(
                     modifier = Modifier
                         .width(100.dp)
                         .clickable {
-                            
+                            onSuperAdminClick(superAdmin.id)
                         }
                 ) {
                     Box(

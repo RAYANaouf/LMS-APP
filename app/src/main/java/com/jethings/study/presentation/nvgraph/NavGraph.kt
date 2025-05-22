@@ -44,6 +44,8 @@ import com.jethings.study.presentation.view.screens.logIn.LogInScreen
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
 import com.jethings.study.presentation.view.screens.profile.ProfileScreen
 import com.jethings.study.presentation.view.screens.signUp.signUpViewModel.SignUpViewModel
+import com.jethings.study.presentation.view.screens.superAdmin.SuperAdminScreen
+import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAdminViewModel
 import com.jethings.study.util.responsiveScreenTools.WindowInfo
 import org.koin.androidx.compose.koinViewModel
 import kotlin.math.sign
@@ -128,6 +130,36 @@ fun NavGraph(
 
                     }
                 },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                    )
+            )
+
+        }
+
+        /***************************** superAdmin ****************************/
+
+        composable<superAdminScreen> {
+
+            val args = it.toRoute<superAdminScreen>()
+
+            SideEffect {
+                currentPage(superAdminScreen(args.superAdmin_id))
+            }
+
+
+            set_system_bars_color(customWhite0 , background_color_0)
+
+            val viewModel  = koinViewModel<SuperAdminViewModel>()
+
+            SuperAdminScreen(
+                superAdmin_id = args.superAdmin_id,
+                superAdmin = viewModel.suprAdmin,
+                onEvent = viewModel::onEvent,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(

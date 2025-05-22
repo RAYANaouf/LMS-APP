@@ -4,12 +4,17 @@ import android.util.Log
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminFailureResponse
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminResponse
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminSuccessResponse
+import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetSuperAdminByIdResponse
+import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetSuperAdminByIdSuccessResponse
 import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminRequest
 import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminResponse
+import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
 import com.jethings.study.domain.manager.SuperAdminManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_SUPER_ADMIN
+import com.jethings.study.util.objects.Constants.GET_ACADEMY_BY_ID
 import com.jethings.study.util.objects.Constants.GET_ALL_SUPER_ADMIN
+import com.jethings.study.util.objects.Constants.GET_SUPER_ADMIN_BY_ID
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.formData
@@ -84,6 +89,27 @@ class SuperAcademyManager_imp(
             Log.d("Catch" , "get all super admins: ${e}")
             GetAllSuperAdminResponse.Exception(e)
         }
+    }
+
+
+
+
+    override suspend fun getSuperAdminById(superAdminId: Int): GetSuperAdminByIdResponse {
+
+        return try {
+            val response = client.get( BASE_URL + GET_SUPER_ADMIN_BY_ID + superAdminId ){
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status == HttpStatusCode.OK ) {
+                GetSuperAdminByIdResponse.Success(data = GetSuperAdminByIdSuccessResponse(response.body()) )
+            }else{
+                GetSuperAdminByIdResponse.Failure(response.body())
+            }
+
+        }catch (e : Exception){
+            GetSuperAdminByIdResponse.Exception(e)
+        }
+
     }
 
 }
