@@ -25,11 +25,9 @@ class CreateAcademyViewModel(
                     if (response is CreateAcademyResponse.Success) {
                         onSuccess()
                     } else if (response is CreateAcademyResponse.Failure) {
-                        Log.d("create academy : " , "Failed to create academy")
                         onFailure()
                     } else if (response is CreateAcademyResponse.Exception) {
                         onFailure()
-                        Log.d("create academy : " , "Exception on create academy ${response.data}")
                     }
                 }
             }

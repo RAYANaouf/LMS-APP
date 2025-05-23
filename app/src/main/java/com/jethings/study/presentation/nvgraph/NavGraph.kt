@@ -1,20 +1,15 @@
 package com.jethings.study.presentation.nvgraph
 
 import android.app.Activity
-import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +28,8 @@ import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.academy.AcademyScreen
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
 import com.jethings.study.presentation.view.screens.academyOwnerList.AcademyOwnerList
-import com.jethings.study.presentation.view.screens.addOwner.AddOwnerScreen
+import com.jethings.study.presentation.view.screens.academyOwners.viewModel.AcademyOwnersViewModel
+import com.jethings.study.presentation.view.screens.addOwner.AcademyOwnerScreen
 import com.jethings.study.presentation.view.screens.createAcademy.CreateAcademyScreen
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.CreateSuperAdminScreen
@@ -48,7 +44,6 @@ import com.jethings.study.presentation.view.screens.superAdmin.SuperAdminScreen
 import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAdminViewModel
 import com.jethings.study.util.responsiveScreenTools.WindowInfo
 import org.koin.androidx.compose.koinViewModel
-import kotlin.math.sign
 
 
 @Composable
@@ -264,17 +259,25 @@ fun NavGraph(
 
         /***************************** add academy owner ****************************/
 
-        composable<addOwnerScreen> {
+        composable<academyOwnerScreen> {
+
+            val args = it.toRoute<academyOwnerScreen>()
 
             SideEffect {
-                currentPage(addOwnerScreen)
+                currentPage(academyOwnerScreen(args.academy_id))
             }
 
 
             set_system_bars_color(customWhite0 , background_color_0)
 
 
-            AddOwnerScreen(
+            val viewModel = koinViewModel<AcademyOwnersViewModel>()
+
+
+            AcademyOwnerScreen(
+                academyId = args.academy_id,
+                owners = viewModel.academyOwners,
+                onEvent = viewModel::onEvent,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(

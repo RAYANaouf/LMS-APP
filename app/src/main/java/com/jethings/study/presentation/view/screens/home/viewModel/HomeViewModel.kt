@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminResponse
-import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAllAcademies.GetAllAcademiesResponse
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.domain.manager.AcademyManager

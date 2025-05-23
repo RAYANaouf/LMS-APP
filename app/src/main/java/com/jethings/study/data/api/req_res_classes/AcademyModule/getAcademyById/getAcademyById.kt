@@ -1,4 +1,4 @@
-package com.jethings.study.data.api.req_res_classes.getAcademyById
+package com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById
 
 import kotlinx.serialization.Serializable
 
@@ -13,11 +13,12 @@ sealed class GetAcademyByIdResponse{
 
 @Serializable
 data class GetAcademyByIdSuccessResponse(
-    val id         : Int,
-    val name       : String,
-    val phone      : String?,
-    val email      : String?,
-    val logo      : String?
+    val id         : Int       = 0,
+    val name       : String    = "",
+    val phone      : String?   = null,
+    val email      : String?   = null,
+    val logo       : String?   = null,
+    val owners     : List<Int>? = null,
 )
 
 @Serializable

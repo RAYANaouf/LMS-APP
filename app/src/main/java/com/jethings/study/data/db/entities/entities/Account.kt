@@ -11,6 +11,7 @@ data class Account(
     val accountId  : Long    = 0,
     val firstName  : String  = "",
     val lastName   : String  = "",
+    val profilePhoto : String? = "",
     val verified   : Boolean = false,
     val phone      : String  = "",
     val email      : String  = "",

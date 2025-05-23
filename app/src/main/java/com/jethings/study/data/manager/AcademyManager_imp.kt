@@ -3,13 +3,15 @@ package com.jethings.study.data.manager
 import android.util.Log
 import com.jethings.study.data.api.req_res_classes.CreateAcademyRequest
 import com.jethings.study.data.api.req_res_classes.CreateAcademyResponse
-import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
-import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesResponse
-import com.jethings.study.data.api.req_res_classes.getAllAcademies.GetAllAcademiesSuccessResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyOwnersResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAllAcademies.GetAllAcademiesResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAllAcademies.GetAllAcademiesSuccessResponse
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
 import com.jethings.study.util.objects.Constants.GET_ACADEMY_BY_ID
+import com.jethings.study.util.objects.Constants.GET_ACADEMY_OWNERS_BY_ID
 import com.jethings.study.util.objects.Constants.GET_ALL_ACADEMIES
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
@@ -97,6 +99,24 @@ class AcademyManager_imp(
 
         }catch (e : Exception){
             GetAcademyByIdResponse.Exception(e)
+        }
+    }
+
+    override suspend fun getAcademyOwners(academyId: Int): GetAcademyOwnersResponse {
+        return try {
+            val path = GET_ACADEMY_OWNERS_BY_ID.replace("{id}" , academyId.toString())
+            val response = client.get( BASE_URL + path){
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status == HttpStatusCode.OK ) {
+                GetAcademyOwnersResponse.Success(response.body())
+            }else{
+                GetAcademyOwnersResponse.Failure(response.body())
+            }
+
+        }catch (e : Exception){
+            Log.d("get academy owners" , e.toString())
+            GetAcademyOwnersResponse.Exception(e)
         }
     }
 }

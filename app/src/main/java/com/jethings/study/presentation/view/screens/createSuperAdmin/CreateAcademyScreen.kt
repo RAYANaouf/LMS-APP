@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.jethings.study.R
-import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminRequest
+import com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin.CreateSuperAdminRequest
 import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2

@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.DeleteSuperAdminByIdResponse
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetSuperAdminByIdResponse
-import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
-import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdSuccessResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdSuccessResponse
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.domain.manager.AcademyManager

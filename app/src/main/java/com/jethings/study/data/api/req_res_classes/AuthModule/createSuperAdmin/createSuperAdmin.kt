@@ -1,4 +1,4 @@
-package com.jethings.study.data.api.req_res_classes.createSuperAdmin
+package com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin
 
 import kotlinx.serialization.Serializable
 
@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 data class CreateSuperAdminRequest(
     val email     : String ,
     val password  : String,
-    val firstName : String,
-    val lastName  : String
+    val firstName : String?,
+    val lastName  : String?
 )
 
 

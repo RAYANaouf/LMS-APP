@@ -2,10 +2,10 @@ package com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminFailureResponse
-import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminRequest
-import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminResponse
-import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminSuccessResponse
+import com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin.CreateSuperAdminFailureResponse
+import com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin.CreateSuperAdminRequest
+import com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin.CreateSuperAdminResponse
+import com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin.CreateSuperAdminSuccessResponse
 import com.jethings.study.domain.manager.SuperAdminManager
 import com.jethings.study.presentation.view.screens.createSuperAdmin.events.CreateSuperAdminEvents
 import kotlinx.coroutines.launch

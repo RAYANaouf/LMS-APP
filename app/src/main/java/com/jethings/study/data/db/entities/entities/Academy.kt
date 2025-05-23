@@ -10,9 +10,10 @@ import kotlinx.serialization.Serializable
 @Entity
 data class Academy (
     @PrimaryKey()
-    val id : Int = 0,
-    val name : String = "",
-    val phone : String? = null,
-    val email : String? = null,
-    val logo  : String? = null
+    val id     : Int        = 0,
+    val name   : String     = "",
+    val phone  : String?    = null,
+    val email  : String?    = null,
+    val logo   : String?    = null,
+    val owners : List<Int>? = null,
 )

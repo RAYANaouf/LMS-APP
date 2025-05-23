@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
-import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdSuccessResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdSuccessResponse
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.presentation.view.screens.academy.events.AcademyEvent
@@ -25,7 +25,7 @@ class AcademyViewModel(
                 viewModelScope.launch {
                     val result = academyManager.getAcademyById(event.academy_id)
                     if(result is GetAcademyByIdResponse.Success){
-                        academy = Academy(id = result.data.id, name = result.data.name , email = result.data.email , phone = result.data.phone , logo = result.data.logo)
+                        academy = Academy(id = result.data.id, name = result.data.name , email = result.data.email , phone = result.data.phone , logo = result.data.logo , owners = result.data.owners)
                         onSuccess()
                     }else if(result is GetAcademyByIdResponse.Failure){
                         onFailure()

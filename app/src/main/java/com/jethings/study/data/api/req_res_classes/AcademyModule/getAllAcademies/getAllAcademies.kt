@@ -1,4 +1,4 @@
-package com.jethings.study.data.api.req_res_classes.getAllAcademies
+package com.jethings.study.data.api.req_res_classes.AcademyModule.getAllAcademies
 
 import com.jethings.study.data.db.entities.entities.Academy
 import kotlinx.serialization.Serializable

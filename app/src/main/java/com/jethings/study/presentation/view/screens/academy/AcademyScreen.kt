@@ -37,7 +37,7 @@ import coil.compose.AsyncImage
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyOwnerList
-import com.jethings.study.presentation.nvgraph.addOwnerScreen
+import com.jethings.study.presentation.nvgraph.academyOwnerScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -50,7 +50,6 @@ import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.ui.theme.p_color3
 import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.view.screens.academy.events.AcademyEvent
-import com.jethings.study.presentation.view.screens.addOwner.AddOwnerScreen
 import com.jethings.study.util.objects.TextStyles
 
 @Composable
@@ -140,7 +139,7 @@ fun AcademyScreen(
                     .fillMaxHeight()
                     .weight(1f)
                     .clickable {
-                        onNavigate(academyOwnerList)
+                        onNavigate(academyOwnerScreen(academyId))
                     }
             ) {
                 Box(
@@ -160,7 +159,7 @@ fun AcademyScreen(
                         .weight(1f)
                 ){
                     Text(
-                        text = "1",
+                        text = if(academy?.owners?.size != null ) academy.owners.size.toString() else  "0",
                         style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
                     )
                 }

@@ -19,6 +19,7 @@ import com.jethings.study.domain.manager.LocalAccountManager
 import com.jethings.study.domain.manager.RemoteAccountManager
 import com.jethings.study.domain.manager.SuperAdminManager
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
+import com.jethings.study.presentation.view.screens.academyOwners.viewModel.AcademyOwnersViewModel
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel.CreateSuperAdminViewModel
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
@@ -172,6 +173,12 @@ val koinModule = module{
     viewModel {
         SuperAdminViewModel(
             superAdminManager = get()
+        )
+    }
+
+    viewModel {
+        AcademyOwnersViewModel(
+            academyManager = get()
         )
     }
 

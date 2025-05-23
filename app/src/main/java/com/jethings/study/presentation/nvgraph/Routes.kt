@@ -44,7 +44,7 @@ data class superAdminScreen(val superAdmin_id: Int) : AppScreen()
 
 
 @Serializable
-object addOwnerScreen  : AppScreen()
+data class academyOwnerScreen(val academy_id: Int)  : AppScreen()
 
 @Serializable
 object academyOwnerList  : AppScreen()

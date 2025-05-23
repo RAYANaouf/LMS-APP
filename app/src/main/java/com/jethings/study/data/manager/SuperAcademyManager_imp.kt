@@ -7,9 +7,9 @@ import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperA
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminSuccessResponse
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetSuperAdminByIdResponse
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetSuperAdminByIdSuccessResponse
-import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminRequest
-import com.jethings.study.data.api.req_res_classes.createSuperAdmin.CreateSuperAdminResponse
-import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
+import com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin.CreateSuperAdminRequest
+import com.jethings.study.data.api.req_res_classes.AuthModule.createSuperAdmin.CreateSuperAdminResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdResponse
 import com.jethings.study.domain.manager.SuperAdminManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_SUPER_ADMIN
@@ -36,7 +36,7 @@ class SuperAcademyManager_imp(
     private val client : HttpClient
 ) : SuperAdminManager {
 
-    override suspend fun createSuperAdmin(createSuperAdminRequest : CreateSuperAdminRequest , profilePhoto : File?) : CreateSuperAdminResponse {
+    override suspend fun createSuperAdmin(createSuperAdminRequest : CreateSuperAdminRequest, profilePhoto : File?) : CreateSuperAdminResponse {
             return try{
 
                 val response  = client.submitFormWithBinaryData(
