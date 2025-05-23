@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jethings.study.data.api.req_res_classes.SuperAdminModule.DeleteSuperAdminByIdResponse
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetSuperAdminByIdResponse
 import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdResponse
 import com.jethings.study.data.api.req_res_classes.getAcademyById.GetAcademyByIdSuccessResponse
@@ -38,6 +39,18 @@ class SuperAdminViewModel(
                         onFailure()
                     }else if(result is GetSuperAdminByIdResponse.Exception){
                         Log.d("to me ==>", "onEvent3: ${result.data.message}")
+                        onFailure()
+                    }
+                }
+            }
+            is SuperAdminEvent.DeleteSuperAdminDetails -> {
+                viewModelScope.launch {
+                    val res = superAdminManager.deleteSuperAdminById(event.superAdmin_id)
+                    if(res is DeleteSuperAdminByIdResponse.Success){
+                        onSuccess()
+                    }else if(res is DeleteSuperAdminByIdResponse.Failure){
+                        onFailure()
+                    }else if(res is DeleteSuperAdminByIdResponse.Exception){
                         onFailure()
                     }
                 }

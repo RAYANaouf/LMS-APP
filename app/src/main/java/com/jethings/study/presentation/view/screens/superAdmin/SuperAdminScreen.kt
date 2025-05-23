@@ -221,7 +221,13 @@ fun SuperAdminScreen(
                 shape = RoundedCornerShape(6.dp),
                 shadowElevation = 0.dp,
                 onClick = {
-
+                    onEvent(
+                        SuperAdminEvent.DeleteSuperAdminDetails(superAdmin_id = superAdmin_id),{
+                            Toast.makeText(context , "deleted" , Toast.LENGTH_SHORT).show()
+                        },{
+                            Toast.makeText(context , "Failed to delete" , Toast.LENGTH_SHORT).show()
+                        }
+                    )
                 },
                 modifier = Modifier
                     .padding(vertical = 6.dp)
