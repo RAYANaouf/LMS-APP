@@ -15,6 +15,7 @@ import com.jethings.study.presentation.nvgraph.createSuperAdminScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.logInScreen
 import com.jethings.study.presentation.nvgraph.profileScreen
+import com.jethings.study.presentation.nvgraph.signUpScreen
 import com.jethings.study.presentation.nvgraph.superAdminScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,6 +55,10 @@ class MainViewModel (
     var bottombar_shadow  by mutableStateOf(0.dp)
         private set
 
+    //navigation drawer
+
+    var show_navigationDrawer    by mutableStateOf(false)
+        private set
 
     init {
 
@@ -85,6 +90,9 @@ class MainViewModel (
                 //bottom bar
                 show_bottombar   =  true
                 bottombar_shadow =  0.dp
+
+                //navigation drawer
+                show_navigationDrawer = true
             }
             profileScreen->{
                 //top bar
@@ -95,6 +103,10 @@ class MainViewModel (
                 //bottom bar
                 show_bottombar   =  true
                 bottombar_shadow =  0.dp
+
+
+                //navigation drawer
+                show_navigationDrawer = true
             }
             logInScreen ->{
                 //top bar
@@ -103,6 +115,22 @@ class MainViewModel (
                 //bottom bar
                 show_bottombar   =  false
                 bottombar_shadow =  0.dp
+
+
+                //navigation drawer
+                show_navigationDrawer = false
+            }
+            signUpScreen ->{
+                //top bar
+                show_topbar      =  false
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+
+
+                //navigation drawer
+                show_navigationDrawer = false
             }
             createAcademyScreen ->{
                 //top bar
@@ -111,6 +139,10 @@ class MainViewModel (
                 //bottom bar
                 show_bottombar   =  false
                 bottombar_shadow =  0.dp
+
+
+                //navigation drawer
+                show_navigationDrawer = true
             }
             createSuperAdminScreen ->{
                 //top bar
@@ -119,6 +151,10 @@ class MainViewModel (
                 //bottom bar
                 show_bottombar   =  false
                 bottombar_shadow =  0.dp
+
+
+                //navigation drawer
+                show_navigationDrawer = true
             }
             is academyScreen ->{
                 //top bar
@@ -127,6 +163,9 @@ class MainViewModel (
                 //bottom bar
                 show_bottombar   =  false
                 bottombar_shadow =  0.dp
+
+                //navigation drawer
+                show_navigationDrawer = true
             }
             is superAdminScreen ->{
                 //top bar
@@ -135,6 +174,9 @@ class MainViewModel (
                 //bottom bar
                 show_bottombar   =  false
                 bottombar_shadow =  0.dp
+
+                //navigation drawer
+                show_navigationDrawer = true
             }
 
         }
