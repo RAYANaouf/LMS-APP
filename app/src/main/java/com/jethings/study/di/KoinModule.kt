@@ -13,11 +13,13 @@ import com.jethings.study.data.manager.AppEntryManager_imp
 import com.jethings.study.data.manager.LocalAccountManager_imp
 import com.jethings.study.data.manager.RemoteAccountManager_imp
 import com.jethings.study.data.manager.SuperAcademyManager_imp
+import com.jethings.study.data.manager.UserManager_imp
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.AppEntryManager
 import com.jethings.study.domain.manager.LocalAccountManager
 import com.jethings.study.domain.manager.RemoteAccountManager
 import com.jethings.study.domain.manager.SuperAdminManager
+import com.jethings.study.domain.manager.UserManager
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
 import com.jethings.study.presentation.view.screens.academyOwners.viewModel.AcademyOwnersViewModel
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
@@ -122,6 +124,12 @@ val koinModule = module{
         )
     }
 
+    single<UserManager> {
+        UserManager_imp(
+            client = get()
+        )
+    }
+
 
 
     /********************  viewModels   **************************/
@@ -178,7 +186,8 @@ val koinModule = module{
 
     viewModel {
         AcademyOwnersViewModel(
-            academyManager = get()
+            academyManager = get(),
+            userManager = get()
         )
     }
 

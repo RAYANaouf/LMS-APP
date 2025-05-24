@@ -1,25 +1,30 @@
 package com.jethings.study.data.manager
 
 import android.util.Log
+import com.jethings.study.data.api.req_res_classes.AcademyModule.addAcademyOwner.AddAcademyOwnerRequest
+import com.jethings.study.data.api.req_res_classes.AcademyModule.addAcademyOwner.AddAcademyOwnerResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.addAcademyOwner.AddAcademyOwnerSuccessResponse
 import com.jethings.study.data.api.req_res_classes.CreateAcademyRequest
 import com.jethings.study.data.api.req_res_classes.CreateAcademyResponse
 import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyOwnersFailureResponse
 import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyOwnersResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyOwnersSuccessResponse
 import com.jethings.study.data.api.req_res_classes.AcademyModule.getAllAcademies.GetAllAcademiesResponse
 import com.jethings.study.data.api.req_res_classes.AcademyModule.getAllAcademies.GetAllAcademiesSuccessResponse
 import com.jethings.study.domain.manager.AcademyManager
+import com.jethings.study.util.objects.Constants.ADD_ACADEMY_OWNER
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
 import com.jethings.study.util.objects.Constants.GET_ACADEMY_BY_ID
 import com.jethings.study.util.objects.Constants.GET_ACADEMY_OWNERS_BY_ID
 import com.jethings.study.util.objects.Constants.GET_ALL_ACADEMIES
 import io.ktor.client.HttpClient
-import io.ktor.client.request.post
 import io.ktor.client.call.body
-import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
+import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
@@ -109,14 +114,37 @@ class AcademyManager_imp(
                 contentType(ContentType.Application.Json)
             }
             if (response.status == HttpStatusCode.OK ) {
+
+                Log.d("get academy owners" , response.body<GetAcademyOwnersSuccessResponse>().toString())
                 GetAcademyOwnersResponse.Success(response.body())
+
             }else{
+                Log.d("get academy owners" , response.body<GetAcademyOwnersFailureResponse>().toString())
                 GetAcademyOwnersResponse.Failure(response.body())
             }
 
         }catch (e : Exception){
             Log.d("get academy owners" , e.toString())
             GetAcademyOwnersResponse.Exception(e)
+        }
+    }
+
+    override suspend fun addAcademyOwner(academyId: Int, ownerId: Int): AddAcademyOwnerResponse {
+        return try {
+            val path = ADD_ACADEMY_OWNER.replace("{id}" , academyId.toString())
+            val response = client.post( BASE_URL + path){
+                contentType(ContentType.Application.Json)
+                setBody(AddAcademyOwnerRequest(userId = ownerId))
+            }
+            if (response.status == HttpStatusCode.Created ) {
+                AddAcademyOwnerResponse.Success(AddAcademyOwnerSuccessResponse() )
+            }else{
+                AddAcademyOwnerResponse.Failure(response.body())
+            }
+
+        }catch (e : Exception){
+            Log.d("add academy owner" , e.toString())
+            AddAcademyOwnerResponse.Exception(e)
         }
     }
 }

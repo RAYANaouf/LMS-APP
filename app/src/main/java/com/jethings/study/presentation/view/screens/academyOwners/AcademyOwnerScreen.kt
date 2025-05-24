@@ -34,10 +34,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -55,6 +58,7 @@ import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite3
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color4
+import com.jethings.study.presentation.view.dialog.addAcademyOwner.AddAcademyOwnerDialog
 import com.jethings.study.presentation.view.screens.academy.events.AcademyEvent
 import com.jethings.study.presentation.view.screens.academyOwners.event.AcademyOwnersEvents
 import com.jethings.study.util.objects.TextStyles
@@ -63,6 +67,7 @@ import com.jethings.study.util.objects.TextStyles
 @Composable
 fun AcademyOwnerScreen(
     academyId : Int ,
+    user      : Account? = null,
     owners : List<Account> = emptyList(),
     onEvent : (AcademyOwnersEvents , ()->Unit , ()->Unit)->Unit = {_,_,_->},
     onNavigate : () -> Unit = {},
@@ -73,6 +78,10 @@ fun AcademyOwnerScreen(
     /*** vars ***/
     val context = LocalContext.current
     var loading by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var showDialog by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -94,6 +103,39 @@ fun AcademyOwnerScreen(
 
         )
     }
+
+    /*** dialog ***/
+
+    AddAcademyOwnerDialog(
+        showDialog = showDialog,
+        user       = user,
+        onAddOwner = { id , onSuccess , onFailure ->
+            onEvent(
+                AcademyOwnersEvents.AddAcademyOwnerEvent(
+                    ownerId = id,
+                    academyId = academyId
+                ),{
+                    onSuccess()
+                    Toast.makeText(context , "added successfully" , Toast.LENGTH_SHORT).show()
+                },{
+                    onFailure()
+                    Toast.makeText(context , "failed to add owner" , Toast.LENGTH_SHORT).show()
+                }
+            )
+        },
+        onSearch   = {email , onSuccess , onFailure ->
+            onEvent(
+                AcademyOwnersEvents.GetUserByEmailEvent(email),{
+                    onSuccess()
+                },{
+                    onFailure()
+                }
+            )
+        },
+        onDismissRequest = {
+            showDialog = false
+        }
+    )
 
 
     var search by rememberSaveable { mutableStateOf("") }
@@ -141,7 +183,7 @@ fun AcademyOwnerScreen(
             ) {
                 Text(
                     text = "Owners",
-                    style = TextStyles.Monospace_TextStyles.TextStyleSZ7.copy(color = customBlack6)
+                    style = TextStyles.Monospace_TextStyles.TextStyleSZ7.copy(color = customBlack4)
                 )
             }
 
@@ -162,11 +204,25 @@ fun AcademyOwnerScreen(
                 val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.empty))
                 val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
 
-                LottieAnimation(
-                    composition = composition ,
-                    progress = progress.value ,
-                    modifier = Modifier.fillMaxSize()
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    LottieAnimation(
+                        composition = composition ,
+                        progress = progress.value ,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "No Owners Found",
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ7
+                        )
+                    }
+                }
             }else{
                 for ( owner in owners){
                     Row(
@@ -185,7 +241,13 @@ fun AcademyOwnerScreen(
                                 .clip(CircleShape)
                                 .background(customWhite3)
                         ) {
-
+                            AsyncImage(
+                                model = owner.profilePhoto,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Column(
@@ -200,7 +262,7 @@ fun AcademyOwnerScreen(
                                     .weight(1f)
                             ) {
                                 Text(
-                                    text = "User name",
+                                    text = owner.firstName + " " + owner.lastName,
                                     style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
                                 )
                             }
@@ -210,7 +272,7 @@ fun AcademyOwnerScreen(
                                     .weight(1f)
                             ) {
                                 Text(
-                                    text = "User email",
+                                    text = owner.email,
                                     style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack2)
                                 )
                             }
@@ -228,7 +290,7 @@ fun AcademyOwnerScreen(
             shape = CircleShape,
             color = p_color1,
             onClick = {
-
+                showDialog = true
             },
             modifier = Modifier
                 .offset(x = -36.dp, y = -45.dp)

@@ -276,9 +276,10 @@ fun NavGraph(
 
             AcademyOwnerScreen(
                 academyId = args.academy_id,
-                owners = viewModel.academyOwners,
-                onEvent = viewModel::onEvent,
-                modifier = Modifier
+                user      = viewModel.user,
+                owners    = viewModel.academyOwners,
+                onEvent   = viewModel::onEvent,
+                modifier  = Modifier
                     .fillMaxSize()
                     .padding(
                         top = paddingValues.calculateTopPadding(),

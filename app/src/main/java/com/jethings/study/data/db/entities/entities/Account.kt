@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
 data class Account(
     @PrimaryKey()
     val accountId  : Long    = 0,
+    val userId     : Long    = 0,
     val firstName  : String  = "",
     val lastName   : String  = "",
     val profilePhoto : String? = "",
