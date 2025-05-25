@@ -52,7 +52,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.NavGraph
@@ -240,23 +239,14 @@ fun mainScreen(
         }
 
 
-        Column(
+        Box(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-        ) {
-            AnimatedVisibility(visible = drawerState) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .padding(bottom = 45.dp)
-                        .fillMaxWidth()
-                ){
-                    Text(
-                        text = "Powered by Jethings",
-                        fontSize = 20.sp
-                    )
-                }
-            }
+                .padding(vertical = 35.dp)
+                .fillMaxWidth()
+        ){
+            Text(
+                text = "Powered by Jethings"
+            )
         }
     }
 

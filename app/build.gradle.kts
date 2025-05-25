@@ -83,6 +83,10 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.compose)
 
+    //compose animation
+    // https://mvnrepository.com/artifact/androidx.compose.animation/animation
+    implementation(libs.androidx.animation)
+
 
 
     //view model

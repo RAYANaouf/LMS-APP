@@ -120,7 +120,6 @@ fun BottomAppBar(
                 .clip(CircleShape)
                 .background(customWhite7)
                 .clickable {
-                    //onNavigate(addCarScreen)
                     toggleAnimation()
                 }
         ) {

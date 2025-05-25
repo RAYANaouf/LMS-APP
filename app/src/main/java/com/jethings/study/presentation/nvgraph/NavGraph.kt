@@ -1,6 +1,8 @@
 package com.jethings.study.presentation.nvgraph
 
 import android.app.Activity
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -46,6 +48,7 @@ import com.jethings.study.util.responsiveScreenTools.WindowInfo
 import org.koin.androidx.compose.koinViewModel
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun NavGraph(
     navController    : NavHostController = rememberNavController(),
@@ -62,357 +65,360 @@ fun NavGraph(
     )
 
 
-    NavHost(
-        navController = navController,
-        startDestination = startDestination,
-        modifier         = Modifier
-    ) {
+    SharedTransitionScope{
+        NavHost(
+            navController = navController,
+            startDestination = startDestination,
+            modifier         = Modifier
+        ) {
 
 
 
-        /***************************** home ****************************/
+            /***************************** home ****************************/
 
-        composable<homeScreen> {
+            composable<homeScreen> {
 
-            SideEffect {
-                currentPage(homeScreen)
+                SideEffect {
+                    currentPage(homeScreen)
+                }
+
+
+                set_system_bars_color(customWhite0 , background_color_0)
+
+                val viewModel : HomeViewModel = koinViewModel()
+
+                HomeScreen(
+                    superAdminList = viewModel.superAdminList,
+                    academyList = viewModel.academyList,
+                    onEvent     = viewModel::onEvent,
+                    onNavigate = {
+                        navController.navigate( it )
+                    },
+                    modifier    = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
             }
 
+            /***************************** academy ****************************/
 
-            set_system_bars_color(customWhite0 , background_color_0)
+            composable<academyScreen> {
 
-            val viewModel : HomeViewModel = koinViewModel()
+                val args = it.toRoute<academyScreen>()
 
-            HomeScreen(
-                superAdminList = viewModel.superAdminList,
-                academyList = viewModel.academyList,
-                onEvent     = viewModel::onEvent,
-                onNavigate = {
-                    navController.navigate( it )
-                },
-                modifier    = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
-        }
+                SideEffect {
+                    currentPage(academyScreen(args.academy_id))
+                }
 
-        /***************************** academy ****************************/
 
-        composable<academyScreen> {
+                set_system_bars_color(customWhite0 , background_color_0)
 
-            val args = it.toRoute<academyScreen>()
+                val viewModel : AcademyViewModel = koinViewModel()
 
-            SideEffect {
-                currentPage(academyScreen(args.academy_id))
+                AcademyScreen(
+                    academy = viewModel.academy,
+
+                    academyId = args.academy_id,
+                    onEvent = viewModel::onEvent,
+                    onNavigate = {
+                        navController.navigate(it){
+
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
+
             }
 
+            /***************************** superAdmin ****************************/
 
-            set_system_bars_color(customWhite0 , background_color_0)
+            composable<superAdminScreen> {
 
-            val viewModel : AcademyViewModel = koinViewModel()
+                val args = it.toRoute<superAdminScreen>()
 
-            AcademyScreen(
-                academy = viewModel.academy,
+                SideEffect {
+                    currentPage(superAdminScreen(args.superAdmin_id))
+                }
 
-                academyId = args.academy_id,
-                onEvent = viewModel::onEvent,
-                onNavigate = {
-                    navController.navigate(it){
 
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
+                set_system_bars_color(customWhite0 , background_color_0)
 
-        }
+                val viewModel  = koinViewModel<SuperAdminViewModel>()
 
-        /***************************** superAdmin ****************************/
+                SuperAdminScreen(
+                    superAdmin_id = args.superAdmin_id,
+                    superAdmin = viewModel.suprAdmin,
+                    onEvent = viewModel::onEvent,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
 
-        composable<superAdminScreen> {
-
-            val args = it.toRoute<superAdminScreen>()
-
-            SideEffect {
-                currentPage(superAdminScreen(args.superAdmin_id))
             }
 
+            /***************************** profile ****************************/
 
-            set_system_bars_color(customWhite0 , background_color_0)
+            composable<profileScreen> {
 
-            val viewModel  = koinViewModel<SuperAdminViewModel>()
+                SideEffect {
+                    currentPage(profileScreen)
+                }
 
-            SuperAdminScreen(
-                superAdmin_id = args.superAdmin_id,
-                superAdmin = viewModel.suprAdmin,
-                onEvent = viewModel::onEvent,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
 
-        }
+                set_system_bars_color(customWhite0 , background_color_0)
 
-        /***************************** profile ****************************/
-
-        composable<profileScreen> {
-
-            SideEffect {
-                currentPage(profileScreen)
+                ProfileScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
             }
 
+            /***************************** create academy ****************************/
 
-            set_system_bars_color(customWhite0 , background_color_0)
+            composable<createAcademyScreen> {
 
-            ProfileScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
-        }
-
-        /***************************** create academy ****************************/
-
-        composable<createAcademyScreen> {
-
-            SideEffect {
-                currentPage(createAcademyScreen)
-            }
+                SideEffect {
+                    currentPage(createAcademyScreen)
+                }
 
 
-            set_system_bars_color(customWhite0 , background_color_0)
+                set_system_bars_color(customWhite0 , background_color_0)
 
-            val viewModel : CreateAcademyViewModel = koinViewModel()
+                val viewModel : CreateAcademyViewModel = koinViewModel()
 
-            CreateAcademyScreen(
-                onEvent = viewModel::onEvent,
-                onNavigate = {
-                    when(it){
-                        homeScreen -> {
-                            navController.navigate(homeScreen) {
-                                popUpTo(createAcademyScreen) {
-                                    inclusive = true
+                CreateAcademyScreen(
+                    onEvent = viewModel::onEvent,
+                    onNavigate = {
+                        when(it){
+                            homeScreen -> {
+                                navController.navigate(homeScreen) {
+                                    popUpTo(createAcademyScreen) {
+                                        inclusive = true
+                                    }
                                 }
                             }
-                        }
-                        else ->{
+                            else ->{
 
 
-                        }                        }
-                },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
-        }
-
-
-
-        /***************************** create Super Admin ****************************/
-
-        composable<createSuperAdminScreen> {
-
-            SideEffect {
-                currentPage(createSuperAdminScreen)
+                            }                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
             }
 
 
-            set_system_bars_color(customWhite0 , background_color_0)
 
-            val viewModel = koinViewModel<CreateSuperAdminViewModel>()
+            /***************************** create Super Admin ****************************/
 
-            CreateSuperAdminScreen(
-                onEvent = viewModel::onEvent,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
-        }
+            composable<createSuperAdminScreen> {
+
+                SideEffect {
+                    currentPage(createSuperAdminScreen)
+                }
 
 
+                set_system_bars_color(customWhite0 , background_color_0)
 
+                val viewModel = koinViewModel<CreateSuperAdminViewModel>()
 
-        /***************************** add academy owner ****************************/
-
-        composable<academyOwnerScreen> {
-
-            val args = it.toRoute<academyOwnerScreen>()
-
-            SideEffect {
-                currentPage(academyOwnerScreen(args.academy_id))
+                CreateSuperAdminScreen(
+                    onEvent = viewModel::onEvent,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
             }
 
 
-            set_system_bars_color(customWhite0 , background_color_0)
 
 
-            val viewModel = koinViewModel<AcademyOwnersViewModel>()
+            /***************************** add academy owner ****************************/
+
+            composable<academyOwnerScreen> {
+
+                val args = it.toRoute<academyOwnerScreen>()
+
+                SideEffect {
+                    currentPage(academyOwnerScreen(args.academy_id))
+                }
 
 
-            AcademyOwnerScreen(
-                academyId = args.academy_id,
-                user      = viewModel.user,
-                owners    = viewModel.academyOwners,
-                onEvent   = viewModel::onEvent,
-                modifier  = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
-        }
+                set_system_bars_color(customWhite0 , background_color_0)
 
 
-        /*****************************  academy owner List ****************************/
+                val viewModel = koinViewModel<AcademyOwnersViewModel>()
 
-        composable<academyOwnerList> {
 
-            SideEffect {
-                currentPage(academyOwnerList)
+                AcademyOwnerScreen(
+                    academyId = args.academy_id,
+                    user      = viewModel.user,
+                    owners    = viewModel.academyOwners,
+                    onEvent   = viewModel::onEvent,
+                    modifier  = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
             }
 
 
-            set_system_bars_color(customWhite0 , background_color_0)
+            /*****************************  academy owner List ****************************/
+
+            composable<academyOwnerList> {
+
+                SideEffect {
+                    currentPage(academyOwnerList)
+                }
 
 
-            AcademyOwnerList(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = paddingValues.calculateTopPadding(),
-                        start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                        end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
-                    )
-            )
-        }
+                set_system_bars_color(customWhite0 , background_color_0)
 
 
-
-        /***************************** log in ****************************/
-
-        composable<logInScreen> {
-
-
-            SideEffect {
-                currentPage(logInScreen)
+                AcademyOwnerList(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
             }
 
-            val context = LocalContext.current
 
 
-            set_system_bars_color(background_color_0 , background_color_0)
+            /***************************** log in ****************************/
 
-            val viewModel : LogInViewModel = koinViewModel()
+            composable<logInScreen> {
 
-            LogInScreen(
-                modifier = Modifier
-                    .padding(paddingValues),
-                onEvent = viewModel::onEvent,
-                onNavigate = {
-                    when(it){
-                        homeScreen -> {
-                            navController.navigate(homeScreen){
-                                popUpTo(logInScreen){
-                                    inclusive = true
+
+                SideEffect {
+                    currentPage(logInScreen)
+                }
+
+                val context = LocalContext.current
+
+
+                set_system_bars_color(background_color_0 , background_color_0)
+
+                val viewModel : LogInViewModel = koinViewModel()
+
+                LogInScreen(
+                    modifier = Modifier
+                        .padding(paddingValues),
+                    onEvent = viewModel::onEvent,
+                    onNavigate = {
+                        when(it){
+                            homeScreen -> {
+                                navController.navigate(homeScreen){
+                                    popUpTo(logInScreen){
+                                        inclusive = true
+                                    }
                                 }
                             }
-                        }
-                        signUpScreen ->{
-                            navController.navigate(signUpScreen){
-                                popUpTo(logInScreen){
-                                    inclusive = true
+                            signUpScreen ->{
+                                navController.navigate(signUpScreen){
+                                    popUpTo(logInScreen){
+                                        inclusive = true
+                                    }
                                 }
                             }
+
                         }
-
-                    }
-                },
-                windowInfo = windowInfo
-            )
-        }
-
-
-
-        /***************************** sign up ****************************/
-
-        composable<signUpScreen> {
-
-
-            SideEffect {
-                currentPage(signUpScreen)
+                    },
+                    windowInfo = windowInfo
+                )
             }
 
-            val context = LocalContext.current
 
 
-            set_system_bars_color(background_color_0 , background_color_0)
+            /***************************** sign up ****************************/
 
-            val viewModel = koinViewModel<SignUpViewModel>()
+            composable<signUpScreen> {
 
-            SignUpScreen(
-                onEvent = viewModel::onEvent,
-                onNavigation = {
-                    navController.navigate(it){
-                        popUpTo(signUpScreen){
-                            inclusive = true
+
+                SideEffect {
+                    currentPage(signUpScreen)
+                }
+
+                val context = LocalContext.current
+
+
+                set_system_bars_color(background_color_0 , background_color_0)
+
+                val viewModel = koinViewModel<SignUpViewModel>()
+
+                SignUpScreen(
+                    onEvent = viewModel::onEvent,
+                    onNavigation = {
+                        navController.navigate(it){
+                            popUpTo(signUpScreen){
+                                inclusive = true
+                            }
                         }
-                    }
-                },
-                modifier = Modifier
-                    .padding(paddingValues),
-            )
-        }
-
-
-        /***************************** on boarding ****************************/
-
-        composable<onBoardingScreen> {
-
-
-            SideEffect {
-                currentPage(onBoardingScreen)
+                    },
+                    modifier = Modifier
+                        .padding(paddingValues),
+                )
             }
 
 
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                Text(text = "on Boarding...")
+            /***************************** on boarding ****************************/
+
+            composable<onBoardingScreen> {
+
+
+                SideEffect {
+                    currentPage(onBoardingScreen)
+                }
+
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    Text(text = "on Boarding...")
+                }
+
             }
 
+
         }
-
-
     }
+
 
 
 
