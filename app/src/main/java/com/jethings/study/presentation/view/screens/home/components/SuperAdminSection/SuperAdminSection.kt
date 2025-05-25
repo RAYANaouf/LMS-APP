@@ -1,5 +1,7 @@
 package com.jethings.study.presentation.view.screens.home.components.SuperAdminSection
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -39,8 +41,9 @@ import com.jethings.study.presentation.ui.theme.p_color5
 import com.jethings.study.util.objects.TextStyles
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SuperAdminSection(
+fun SharedTransitionScope.SuperAdminSection(
     superAdminList : List<SuperAdmin> = emptyList(),
     onSuperAdminClick : (Int)->Unit ,
     modifier: Modifier = Modifier
@@ -142,6 +145,9 @@ fun SuperAdminSection(
                             .size(80.dp)
                             .clip(CircleShape)
                             .background(customWhite3)
+                            .sharedElement(
+                                state = rememberSharedContentState(key = "Super Admin ${superAdmin.id}")
+                            )
                     ) {
                         if (superAdmin.profilePhoto != null && superAdmin.profilePhoto != "") {
                             AsyncImage(

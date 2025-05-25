@@ -66,10 +66,11 @@ fun NavGraph(
 
 
     SharedTransitionScope{
+
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier         = Modifier
+            modifier         = it
         ) {
 
 

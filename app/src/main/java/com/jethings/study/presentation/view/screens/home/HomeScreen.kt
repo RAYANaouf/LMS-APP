@@ -1,6 +1,8 @@
 package com.jethings.study.presentation.view.screens.home
 
 import android.widget.Toast
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -71,8 +73,9 @@ import com.jethings.study.presentation.view.screens.home.events.HomeEvents
 import com.jethings.study.util.objects.TextStyles
 import java.time.format.TextStyle
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun HomeScreen(
+fun SharedTransitionScope.HomeScreen(
     academyList    : List<Academy>    = emptyList(),
     superAdminList : List<SuperAdmin> = emptyList(),
     onEvent        : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
@@ -148,13 +151,16 @@ fun HomeScreen(
 }
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview
 @Composable
 private fun HomeScreen_preview() {
-    HomeScreen(
-        academyList = listOf(Academy(name = "Daracedemy") , Academy(name = "Djabali Academy"), Academy(name = "Achbal Academy")) ,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(background_color_0)
-    )
+    SharedTransitionScope {
+        HomeScreen(
+            academyList = listOf(Academy(name = "Daracedemy") , Academy(name = "Djabali Academy"), Academy(name = "Achbal Academy")) ,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(background_color_0)
+        )
+    }
 }
