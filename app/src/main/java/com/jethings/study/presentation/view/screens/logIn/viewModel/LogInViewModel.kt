@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.data.api.req_res_classes.LogInRequest
 import com.jethings.study.data.api.req_res_classes.LogInResponse
+import com.jethings.study.domain.manager.LocalUserManager
 import com.jethings.study.domain.manager.RemoteAccountManager
 import com.jethings.study.presentation.view.screens.logIn.events.LogInEvents
 import kotlinx.coroutines.launch
 
 class LogInViewModel(
-    private val remoteAccountManager : RemoteAccountManager
+    private val remoteAccountManager : RemoteAccountManager,
+    private val localUserManager: LocalUserManager
 ) : ViewModel() {
 
     fun onEvent(event: LogInEvents, onSucces : () -> Unit, onFailure : ()-> Unit){
@@ -21,13 +23,13 @@ class LogInViewModel(
                         LogInRequest(event.email , event.password)
                     )
                     if(response is LogInResponse.Success){
+                        localUserManager.saveAppEntry()
                         onSucces()
-                        Log.d("heeeeeeeeeeeeeeeere success  =====>> " , response.data.access_token)
                     }else{
                         if ( response is LogInResponse.Failure ){
-                            Log.d("heeeeeeeeeeeeeeeere  =====>> " , response.data.toString())
+                            Log.d("failed to log in  =====>> " , response.data.toString())
                         }else if ( response is LogInResponse.Exception ){
-                            Log.d("heeeeeeeeeeeeeeeere =====>> " , response.data.toString())
+                            Log.d("failed to log in =====>> " , response.data.toString())
                         }
                         onFailure()
                     }

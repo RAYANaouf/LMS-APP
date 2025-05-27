@@ -5,6 +5,11 @@ object Constants {
 
 
 
+    //DataStore
+    const val USER_SETTINGS = "USER_SETTINGS"
+    const val APP_ENRTY = "APP_ENTRY"
+
+
     //API
     const val BASE_URL             = "https://j-study.onrender.com"
     //to review

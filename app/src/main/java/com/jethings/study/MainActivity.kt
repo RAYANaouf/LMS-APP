@@ -82,6 +82,9 @@ class MainActivity : ComponentActivity() {
 
                 val viewModel = koinViewModel<MainViewModel>()
 
+                val context = LocalContext.current
+
+
                 Surface {
                     mainScreen (
                         startDestination = viewModel.startDestination,

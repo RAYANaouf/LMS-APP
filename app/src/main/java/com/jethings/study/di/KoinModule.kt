@@ -10,13 +10,13 @@ import com.jethings.study.data.db.AppDataBase
 import com.jethings.study.data.db.dao.AccountDao
 import com.jethings.study.data.manager.AcademyManager_imp
 import com.jethings.study.data.manager.AppEntryManager_imp
-import com.jethings.study.data.manager.LocalAccountManager_imp
+import com.jethings.study.data.manager.LocalUserManager_imp
 import com.jethings.study.data.manager.RemoteAccountManager_imp
 import com.jethings.study.data.manager.SuperAcademyManager_imp
 import com.jethings.study.data.manager.UserManager_imp
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.AppEntryManager
-import com.jethings.study.domain.manager.LocalAccountManager
+import com.jethings.study.domain.manager.LocalUserManager
 import com.jethings.study.domain.manager.RemoteAccountManager
 import com.jethings.study.domain.manager.SuperAdminManager
 import com.jethings.study.domain.manager.UserManager
@@ -98,8 +98,10 @@ val koinModule = module{
 
     /********************  manager  ***********************/
 
-    single<LocalAccountManager>{
-        LocalAccountManager_imp()
+    single<LocalUserManager>{
+        LocalUserManager_imp(
+            context = get()
+        )
     }
 
     single<RemoteAccountManager>{
@@ -135,7 +137,9 @@ val koinModule = module{
     /********************  viewModels   **************************/
 
     viewModel {
-        MainViewModel()
+        MainViewModel(
+            localUserManager = get()
+        )
     }
 
 
@@ -143,13 +147,15 @@ val koinModule = module{
 
     viewModel {
         LogInViewModel(
-            remoteAccountManager = get()
+            remoteAccountManager = get(),
+            localUserManager = get()
         )
     }
 
     viewModel {
         SignUpViewModel(
-            remoteAccountManager = get()
+            remoteAccountManager = get(),
+            localUserManager = get()
         )
     }
 
