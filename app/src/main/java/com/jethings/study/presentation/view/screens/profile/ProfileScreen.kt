@@ -29,13 +29,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.jethings.study.R
+import com.jethings.study.data.db.entities.Account
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack1
 import com.jethings.study.presentation.ui.theme.customBlack2
@@ -57,7 +60,10 @@ import com.jethings.study.presentation.view.material.AlphaTextFields.AlphaTextFi
 import com.jethings.study.util.objects.TextStyles
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
+fun ProfileScreen(
+    account : Account? = Account(),
+    modifier: Modifier = Modifier
+) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,6 +89,12 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
                     tint = customBlack1,
                     modifier  = Modifier
                         .size(100.dp)
+                )
+                AsyncImage(
+                    model = account?.profilePhoto,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
             Box(
@@ -110,7 +122,7 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "Admin Name",
+            text = if (account != null )"${account.firstName} ${account.lastName}" else "Admin Name",
             style = TextStyle(
                 fontSize = 26.sp,
                 fontWeight = FontWeight(700)
@@ -120,7 +132,7 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(10.dp))
 
         Text(
-            text = "Admin@gmail.com",
+            text = account?.email ?: "Admin@gmail.com",
             style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack5)
         )
 
@@ -130,7 +142,7 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 26.dp , vertical = 6.dp)
+                .padding(horizontal = 26.dp, vertical = 6.dp)
         ) {
             Text(
                 text = "General",
@@ -245,7 +257,7 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 26.dp , vertical = 6.dp)
+                .padding(horizontal = 26.dp, vertical = 6.dp)
         ) {
             Text(
                 text = "Privacy",

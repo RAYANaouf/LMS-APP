@@ -6,8 +6,16 @@ object Constants {
 
 
     //DataStore
-    const val USER_SETTINGS = "USER_SETTINGS"
-    const val APP_ENRTY = "APP_ENTRY"
+    const val USER_SETTINGS      = "USER_SETTINGS"
+    const val APP_ENRTY          = "APP_ENTRY"
+    const val ACCOUNT_ID         = "ACCOUNT_ID"
+    const val USER_ID            = "USER_ACCOUNT_ID"
+    const val USER_FIRST_NAME    = "USER_ACCOUNT_ID"
+    const val USER_LAST_NAME     = "USER_ACCOUNT_ID"
+    const val USER_EMAIL         = "USER_ACCOUNT_ID"
+    const val USER_PHONE         = "USER_PHONE"
+    const val USER_PASSWORD      = "USER_ACCOUNT_ID"
+    const val USER_PROFILE_PHOTO = "USER_ACCOUNT_ID"
 
 
     //API

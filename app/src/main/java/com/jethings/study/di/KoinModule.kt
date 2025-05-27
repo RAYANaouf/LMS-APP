@@ -26,6 +26,7 @@ import com.jethings.study.presentation.view.screens.createAcademy.viewModel.Crea
 import com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel.CreateSuperAdminViewModel
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
+import com.jethings.study.presentation.view.screens.profile.viewModel.ProfileViewModel
 import com.jethings.study.presentation.view.screens.signUp.signUpViewModel.SignUpViewModel
 import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAdminViewModel
 import com.jethings.study.util.preferencesKeys.preferencesKeys.USER_SETTING
@@ -194,6 +195,12 @@ val koinModule = module{
         AcademyOwnersViewModel(
             academyManager = get(),
             userManager = get()
+        )
+    }
+
+    viewModel {
+        ProfileViewModel(
+            localUserManager = get()
         )
     }
 

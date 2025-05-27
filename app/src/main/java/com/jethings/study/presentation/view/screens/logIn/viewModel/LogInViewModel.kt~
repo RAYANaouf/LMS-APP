@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.data.api.req_res_classes.LogInRequest
 import com.jethings.study.data.api.req_res_classes.LogInResponse
-import com.jethings.study.data.db.entities.Account
 import com.jethings.study.domain.manager.LocalUserManager
 import com.jethings.study.domain.manager.RemoteAccountManager
 import com.jethings.study.presentation.view.screens.logIn.events.LogInEvents
@@ -25,10 +24,6 @@ class LogInViewModel(
                     )
                     if(response is LogInResponse.Success){
                         localUserManager.saveAppEntry()
-                        localUserManager.saveAccount(Account(
-                            email = event.email,
-                            password = event.password,
-                        ))
                         onSucces()
                     }else{
                         if ( response is LogInResponse.Failure ){

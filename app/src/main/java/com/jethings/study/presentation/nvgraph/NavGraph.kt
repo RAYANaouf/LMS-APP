@@ -42,6 +42,7 @@ import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
 import com.jethings.study.presentation.view.screens.profile.ProfileScreen
+import com.jethings.study.presentation.view.screens.profile.viewModel.ProfileViewModel
 import com.jethings.study.presentation.view.screens.signUp.signUpViewModel.SignUpViewModel
 import com.jethings.study.presentation.view.screens.superAdmin.SuperAdminScreen
 import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAdminViewModel
@@ -193,7 +194,10 @@ fun NavGraph(
 
                 set_system_bars_color(customWhite0 , background_color_0)
 
+                val viewModel = koinViewModel<ProfileViewModel>()
+
                 ProfileScreen(
+                    account = viewModel.user,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
