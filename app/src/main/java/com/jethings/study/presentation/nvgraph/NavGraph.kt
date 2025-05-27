@@ -2,6 +2,7 @@ package com.jethings.study.presentation.nvgraph
 
 import android.app.Activity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -65,15 +66,17 @@ fun NavGraph(
     )
 
 
-    SharedTransitionScope{
+    SharedTransitionLayout{
 
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier         = it
+            modifier         = Modifier
         ) {
 
 
+
+            /***************************** home ****************************/
 
             /***************************** home ****************************/
 
@@ -89,6 +92,7 @@ fun NavGraph(
                 val viewModel : HomeViewModel = koinViewModel()
 
                 HomeScreen(
+                    animatedVisibilityScope = this@composable,
                     superAdminList = viewModel.superAdminList,
                     academyList = viewModel.academyList,
                     onEvent     = viewModel::onEvent,
@@ -107,6 +111,8 @@ fun NavGraph(
 
             /***************************** academy ****************************/
 
+            /***************************** academy ****************************/
+
             composable<academyScreen> {
 
                 val args = it.toRoute<academyScreen>()
@@ -121,8 +127,8 @@ fun NavGraph(
                 val viewModel : AcademyViewModel = koinViewModel()
 
                 AcademyScreen(
+                    animatedVisibilityScope = this,
                     academy = viewModel.academy,
-
                     academyId = args.academy_id,
                     onEvent = viewModel::onEvent,
                     onNavigate = {
@@ -143,6 +149,8 @@ fun NavGraph(
 
             /***************************** superAdmin ****************************/
 
+            /***************************** superAdmin ****************************/
+
             composable<superAdminScreen> {
 
                 val args = it.toRoute<superAdminScreen>()
@@ -157,6 +165,7 @@ fun NavGraph(
                 val viewModel  = koinViewModel<SuperAdminViewModel>()
 
                 SuperAdminScreen(
+                    animatedVisibilityScope = this,
                     superAdmin_id = args.superAdmin_id,
                     superAdmin = viewModel.suprAdmin,
                     onEvent = viewModel::onEvent,
@@ -170,6 +179,8 @@ fun NavGraph(
                 )
 
             }
+
+            /***************************** profile ****************************/
 
             /***************************** profile ****************************/
 
@@ -192,6 +203,8 @@ fun NavGraph(
                         )
                 )
             }
+
+            /***************************** create academy ****************************/
 
             /***************************** create academy ****************************/
 
@@ -233,6 +246,9 @@ fun NavGraph(
             }
 
 
+            /***************************** create Super Admin ****************************/
+
+
 
             /***************************** create Super Admin ****************************/
 
@@ -258,6 +274,9 @@ fun NavGraph(
                         )
                 )
             }
+
+
+            /***************************** add academy owner ****************************/
 
 
 
@@ -297,6 +316,9 @@ fun NavGraph(
 
             /*****************************  academy owner List ****************************/
 
+
+            /*****************************  academy owner List ****************************/
+
             composable<academyOwnerList> {
 
                 SideEffect {
@@ -317,6 +339,9 @@ fun NavGraph(
                         )
                 )
             }
+
+
+            /***************************** log in ****************************/
 
 
 
@@ -364,6 +389,9 @@ fun NavGraph(
             }
 
 
+            /***************************** sign up ****************************/
+
+
 
             /***************************** sign up ****************************/
 
@@ -394,6 +422,9 @@ fun NavGraph(
                         .padding(paddingValues),
                 )
             }
+
+
+            /***************************** on boarding ****************************/
 
 
             /***************************** on boarding ****************************/

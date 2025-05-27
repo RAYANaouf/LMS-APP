@@ -1,6 +1,10 @@
 package com.jethings.study.presentation.view.screens.academy
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -33,11 +37,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyOwnerList
 import com.jethings.study.presentation.nvgraph.academyOwnerScreen
+import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -52,8 +60,10 @@ import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.view.screens.academy.events.AcademyEvent
 import com.jethings.study.util.objects.TextStyles
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun AcademyScreen(
+fun SharedTransitionScope.AcademyScreen(
+    animatedVisibilityScope : AnimatedVisibilityScope,
     academyId : Int,
     academy   : Academy? = null,
     onEvent : (AcademyEvent , ()->Unit , ()->Unit)->Unit = {_,_,_->},
@@ -98,6 +108,10 @@ fun AcademyScreen(
             ) {
                 Box(
                     modifier = Modifier
+                        .sharedElement(
+                            state = rememberSharedContentState(key = "Academy-${academyId}"),
+                            animatedVisibilityScope = animatedVisibilityScope
+                        )
                         .size(150.dp)
                         .clip(CircleShape)
                         .background(customWhite5)
@@ -379,13 +393,26 @@ fun AcademyScreen(
 }
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview
 @Composable
 private fun AcademyScreen_prev() {
-    AcademyScreen(
-        academyId = 1,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(background_color_0)
-    )
+
+    SharedTransitionLayout {
+        NavHost(
+            navController = rememberNavController(),
+            startDestination = academyScreen
+        ){
+            composable<academyScreen> {
+                AcademyScreen(
+                    animatedVisibilityScope = this,
+                    academyId = 1,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(background_color_0)
+                )
+            }
+        }
+    }
+
 }

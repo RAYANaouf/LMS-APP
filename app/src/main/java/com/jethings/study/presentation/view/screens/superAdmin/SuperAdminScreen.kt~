@@ -2,6 +2,10 @@ package com.jethings.study.presentation.view.screens.superAdmin
 
 import android.graphics.Paint.Align
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -41,10 +45,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.presentation.nvgraph.academyOwnerList
+import com.jethings.study.presentation.nvgraph.superAdminScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack3
@@ -62,8 +70,10 @@ import com.jethings.study.presentation.view.screens.superAdmin.events.SuperAdmin
 import com.jethings.study.util.objects.TextStyles
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SuperAdminScreen(
+fun SharedTransitionScope.SuperAdminScreen(
+    animatedVisibilityScope : AnimatedVisibilityScope,
     superAdmin_id : Int = 0,
     superAdmin: SuperAdmin? = SuperAdmin(firstName = "Rayan" , lastName = "Aouf"),
     onEvent : (event : SuperAdminEvent , onSuccess : ()->Unit , onFailure : ()->Unit) -> Unit ={_,_,_->},
@@ -103,6 +113,10 @@ fun SuperAdminScreen(
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
+                    .sharedElement(
+                        state = rememberSharedContentState(key = "SuperAdmin-${superAdmin?.id}"),
+                        animatedVisibilityScope = animatedVisibilityScope
+                    )
                     .size(110.dp)
                     .clip(CircleShape)
                     .background(customWhite2)
@@ -225,7 +239,7 @@ fun SuperAdminScreen(
                         SuperAdminEvent.DeleteSuperAdminDetails(superAdmin_id = superAdmin_id),{
                             Toast.makeText(context , "deleted" , Toast.LENGTH_SHORT).show()
                         },{
-                            Toast.makeText(context , "Failed to deleted" , Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context , "Failed to delete" , Toast.LENGTH_SHORT).show()
                         }
                     )
                 },
@@ -262,11 +276,19 @@ fun SuperAdminScreen(
 }
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview
 @Composable
 private fun SuperAdminScreen_prev() {
-    SuperAdminScreen(
-        modifier = Modifier
-            .background(background_color_0)
-    )
+    SharedTransitionLayout {
+        NavHost(navController = rememberNavController(), startDestination = superAdminScreen ){
+            composable<superAdminScreen> {
+                SuperAdminScreen(
+                    animatedVisibilityScope = this,
+                    modifier = Modifier
+                        .background(background_color_0)
+                )
+            }
+        }
+    }
 }

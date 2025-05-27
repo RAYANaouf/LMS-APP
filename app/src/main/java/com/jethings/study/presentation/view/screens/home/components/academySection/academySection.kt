@@ -1,5 +1,8 @@
 package com.jethings.study.presentation.view.screens.home.components.academySection
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -46,10 +49,12 @@ import com.jethings.study.presentation.ui.theme.p_color5
 import com.jethings.study.util.objects.TextStyles
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun academySection(
+fun SharedTransitionScope.academySection(
+    animatedVisibilityScope : AnimatedVisibilityScope,
     academyList : List<Academy> = emptyList(),
-    onAcademyClick : (Int)->Unit ,
+    onAcademyClick : (Int)->Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -216,7 +221,6 @@ fun academySection(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
                 .horizontalScroll(rememberScrollState())
         ) {
 
@@ -256,6 +260,10 @@ fun academySection(
                         ) {
                             Box(
                                 modifier = Modifier
+                                    .sharedElement(
+                                        state = rememberSharedContentState(key = "Academy-${academy.id}"),
+                                        animatedVisibilityScope = animatedVisibilityScope
+                                    )
                                     .size(85.dp)
                                     .clip(CircleShape)
                                     .border(

@@ -1,7 +1,8 @@
 package com.jethings.study.presentation.view.screens.home
 
-import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -48,11 +49,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
+import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.superAdminScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
@@ -76,6 +82,7 @@ import java.time.format.TextStyle
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.HomeScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     academyList    : List<Academy>    = emptyList(),
     superAdminList : List<SuperAdmin> = emptyList(),
     onEvent        : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
@@ -116,6 +123,7 @@ fun SharedTransitionScope.HomeScreen(
         Spacer(modifier = Modifier.height(35.dp))
 
         SuperAdminSection(
+            animatedVisibilityScope = animatedVisibilityScope,
             superAdminList = superAdminList,
             onSuperAdminClick =  {
                 onNavigate(superAdminScreen(superAdmin_id = it))
@@ -128,6 +136,7 @@ fun SharedTransitionScope.HomeScreen(
 
 
         academySection(
+            animatedVisibilityScope = animatedVisibilityScope,
             academyList = academyList,
             onAcademyClick = {
                 onNavigate(academyScreen(academy_id = it))
@@ -155,12 +164,20 @@ fun SharedTransitionScope.HomeScreen(
 @Preview
 @Composable
 private fun HomeScreen_preview() {
-    SharedTransitionScope {
-        HomeScreen(
-            academyList = listOf(Academy(name = "Daracedemy") , Academy(name = "Djabali Academy"), Academy(name = "Achbal Academy")) ,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(background_color_0)
-        )
+    SharedTransitionLayout {
+
+        NavHost(navController = rememberNavController(), startDestination = homeScreen){
+            composable<homeScreen> {
+                HomeScreen(
+                    animatedVisibilityScope = this ,
+                    academyList = listOf(Academy(name = "Daracedemy") , Academy(name = "Djabali Academy"), Academy(name = "Achbal Academy")) ,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(background_color_0)
+                )
+            }
+        }
     }
+
+
 }

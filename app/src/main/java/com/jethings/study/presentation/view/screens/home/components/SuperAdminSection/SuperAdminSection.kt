@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.home.components.SuperAdminSection
 
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
@@ -45,7 +46,8 @@ import com.jethings.study.util.objects.TextStyles
 @Composable
 fun SharedTransitionScope.SuperAdminSection(
     superAdminList : List<SuperAdmin> = emptyList(),
-    onSuperAdminClick : (Int)->Unit ,
+    animatedVisibilityScope : AnimatedVisibilityScope,
+    onSuperAdminClick : (Int)->Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -142,12 +144,13 @@ fun SharedTransitionScope.SuperAdminSection(
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
+                            .sharedElement(
+                                state = rememberSharedContentState(key = "SuperAdmin-${superAdmin.id}"),
+                                animatedVisibilityScope = animatedVisibilityScope
+                            )
                             .size(80.dp)
                             .clip(CircleShape)
                             .background(customWhite3)
-                            .sharedElement(
-                                state = rememberSharedContentState(key = "Super Admin ${superAdmin.id}")
-                            )
                     ) {
                         if (superAdmin.profilePhoto != null && superAdmin.profilePhoto != "") {
                             AsyncImage(
