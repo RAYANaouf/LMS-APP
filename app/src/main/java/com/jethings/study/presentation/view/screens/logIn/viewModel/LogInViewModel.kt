@@ -26,8 +26,17 @@ class LogInViewModel(
                     if(response is LogInResponse.Success){
                         localUserManager.saveAppEntry()
                         localUserManager.saveAccount(Account(
-                            email = event.email,
-                            password = event.password,
+                            accountId    = response.data.accountId,
+                            userId       = response.data.userId,
+                            firstName    = response.data.firstName,
+                            lastName     = response.data.lastName,
+                            profilePhoto = response.data.profilePhoto,
+                            email        = event.email,
+                            isParent     = response.data.isParent,
+                            isStudent    = response.data.isStudent,
+                            isTeacher    = response.data.isTeacher,
+                            isSuperAdmin = response.data.isSuperAdmin,
+                            password     = event.password,
                         ))
                         onSucces()
                     }else{

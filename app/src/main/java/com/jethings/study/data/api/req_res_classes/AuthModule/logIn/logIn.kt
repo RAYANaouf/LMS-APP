@@ -22,24 +22,24 @@ sealed class LogInResponse{
 
 @Serializable
 data class LogInSuccessResponse(
-    val access_token       : String,
-    val accountId          : Long,
-    val userId             : Long,
-    val firstName          : String,
-    val lastName           : String,
-    val profilePhoto       : String,
-    val verified           : Boolean,
-    val phone              : String,
-    val email              : String,
-    val isSuperAdmin       : Boolean,
-    val isStudent          : Boolean,
-    val isParent           : Boolean,
-    val isTeacher          : Boolean,
+    val access_token       : String  = "",
+    val accountId          : Long    = 0L,
+    val userId             : Long    = 0L,
+    val firstName          : String  = "",
+    val lastName           : String  = "",
+    val profilePhoto       : String  = "",
+    val verified           : Boolean = false,
+    val phone              : String  = "",
+    val email              : String  = "",
+    val isSuperAdmin       : Boolean = false,
+    val isStudent          : Boolean = false,
+    val isParent           : Boolean = false,
+    val isTeacher          : Boolean = false,
 )
 
 @Serializable
 data class LogInFailureResponse(
-    val statusCode : Int,
-    val message    : String,
-    val error      : String
+    val statusCode : Int = 0,
+    val message    : String = "",
+    val error      : String = "",
 )
