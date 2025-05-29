@@ -9,13 +9,13 @@ object Constants {
     const val USER_SETTINGS      = "USER_SETTINGS"
     const val APP_ENRTY          = "APP_ENTRY"
     const val ACCOUNT_ID         = "ACCOUNT_ID"
-    const val USER_ID            = "USER_ID"
-    const val USER_FIRST_NAME    = "USER_FIRST_NAME"
-    const val USER_LAST_NAME     = "USER_LAST_NAME"
-    const val USER_EMAIL         = "USER_EMAIL"
+    const val USER_ID            = "USER_ACCOUNT_ID"
+    const val USER_FIRST_NAME    = "USER_ACCOUNT_ID"
+    const val USER_LAST_NAME     = "USER_ACCOUNT_ID"
+    const val USER_EMAIL         = "USER_ACCOUNT_ID"
     const val USER_PHONE         = "USER_PHONE"
-    const val USER_PASSWORD      = "USER_PASSWORD"
-    const val USER_PROFILE_PHOTO = "USER_PROFILE_PHOTO"
+    const val USER_PASSWORD      = "USER_ACCOUNT_ID"
+    const val USER_PROFILE_PHOTO = "USER_ACCOUNT_ID"
 
 
     //API
