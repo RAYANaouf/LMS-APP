@@ -55,7 +55,6 @@ import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.ui.theme.p_color3
 import com.jethings.study.presentation.ui.theme.p_color4
-import com.jethings.study.presentation.view.screens.AcademyPage.components.AcademicPhases.AcademicPhases
 import com.jethings.study.presentation.view.screens.AcademyPage.components.bestTrainingPrograms.BestTrainingPrograms
 import com.jethings.study.presentation.view.screens.AcademyPage.components.slider.Slider
 import com.jethings.study.util.objects.TextStyles
