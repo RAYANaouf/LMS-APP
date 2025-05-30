@@ -22,14 +22,14 @@ class SignUpViewModel(
         when(event){
             is SignUpEvents.SignUpBtnClicked -> {
                 viewModelScope.launch {
-                    val result = remoteAccountManager.signUp(SignUpRequest(email = event.email , password = event.password))
+                    val result = remoteAccountManager.signUp(SignUpRequest(email = event.email , password = event.password , firstName = event.firstName , lastName = event.lastName , phone = event.phone))
                     if (result is SignUpResponse.Success){
                         localUserManager.saveAppEntry()
                         localUserManager.saveAccount(Account(
                             email = event.email,
                             password = event.password,
-                            firstName = event.name,
-                            lastName = event.name,
+                            firstName = event.firstName,
+                            lastName = event.lastName,
                             phone = event.phone
                         ))
                         onSuccess(SignUpSuccessResponse(result.data.access_token ))

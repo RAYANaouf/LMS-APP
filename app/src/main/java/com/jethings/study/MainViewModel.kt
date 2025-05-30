@@ -1,6 +1,5 @@
 package com.jethings.study
 
-import android.accounts.Account
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -8,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jethings.study.data.db.entities.Account
 import com.jethings.study.domain.manager.LocalUserManager
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
@@ -65,13 +65,27 @@ class MainViewModel (
     var show_navigationDrawer    by mutableStateOf(false)
         private set
 
+
+
+
+
+
+
+
+
+    //logic vars
+    var account : Account? by mutableStateOf(null)
+        private set
+
+
     init {
 
         viewModelScope.launch {
             localUserManager.readAppEntry().onEach { shouldStartFromHomeScreen ->
                 if (shouldStartFromHomeScreen) {
-                    val account = localUserManager.readAccount().first()
-                    if (account != null) {
+                    val _account = localUserManager.readAccount().first()
+                    if (_account != null) {
+                        account = _account
                         startDestination = homeScreen
                     } else {
                         startDestination = logInScreen
@@ -203,10 +217,17 @@ class MainViewModel (
 
 
 
-    fun onEvent(event : MainEvent, onSuccees : () -> Unit = {}){
+    fun onEvent(event : MainEvent, onSuccees : () -> Unit = {}, onFailure : () -> Unit = {}){
         when(event){
             is MainEvent.LogOutEvent -> {
-
+                viewModelScope.launch {
+                    val result  = localUserManager.logOutAccount()
+                    if(result){
+                        onSuccees()
+                    }else{
+                        onFailure()
+                    }
+                }
             }
             is MainEvent.ScreenChangeEvent -> {
                 setCurrentScreen(event.screen)

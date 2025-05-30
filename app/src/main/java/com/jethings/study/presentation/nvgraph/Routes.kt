@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.nvgraph
 
+import com.jethings.study.data.db.entities.Account
 import kotlinx.serialization.Serializable
 
 @Serializable

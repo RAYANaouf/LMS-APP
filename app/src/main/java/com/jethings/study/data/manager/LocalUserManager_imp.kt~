@@ -50,7 +50,7 @@ class LocalUserManager_imp(
             settings[PrefrencesKeys.USER_FIRST_NAME] = account.firstName
             settings[PrefrencesKeys.USER_LAST_NAME] = account.lastName
             settings[PrefrencesKeys.USER_PROFILE_PHOTO] = account.profilePhoto ?: ""
-            settings[PrefrencesKeys.IS_SUPER_ADMIN] = account.isSuperAdmin
+            settings[PrefrencesKeys.IS_SUPER_ADMIN] = account.isSuperAdmin 
             settings[PrefrencesKeys.IS_TEACHER]  = account.isTeacher
             settings[PrefrencesKeys.IS_STUDENT]   = account.isStudent
             settings[PrefrencesKeys.IS_PARENT]   = account.isParent

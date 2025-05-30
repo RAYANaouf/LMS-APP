@@ -24,6 +24,7 @@ class LogInViewModel(
                         LogInRequest(event.email , event.password)
                     )
                     if(response is LogInResponse.Success){
+                        Log.d("success to log in =====>> " , response.data.toString())
                         localUserManager.saveAppEntry()
                         localUserManager.saveAccount(Account(
                             accountId    = response.data.accountId,

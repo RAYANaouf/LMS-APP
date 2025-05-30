@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.jetapptech.business.presentation.view.screens.signUp.SignUpScreen
+import com.jethings.study.data.db.entities.Account
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.academy.AcademyScreen
@@ -57,6 +58,7 @@ fun NavGraph(
     startDestination : AppScreen,
     currentPage      : (AppScreen)->Unit = {},
     currentScene     : (String   )->Unit = {},
+    account          : Account? ,
     windowInfo       : WindowInfo,
     paddingValues    : PaddingValues
 ) {
@@ -93,6 +95,7 @@ fun NavGraph(
                 val viewModel : HomeViewModel = koinViewModel()
 
                 HomeScreen(
+                    account     = account,
                     animatedVisibilityScope = this@composable,
                     superAdminList = viewModel.superAdminList,
                     academyList = viewModel.academyList,

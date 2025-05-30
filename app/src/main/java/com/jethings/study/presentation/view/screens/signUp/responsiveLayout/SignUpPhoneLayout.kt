@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -87,39 +89,80 @@ fun SignUpPhoneLayout(
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
         ) {
-            OutlinedTextField(
-                value = firstName,
-                onValueChange = {
-                    onChange("firstName" , it)
-                },
-                textStyle = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = p_color1),
-                label = {
-                    Text(
-                        text = "User Name",
-                        style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack8),
-                    )
-                },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.user),
-                        contentDescription = null,
-                        tint = p_color1,
-                        modifier = Modifier.size(26.dp)
-                    )
-                },
-                shape = RoundedCornerShape(12.dp),
-                colors = TextFieldDefaults.colors().copy(
-                    focusedContainerColor = customWhite0,
-                    unfocusedContainerColor = customWhite0,
-                    focusedLabelColor = p_color1,
-                    focusedIndicatorColor = p_color1,
-                    cursorColor = p_color1
-                ),
+
+
+            Row(
                 modifier = Modifier
-                    .heightIn(min = 45.dp)
                     .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp)
-            )
+            ) {
+                OutlinedTextField(
+                    value = firstName,
+                    onValueChange = {
+                        onChange("firstName" , it)
+                    },
+                    textStyle = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = p_color1),
+                    label = {
+                        Text(
+                            text = "First Name",
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack8),
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.user),
+                            contentDescription = null,
+                            tint = p_color1,
+                            modifier = Modifier.size(26.dp)
+                        )
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = TextFieldDefaults.colors().copy(
+                        focusedContainerColor = customWhite0,
+                        unfocusedContainerColor = customWhite0,
+                        focusedLabelColor = p_color1,
+                        focusedIndicatorColor = p_color1,
+                        cursorColor = p_color1
+                    ),
+                    modifier = Modifier
+                        .heightIn(min = 45.dp)
+                        .weight(1f)
+                        .padding(start = 20.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                OutlinedTextField(
+                    value = lastName,
+                    onValueChange = {
+                        onChange("LastName" , it)
+                    },
+                    textStyle = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = p_color1),
+                    label = {
+                        Text(
+                            text = "last Name",
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack8),
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.user),
+                            contentDescription = null,
+                            tint = p_color1,
+                            modifier = Modifier.size(26.dp)
+                        )
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = TextFieldDefaults.colors().copy(
+                        focusedContainerColor = customWhite0,
+                        unfocusedContainerColor = customWhite0,
+                        focusedLabelColor = p_color1,
+                        focusedIndicatorColor = p_color1,
+                        cursorColor = p_color1
+                    ),
+                    modifier = Modifier
+                        .heightIn(min = 45.dp)
+                        .weight(1f)
+                        .padding(end = 20.dp)
+                )
+            }
 
 
             Spacer(modifier = Modifier.height(16.dp))

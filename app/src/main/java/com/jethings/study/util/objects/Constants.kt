@@ -16,6 +16,10 @@ object Constants {
     const val USER_PHONE         = "USER_PHONE"
     const val USER_PASSWORD      = "USER_PASSWORD"
     const val USER_PROFILE_PHOTO = "USER_PROFILE_PHOTO"
+    const val IS_SUPER_ADMIN     = "IS_SUPER_ADMIN"
+    const val IS_TEACHER         = "IS_TEACHER"
+    const val IS_STUDENT         = "IS_STUDENT"
+    const val IS_PARENT          = "IS_PARENT"
 
 
     //API

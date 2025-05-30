@@ -194,6 +194,23 @@ fun mainScreen(
                                 img       = viewModel.topBarImg,
                                 title     = viewModel.topBarTxt,
                                 elevation = viewModel.topbar_shadow,
+                                onEvent = {
+                                    if (it is MainEvent.LogOutEvent){
+                                        viewModel.onEvent(
+                                            it,{
+                                                navController.navigate(logInScreen){
+                                                    popUpTo(logInScreen){
+                                                        inclusive = true
+                                                    }
+                                                }
+                                            },{
+
+                                            }
+                                        )
+                                    }else{
+                                        viewModel.onEvent(it)
+                                    }
+                                },
                                 onClick = {
                                     when(it){
                                         "Img" ->{
@@ -234,6 +251,7 @@ fun mainScreen(
                     currentScene = {
                         ""
                     },
+                    account       = viewModel.account,
                     windowInfo    = windowInfo ,
                     paddingValues = padding
                 )
