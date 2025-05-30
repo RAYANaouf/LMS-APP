@@ -11,7 +11,7 @@ interface LocalUserManager {
     suspend fun readAppEntry() : Flow<Boolean>
 
     suspend fun saveAccount(account : Account)
-    suspend fun readAccount() : Flow<Account>
+    suspend fun readAccount() : Flow<Account?>
 
 
     suspend fun logInAccount(email : String, password : String)   : Account?

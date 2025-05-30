@@ -19,6 +19,7 @@ import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.nvgraph.signUpScreen
 import com.jethings.study.presentation.nvgraph.superAdminScreen
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -67,8 +68,13 @@ class MainViewModel (
 
         viewModelScope.launch {
             localUserManager.readAppEntry().onEach { shouldStartFromHomeScreen ->
-                startDestination = if (shouldStartFromHomeScreen) homeScreen else logInScreen
-            }
+                if (shouldStartFromHomeScreen) {
+                    localUserManager.readAccount()
+                } else {
+                    startDestination = logInScreen
+                }
+
+            }.launchIn(viewModelScope)
         }
     }
 

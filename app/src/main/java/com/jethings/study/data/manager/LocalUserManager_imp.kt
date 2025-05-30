@@ -56,23 +56,29 @@ class LocalUserManager_imp(
         }
     }
 
-    override suspend fun readAccount() : Flow<Account>  {
+    override suspend fun readAccount() : Flow<Account?>  {
 
         return context.dataStore.data.map { preferences ->
 
             Toast.makeText(context , "value : '${preferences[PrefrencesKeys.USER_ID] ?: 0L}'" ,Toast.LENGTH_SHORT).show()
 
-            val account = Account(
-                accountId =  preferences[PrefrencesKeys.USER_ACCOUNT_ID] ?: 0L,
-                userId =   preferences[PrefrencesKeys.USER_ID] ?: 0L ,
-                email =  preferences[PrefrencesKeys.USER_EMAIL] ?: "@gmail.com",
-                password = preferences[PrefrencesKeys.USER_PASSWORD] ?: "",
-                phone =  preferences[PrefrencesKeys.USER_PHONE] ?: "",
-                firstName = preferences[PrefrencesKeys.USER_FIRST_NAME] ?: "F_NAME" ,
-                lastName =  preferences[PrefrencesKeys.USER_LAST_NAME] ?: "L_NAME" ,
-                profilePhoto = preferences[PrefrencesKeys.USER_PROFILE_PHOTO] ?: "" ,
-            )
-            account
+            if (preferences[PrefrencesKeys.USER_ACCOUNT_ID] == null || preferences[PrefrencesKeys.USER_ACCOUNT_ID] == 0L){
+                null
+            }else{
+                val account = Account(
+                    accountId =  preferences[PrefrencesKeys.USER_ACCOUNT_ID] ?: 0L,
+                    userId =   preferences[PrefrencesKeys.USER_ID] ?: 0L ,
+                    email =  preferences[PrefrencesKeys.USER_EMAIL] ?: "@gmail.com",
+                    password = preferences[PrefrencesKeys.USER_PASSWORD] ?: "",
+                    phone =  preferences[PrefrencesKeys.USER_PHONE] ?: "",
+                    firstName = preferences[PrefrencesKeys.USER_FIRST_NAME] ?: "F_NAME" ,
+                    lastName =  preferences[PrefrencesKeys.USER_LAST_NAME] ?: "L_NAME" ,
+                    profilePhoto = preferences[PrefrencesKeys.USER_PROFILE_PHOTO] ?: "" ,
+                )
+                account
+            }
+
+
         }
     }
 

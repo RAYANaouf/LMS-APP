@@ -3,6 +3,8 @@ package com.jethings.study.presentation.view.screens.AcademyPage.components.Acad
 import android.graphics.Paint.Align
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +30,8 @@ import com.jethings.study.presentation.ui.theme.customBlack8
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color1_dark
+import com.jethings.study.presentation.view.screens.AcademyPage.components.AcademicPhases.sections.Header
+import com.jethings.study.presentation.view.screens.AcademyPage.components.AcademicPhases.sections.PrimerySection
 import com.jethings.study.util.objects.TextStyles
 
 
@@ -39,118 +45,15 @@ fun AcademicPhases(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Spacer(modifier = Modifier
-                .height(1.dp)
-                .background(customBlack8)
-                .weight(1f))
 
+        Header()
 
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(6.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(12.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(18.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(30.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = "Academic",
-                style = TextStyles.Monospace_TextStyles.TextStyleSZ6.copy(color = customBlack3 )
-                )
-            Spacer(modifier = Modifier.width(16.dp))
-
-
-            Spacer(modifier = Modifier
-                .height(30.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(18.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(12.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(6.dp)
-                .width(2.dp)
-                .background(customBlack8)
-            )
-
-
-            Spacer(modifier = Modifier.width(2.dp))
-
-            Spacer(modifier = Modifier
-                .height(1.dp)
-                .background(customBlack8)
-                .weight(1f))
-
-        }
         Spacer(modifier = Modifier.height(36.dp))
 
-        Surface(
-            shape = RoundedCornerShape(12.dp),
-            color = p_color1,
-            border = BorderStroke(width = 2.dp , color = p_color1_dark),
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .height(38.dp)
-                .width(100.dp)
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                Text(
-                    text = "Primery",
-                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customWhite0)
-                )
-            }
-        }
+        PrimerySection()
+
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 
 }
