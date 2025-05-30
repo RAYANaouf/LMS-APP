@@ -45,17 +45,21 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.jethings.study.MainEvent
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.Account
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customWhite0
@@ -71,15 +75,14 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun NavigationDrawer(
-    account: Account? ,
+    onEvent : (MainEvent , onSuccess : ()->Unit , onFailure : ()->Unit , )->Unit = {_,_,_->},
+    account: Account?,
+    myAcademies : List<Academy> = listOf(Academy(id = -1)),
     modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit = {},
     onClose: () -> Unit = {} // Optional callback if needed
 ) {
 
-
-    var counter by remember{
-        mutableStateOf(1)
-    }
 
     Surface(
         color = background_color_0,
@@ -181,14 +184,27 @@ fun NavigationDrawer(
                 }
                 if (account != null && account.ownedAcademies > 0){
 
+                    if (myAcademies.size == 1 && myAcademies[0].id == -1){
+                        LaunchedEffect(true) {
+                            onEvent(
+                                MainEvent.GetMyAcademiesEvent(account.userId ),{
+
+                                },{
+
+                                }
+                            )
+                        }
+                    }
                     // Animated menu items
                     ExpendedDrawerItem(
                         icon = R.drawable.academy_icon,
                         text = "My Academy",
                         notification = account.ownedAcademies,
+                        myAcademies = myAcademies,
                         delayMillis = if (account.isSuperAdmin) 5 * 500L else 1 * 500L, // delay between items
                         onClick = {
                             // handle navigation or logout here
+                            onClick(it)
                             onClose()
                         }
                     )
@@ -290,8 +306,9 @@ fun ExpendedDrawerItem(
     text : String,
     @DrawableRes icon : Int,
     notification      : Int = -1,
+    myAcademies        : List<Academy> = listOf(Academy(id = -1)),
     delayMillis: Long,
-    onClick: () -> Unit
+    onClick: (Int) -> Unit
 ) {
     val visible = remember { mutableStateOf(false) }
 
@@ -317,16 +334,14 @@ fun ExpendedDrawerItem(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp))
                 .clickable {
-                    onClick()
                     expended = !expended
                 }
-                .background(p_color4)
-                .padding(start = 8.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .height(55.dp)
+                    .padding(start = 8.dp)
             ) {
 
                 Icon(
@@ -360,15 +375,15 @@ fun ExpendedDrawerItem(
                 }
             }
 
-            Box(
-                modifier = Modifier
-                    .animateContentSize { initialValue, targetValue ->  }
-            ) {
-                if (expended){
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
+            AnimatedVisibility(visible = expended) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+
+
+
+                    if (myAcademies.size == 1 && myAcademies[0].id == -1){
                         val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.loading))
                         val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
 
@@ -378,7 +393,49 @@ fun ExpendedDrawerItem(
                             modifier = Modifier
                                 .heightIn(max = 50.dp)
                         )
+                    }else{
+                        myAcademies.forEachIndexed { index, academy ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(50.dp)
+                                    .clickable {
+                                        onClick(academy.id)
+                                    }
+                                    .padding(horizontal = 8.dp)
+                            ) {
+                                Box(
+                                    contentAlignment = Alignment.TopCenter,
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(26.dp)
+                                ) {
+                                    Spacer(
+                                        modifier = Modifier
+                                            .fillMaxHeight(if (index == myAcademies.size - 1) 0.5f else 1f)
+                                            .width(2.dp)
+                                            .background(p_color1)
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(12.dp))
+                                AsyncImage(
+                                    model = academy.logo,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .clip(CircleShape)
+                                        .size(32.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = academy.name,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        }
                     }
+
                 }
             }
         }

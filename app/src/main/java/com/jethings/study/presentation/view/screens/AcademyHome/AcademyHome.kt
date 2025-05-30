@@ -1,4 +1,4 @@
-package com.jethings.study.presentation.view.screens.AcademyPage
+package com.jethings.study.presentation.view.screens.AcademyHome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jethings.study.presentation.ui.theme.background_color_0
-import com.jethings.study.presentation.view.screens.AcademyPage.components.AcademicPhases.AcademicPhases
-import com.jethings.study.presentation.view.screens.AcademyPage.components.bestTrainingPrograms.BestTrainingPrograms
-import com.jethings.study.presentation.view.screens.AcademyPage.components.slider.Slider
+import com.jethings.study.presentation.view.screens.AcademyHome.components.AcademicPhases.AcademicPhases
+import com.jethings.study.presentation.view.screens.AcademyHome.components.bestTrainingPrograms.BestTrainingPrograms
+import com.jethings.study.presentation.view.screens.AcademyHome.components.slider.Slider
 
 
 @Composable
@@ -29,6 +29,7 @@ fun AcademyHome(
         BestTrainingPrograms()
         Spacer(modifier = Modifier.height(36.dp))
         AcademicPhases()
+        Spacer(modifier = Modifier.height(150.dp))
 
     }
 }

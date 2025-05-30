@@ -8,7 +8,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademiesByOwnerIdFailureResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademiesByOwnerIdResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademiesByOwnerIdSuccessResponse
 import com.jethings.study.data.db.entities.Account
+import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.LocalUserManager
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
@@ -30,7 +35,8 @@ import kotlinx.coroutines.withContext
 
 
 class MainViewModel (
-    private val localUserManager : LocalUserManager
+    private val localUserManager : LocalUserManager,
+    private val academyManager   : AcademyManager
 ): ViewModel() {
 
 
@@ -77,6 +83,11 @@ class MainViewModel (
     //logic vars
     var account : Account? by mutableStateOf(null)
         private set
+    val myAcademies  = mutableStateListOf<Academy>(
+        Academy(
+            id = -1
+        )
+    )
 
 
     init {
@@ -212,6 +223,17 @@ class MainViewModel (
                 //navigation drawer
                 show_navigationDrawer = true
             }
+            else ->{
+                //top bar
+                show_topbar      =  true
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+
+                //navigation drawer
+                show_navigationDrawer = false
+            }
 
         }
     }
@@ -233,6 +255,20 @@ class MainViewModel (
             }
             is MainEvent.ScreenChangeEvent -> {
                 setCurrentScreen(event.screen)
+            }
+            is MainEvent.GetMyAcademiesEvent -> {
+                viewModelScope.launch {
+                    val result = academyManager.getAcademiesByOwnerId(event.userId)
+                    if (result is GetAcademiesByOwnerIdResponse.Success){
+                        myAcademies.clear()
+                        myAcademies.addAll(result.data.academies)
+                        onSuccees()
+                    }else if (result is GetAcademiesByOwnerIdResponse.Failure){
+                        onFailure()
+                    }else {
+                        onFailure()
+                    }
+                }
             }
 
         }

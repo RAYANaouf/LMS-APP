@@ -1,4 +1,4 @@
-package com.jethings.study.presentation.view.screens.AcademyPage.components.slider
+package com.jethings.study.presentation.view.screens.AcademyHome.components.slider
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

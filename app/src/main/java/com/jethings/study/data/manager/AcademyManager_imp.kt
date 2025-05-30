@@ -4,6 +4,8 @@ import android.util.Log
 import com.jethings.study.data.api.req_res_classes.AcademyModule.addAcademyOwner.AddAcademyOwnerRequest
 import com.jethings.study.data.api.req_res_classes.AcademyModule.addAcademyOwner.AddAcademyOwnerResponse
 import com.jethings.study.data.api.req_res_classes.AcademyModule.addAcademyOwner.AddAcademyOwnerSuccessResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademiesByOwnerIdResponse
+import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademiesByOwnerIdSuccessResponse
 import com.jethings.study.data.api.req_res_classes.CreateAcademyRequest
 import com.jethings.study.data.api.req_res_classes.CreateAcademyResponse
 import com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById.GetAcademyByIdResponse
@@ -16,6 +18,7 @@ import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.util.objects.Constants.ADD_ACADEMY_OWNER
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
+import com.jethings.study.util.objects.Constants.GET_ACADEMIES_BY_OWNER_ID
 import com.jethings.study.util.objects.Constants.GET_ACADEMY_BY_ID
 import com.jethings.study.util.objects.Constants.GET_ACADEMY_OWNERS_BY_ID
 import com.jethings.study.util.objects.Constants.GET_ALL_ACADEMIES
@@ -56,10 +59,6 @@ class AcademyManager_imp(
                 }
             )
 
-
-            Log.d("response Body ", response.bodyAsText())
-            Log.d("response status ", "onEvent: ${response.status}")
-
             if ( response.status == HttpStatusCode.Created ) {
                 CreateAcademyResponse.Success(response.body())
             }else{
@@ -77,8 +76,6 @@ class AcademyManager_imp(
             val response = client.get(BASE_URL + GET_ALL_ACADEMIES) {
                 contentType(ContentType.Application.Json)
             }
-            Log.d("response get all academies : status : " , response.status.toString())
-            Log.d("response get all academies : " , response.body())
             if (response.status == HttpStatusCode.OK ) {
                 GetAllAcademiesResponse.Success(GetAllAcademiesSuccessResponse(response.body()))
             } else  {
@@ -115,11 +112,9 @@ class AcademyManager_imp(
             }
             if (response.status == HttpStatusCode.OK ) {
 
-                Log.d("get academy owners" , response.body<GetAcademyOwnersSuccessResponse>().toString())
                 GetAcademyOwnersResponse.Success(response.body())
 
             }else{
-                Log.d("get academy owners" , response.body<GetAcademyOwnersFailureResponse>().toString())
                 GetAcademyOwnersResponse.Failure(response.body())
             }
 
@@ -145,6 +140,25 @@ class AcademyManager_imp(
         }catch (e : Exception){
             Log.d("add academy owner" , e.toString())
             AddAcademyOwnerResponse.Exception(e)
+        }
+    }
+
+    override suspend fun getAcademiesByOwnerId(ownerId: Long): GetAcademiesByOwnerIdResponse {
+        return try {
+            val path = GET_ACADEMIES_BY_OWNER_ID.replace("{id}" , ownerId.toString())
+            val response = client.get( BASE_URL + path){
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status == HttpStatusCode.OK ) {
+                val result = GetAcademiesByOwnerIdResponse.Success(data = GetAcademiesByOwnerIdSuccessResponse(response.body()))
+                result
+            }else{
+                GetAcademiesByOwnerIdResponse.Failure(response.body())
+            }
+
+        }catch (e : Exception){
+            Log.d("get academies by owner id" , e.toString())
+            GetAcademiesByOwnerIdResponse.Exception(e)
         }
     }
 }

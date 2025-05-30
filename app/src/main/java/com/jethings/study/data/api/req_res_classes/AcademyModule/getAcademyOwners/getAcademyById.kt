@@ -1,24 +1,25 @@
 package com.jethings.study.data.api.req_res_classes.AcademyModule.getAcademyById
 
 import com.jethings.study.data.db.entities.Account
+import com.jethings.study.data.db.entities.entities.Academy
 import kotlinx.serialization.Serializable
 
 
 //response
 
-sealed class GetAcademyOwnersResponse{
-    class Success(val data : GetAcademyOwnersSuccessResponse)  : GetAcademyOwnersResponse()
-    class Failure(val data : GetAcademyOwnersFailureResponse)  : GetAcademyOwnersResponse()
-    class Exception(val data : kotlin.Exception)    : GetAcademyOwnersResponse()
+sealed class GetAcademiesByOwnerIdResponse{
+    class Success(val data : GetAcademiesByOwnerIdSuccessResponse)  : GetAcademiesByOwnerIdResponse()
+    class Failure(val data : GetAcademiesByOwnerIdFailureResponse)  : GetAcademiesByOwnerIdResponse()
+    class Exception(val data : kotlin.Exception)    : GetAcademiesByOwnerIdResponse()
 }
 
 @Serializable
-data class GetAcademyOwnersSuccessResponse(
-    val owners     : List<Account> = emptyList(),
+data class GetAcademiesByOwnerIdSuccessResponse(
+    val academies     : List<Academy> = emptyList(),
 )
 
 @Serializable
-data class GetAcademyOwnersFailureResponse(
+data class GetAcademiesByOwnerIdFailureResponse(
     val statusCode : Int,
     val message    : String,
     val error      : String

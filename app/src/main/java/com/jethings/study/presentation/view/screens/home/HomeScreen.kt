@@ -118,9 +118,6 @@ fun SharedTransitionScope.HomeScreen(
         )
     }
 
-    Toast.makeText(context , "account : ${account?.isSuperAdmin}" , Toast.LENGTH_SHORT).show()
-    Log.d("account" , "account : ${account}")
-
     if (account != null && account.isSuperAdmin){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

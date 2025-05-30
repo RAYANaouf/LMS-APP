@@ -139,7 +139,8 @@ val koinModule = module{
 
     viewModel {
         MainViewModel(
-            localUserManager = get()
+            localUserManager = get(),
+            academyManager = get()
         )
     }
 

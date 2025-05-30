@@ -1,6 +1,7 @@
 package com.jethings.study
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -56,6 +57,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.NavGraph
+import com.jethings.study.presentation.nvgraph.academyHome
+import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.nvgraph.logInScreen
 import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.ui.theme.StudyTheme
@@ -163,12 +166,28 @@ fun mainScreen(
             )
         }
 
+        val context = LocalContext.current
+
         Row {
             AnimatedVisibility(
                 visible = drawerState
             ) {
                 NavigationDrawer(
+                    myAcademies = viewModel.myAcademies,
                     account = viewModel.account,
+                    onEvent = {event,onSuccess,onFailure->
+                        viewModel.onEvent(
+                            event,
+                            onSuccess,
+                            onFailure
+                        )
+                    },
+                    onClick = {
+                        navController.navigate(academyHome(it))
+                    },
+                    onClose = {
+                        drawerState = false
+                    },
                     modifier = Modifier
                         .fillMaxWidth(0.6f)
                 )

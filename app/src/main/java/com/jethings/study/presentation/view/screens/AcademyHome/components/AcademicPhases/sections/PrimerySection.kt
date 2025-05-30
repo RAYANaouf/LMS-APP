@@ -1,4 +1,4 @@
-package com.jethings.study.presentation.view.screens.AcademyPage.components.AcademicPhases.sections
+package com.jethings.study.presentation.view.screens.AcademyHome.components.AcademicPhases.sections
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.horizontalScroll

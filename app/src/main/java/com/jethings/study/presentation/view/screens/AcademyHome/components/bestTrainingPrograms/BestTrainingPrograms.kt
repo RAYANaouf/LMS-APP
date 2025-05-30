@@ -1,4 +1,4 @@
-package com.jethings.study.presentation.view.screens.AcademyPage.components.bestTrainingPrograms
+package com.jethings.study.presentation.view.screens.AcademyHome.components.bestTrainingPrograms
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

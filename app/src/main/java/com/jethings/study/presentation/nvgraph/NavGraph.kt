@@ -29,6 +29,7 @@ import com.jetapptech.business.presentation.view.screens.signUp.SignUpScreen
 import com.jethings.study.data.db.entities.Account
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
+import com.jethings.study.presentation.view.screens.AcademyHome.AcademyHome
 import com.jethings.study.presentation.view.screens.academy.AcademyScreen
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
 import com.jethings.study.presentation.view.screens.academyOwnerList.AcademyOwnerList
@@ -321,8 +322,6 @@ fun NavGraph(
             }
 
 
-            /*****************************  academy owner List ****************************/
-
 
             /*****************************  academy owner List ****************************/
 
@@ -348,8 +347,31 @@ fun NavGraph(
             }
 
 
-            /***************************** log in ****************************/
 
+            /*****************************  academy home ****************************/
+
+            composable<academyHome> {
+
+                val args = it.toRoute<academyOwnerScreen>()
+
+                SideEffect {
+                    currentPage(academyHome(args.academy_id))
+                }
+
+
+                set_system_bars_color(customWhite0 , background_color_0)
+
+
+                AcademyHome(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
+            }
 
 
             /***************************** log in ****************************/
