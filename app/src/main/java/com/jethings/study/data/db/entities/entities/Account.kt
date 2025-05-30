@@ -22,4 +22,6 @@ data class Account(
     val isStudent     : Boolean = false,
     val isParent      : Boolean = false,
     val isTeacher     : Boolean = false,
+
+    val ownedAcademies : Int = 0,
 )

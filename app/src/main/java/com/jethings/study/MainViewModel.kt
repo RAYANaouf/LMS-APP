@@ -1,5 +1,6 @@
 package com.jethings.study
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -85,6 +86,7 @@ class MainViewModel (
                 if (shouldStartFromHomeScreen) {
                     val _account = localUserManager.readAccount().first()
                     if (_account != null) {
+                        Log.d("success to log in", "success to read account : ${account}")
                         account = _account
                         startDestination = homeScreen
                     } else {

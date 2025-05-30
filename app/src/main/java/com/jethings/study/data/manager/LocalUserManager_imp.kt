@@ -7,6 +7,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -54,6 +55,7 @@ class LocalUserManager_imp(
             settings[PrefrencesKeys.IS_TEACHER]  = account.isTeacher
             settings[PrefrencesKeys.IS_STUDENT]   = account.isStudent
             settings[PrefrencesKeys.IS_PARENT]   = account.isParent
+            settings[PrefrencesKeys.OWNED_ACADEMiES]   = account.ownedAcademies
         }
     }
 
@@ -77,6 +79,7 @@ class LocalUserManager_imp(
                     isTeacher = preferences[PrefrencesKeys.IS_TEACHER]        ?: false ,
                     isStudent = preferences[PrefrencesKeys.IS_STUDENT]        ?: false ,
                     isParent = preferences[PrefrencesKeys.IS_PARENT]          ?: false ,
+                    ownedAcademies = preferences[PrefrencesKeys.OWNED_ACADEMiES]  ?: 0 ,
                 )
                 account
             }
@@ -104,6 +107,7 @@ class LocalUserManager_imp(
                 settings[PrefrencesKeys.IS_TEACHER]         = false
                 settings[PrefrencesKeys.IS_STUDENT]         = false
                 settings[PrefrencesKeys.IS_PARENT]          = false
+                settings[PrefrencesKeys.OWNED_ACADEMiES]    = 0
             }
             return true
         }catch (e : Exception){
@@ -138,4 +142,5 @@ private object PrefrencesKeys{
     val IS_TEACHER       = booleanPreferencesKey(name = Constants.IS_TEACHER)
     val IS_STUDENT       = booleanPreferencesKey(name = Constants.IS_STUDENT)
     val IS_PARENT        = booleanPreferencesKey(name = Constants.IS_PARENT)
+    val OWNED_ACADEMiES  = intPreferencesKey(name = Constants.OWNED_ACADEMiES)
 }

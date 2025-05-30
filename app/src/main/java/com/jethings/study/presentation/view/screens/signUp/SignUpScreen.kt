@@ -80,7 +80,7 @@ fun SignUpScreen(
             onEvent(
                 SignUpEvents.SignUpBtnClicked(firstName=firstName,lastName = lastName,email=email, password=password,phone=phone),{
                     Toast.makeText(context , "Sign Up seccessfully" , Toast.LENGTH_LONG).show()
-                    onNavigation(homeScreen             )
+                    onNavigation(homeScreen)
                 },{
                     Toast.makeText(context , "Failure : ${it}" , Toast.LENGTH_LONG).show()
                 },{

@@ -132,7 +132,7 @@ fun SignUpPhoneLayout(
                 OutlinedTextField(
                     value = lastName,
                     onValueChange = {
-                        onChange("LastName" , it)
+                        onChange("lastName" , it)
                     },
                     textStyle = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = p_color1),
                     label = {

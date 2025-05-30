@@ -20,6 +20,7 @@ object Constants {
     const val IS_TEACHER         = "IS_TEACHER"
     const val IS_STUDENT         = "IS_STUDENT"
     const val IS_PARENT          = "IS_PARENT"
+    const val OWNED_ACADEMiES    = "OWNED_ACADEMiES"
 
 
     //API

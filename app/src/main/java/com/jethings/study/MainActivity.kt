@@ -168,6 +168,7 @@ fun mainScreen(
                 visible = drawerState
             ) {
                 NavigationDrawer(
+                    account = viewModel.account,
                     modifier = Modifier
                         .fillMaxWidth(0.6f)
                 )

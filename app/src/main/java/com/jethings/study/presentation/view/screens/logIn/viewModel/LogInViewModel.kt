@@ -38,6 +38,7 @@ class LogInViewModel(
                             isTeacher    = response.data.isTeacher,
                             isSuperAdmin = response.data.isSuperAdmin,
                             password     = event.password,
+                            ownedAcademies     = response.data.ownedAcademies,
                         ))
                         onSucces()
                     }else{
