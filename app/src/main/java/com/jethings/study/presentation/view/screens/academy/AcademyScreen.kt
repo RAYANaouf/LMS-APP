@@ -41,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -49,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -114,373 +116,406 @@ fun SharedTransitionScope.AcademyScreen(
             .verticalScroll(rememberScrollState())
     ) {
 
-        Box(
+
+        Surface(
+            color = background_color_0,
+            shadowElevation = 2.dp,
             modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp)
-                .background(customWhite2)
+                .zIndex(1f)
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    //.offset(y = 120.dp)
-            ) {
+            Column {
+
                 Box(
                     modifier = Modifier
-                        .sharedElement(
-                            state = rememberSharedContentState(key = "Academy-${academyId}"),
-                            animatedVisibilityScope = animatedVisibilityScope
-                        )
-                        .size(150.dp)
-                        .clip(CircleShape)
-                        .background(customWhite5)
+                        .fillMaxWidth()
+                        .height(250.dp)
+                        .background(customWhite2)
                 ) {
-                    AsyncImage(
-                        model = academy?.logo,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .fillMaxSize()
-                    )
+                            .align(Alignment.Center)
+                        //.offset(y = 120.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .sharedElement(
+                                    state = rememberSharedContentState(key = "Academy-${academyId}"),
+                                    animatedVisibilityScope = animatedVisibilityScope
+                                )
+                                .size(150.dp)
+                                .clip(CircleShape)
+                                .background(customWhite5)
+                        ) {
+                            AsyncImage(
+                                model = academy?.logo,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .height(40.dp)
+                                .widthIn(max = 150.dp)
+                        ) {
+                            Text(
+                                text = academy?.name  ?: "Loading..."     ,
+                                style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                            )
+                        }
+                    }
                 }
-                Spacer(modifier = Modifier.height(10.dp))
-                Box(
-                    contentAlignment = Alignment.Center,
+
+                Spacer(modifier = Modifier.height(45.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .height(40.dp)
-                        .widthIn(max = 150.dp)
+                        .fillMaxWidth()
+                        .height(65.dp)
+                        .padding(horizontal = 12.dp)
                 ) {
-                    Text(
-                        text = academy?.name  ?: "Loading..."     ,
-                        style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                    )
-                }
-            }
-        }
+                    Surface(
+                        shadowElevation = 2.dp,
+                        onClick = {
+                            onNavigate(academyOwnerScreen(academyId))
+                        },
+                        border = BorderStroke(
+                            width = 0.dp,
+                            color = customWhite3
+                        ),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
 
-        Spacer(modifier = Modifier.height(45.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(65.dp)
-                .padding(horizontal = 12.dp)
-        ) {
-            Surface(
-                shadowElevation = 2.dp,
-                onClick = {
-                    onNavigate(academyOwnerScreen(academyId))
-                },
-                border = BorderStroke(
-                    width = 0.dp,
-                    color = customWhite3
-                ),
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f)
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .weight(1f)
-
-                    ){
-                        Text(
-                            text = "Owner",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                        )
+                            ){
+                                Text(
+                                    text = "Owner",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
+                            ){
+                                Text(
+                                    text = if(academy?.owners?.size != null ) academy.owners.size.toString() else  "0",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                        }
                     }
-                    Box(
-                        contentAlignment = Alignment.Center,
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        shadowElevation = 2.dp,
+                        onClick = {
+                            onNavigate(academyOwnerScreen(academyId))
+                        },
                         modifier = Modifier
+                            .fillMaxHeight()
                             .weight(1f)
-                    ){
-                        Text(
-                            text = if(academy?.owners?.size != null ) academy.owners.size.toString() else  "0",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                        )
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
+                            ){
+                                Text(
+                                    text = "Employee",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
+                            ){
+                                Text(
+                                    text = "21",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                        }
                     }
-                }
-            }
-            Spacer(modifier = Modifier.width(12.dp))
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                shadowElevation = 2.dp,
-                onClick = {
-                    onNavigate(academyOwnerScreen(academyId))
-                },
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f)
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Surface(
+                        shadowElevation = 2.dp,
+                        shape = RoundedCornerShape(12.dp),
+                        onClick = {
+                            onNavigate(academyOwnerScreen(academyId))
+                        },
                         modifier = Modifier
+                            .fillMaxHeight()
                             .weight(1f)
-                    ){
-                        Text(
-                            text = "Employee",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                        )
-                    }
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .weight(1f)
-                    ){
-                        Text(
-                            text = "21",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.width(12.dp))
-            Surface(
-                shadowElevation = 2.dp,
-                shape = RoundedCornerShape(12.dp),
-                onClick = {
-                    onNavigate(academyOwnerScreen(academyId))
-                },
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f)
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .weight(1f)
-                    ){
-                        Text(
-                            text = "Teacher",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                        )
-                    }
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .weight(1f)
-                    ){
-                        Text(
-                            text = "13",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                        )
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
+                            ){
+                                Text(
+                                    text = "Teacher",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
+                            ){
+                                Text(
+                                    text = "13",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(65.dp)
-                .padding(horizontal = 12.dp)
-        ) {
-            Surface(
-                shadowElevation = 2.dp,
-                onClick = {
-                    academyOwnerScreen(academyId)
-                },
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f)
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .background(customWhite0)
+                        .fillMaxWidth()
+                        .height(65.dp)
+                        .padding(horizontal = 12.dp)
+                ) {
+                    Surface(
+                        shadowElevation = 2.dp,
+                        onClick = {
+                            academyOwnerScreen(academyId)
+                        },
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .background(customWhite0)
 
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
+
+                            ){
+                                Text(
+                                    text = "Student",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .weight(1f)
+                            ){
+                                Text(
+                                    text = "126",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(35.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .height(40.dp)
+                            .weight(1f)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(p_color1)
+                            .clickable {
+
+                            }
+                    ) {
+                        Text(
+                            text = "Edit",
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customWhite0)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .height(40.dp)
+                            .weight(1f)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(customWhite3)
+                            .clickable {
+
+                            }
+                    ) {
+                        Text(
+                            text = "Analitics",
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                }
+
+
+                Spacer(modifier = Modifier.height(35.dp))
+
+
+                Row(
+                    modifier = Modifier
+                        .height(45.dp)
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
                 ) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .weight(1f)
+                            .fillMaxHeight()
+                            .clickable {
 
-                    ){
+                            }
+                            .drawBehind {
+                                drawLine(
+                                    color = if (pagerState.currentPage == 0) p_color1 else customWhite2,
+                                    start = Offset(0f, size.height),
+                                    end = Offset(size.width, size.height),
+                                    strokeWidth = if (pagerState.currentPage == 0) 2.dp.toPx() else 0.dp.toPx()
+                                )
+                            }
+                            .padding(vertical = 8.dp, horizontal = 26.dp)
+
+                    ) {
                         Text(
-                            text = "Student",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                            text = "Courses",
+                            style = TextStyle(fontSize = if (pagerState.currentPage == 0) 22.sp else 17.sp , fontWeight = FontWeight(if (pagerState.currentPage == 0) 600 else 500) , color = if (pagerState.currentPage == 0) p_color1 else customBlack3)
                         )
                     }
+
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .weight(1f)
-                    ){
+                            .fillMaxHeight()
+                            .clickable {
+
+                            }
+                            .drawBehind {
+                                drawLine(
+                                    color = if (pagerState.currentPage == 1) p_color1 else customWhite2,
+                                    start = Offset(0f, size.height),
+                                    end = Offset(size.width, size.height),
+                                    strokeWidth = if (pagerState.currentPage == 1) 2.dp.toPx() else 0.dp.toPx()
+                                )
+                            }
+                            .padding(vertical = 8.dp, horizontal = 26.dp)
+
+                    ) {
                         Text(
-                            text = "126",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                            text = "Training Program",
+                            style = TextStyle(fontSize = if (pagerState.currentPage == 1) 22.sp else 17.sp , fontWeight = FontWeight(if (pagerState.currentPage == 1) 600 else 500) , color = if (pagerState.currentPage == 1) p_color1 else customBlack3)
+                        )
+                    }
+
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .clickable {
+
+                            }
+                            .drawBehind {
+                                drawLine(
+                                    color = if (pagerState.currentPage == 2) p_color1 else customWhite2,
+                                    start = Offset(0f, size.height),
+                                    end = Offset(size.width, size.height),
+                                    strokeWidth = if (pagerState.currentPage == 1) 2.dp.toPx() else 0.dp.toPx()
+                                )
+                            }
+                            .padding(vertical = 8.dp, horizontal = 26.dp)
+
+                    ) {
+                        Text(
+                            text = "Info",
+                            style = TextStyle(fontSize = if (pagerState.currentPage == 2) 22.sp else 17.sp , fontWeight = FontWeight(if (pagerState.currentPage == 2) 600 else 500) , color = if (pagerState.currentPage == 2) p_color1 else customBlack3)
                         )
                     }
                 }
+
+
             }
         }
 
-        Spacer(modifier = Modifier.height(35.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        HorizontalPager(
+            state = pagerState,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
+                .background(p_color3)
         ) {
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .height(40.dp)
-                    .weight(1f)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(p_color1)
-                    .clickable {
-
-                    }
-            ) {
-                Text(
-                    text = "Edit",
-                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customWhite0)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .height(40.dp)
-                    .weight(1f)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(customWhite3)
-                    .clickable {
-
-                    }
-            ) {
-                Text(
-                    text = "Analitics",
-                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack4)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-        }
-
-
-        Spacer(modifier = Modifier.height(35.dp))
-
-
-        Row(
-            modifier = Modifier
-                .height(45.dp)
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .clickable {
-
-                    }
-                    .drawBehind {
-                        drawLine(
-                            color = if (pagerState.currentPage == 0) p_color1 else customWhite2,
-                            start = Offset(0f, size.height),
-                            end = Offset(size.width, size.height),
-                            strokeWidth = if (pagerState.currentPage == 0) 2.dp.toPx() else 0.dp.toPx()
-                        )
-                    }
-                    .padding(vertical = 8.dp, horizontal = 26.dp)
-
-            ) {
-                Text(
-                    text = "Courses",
-                    style = TextStyle(fontSize = if (pagerState.currentPage == 0) 22.sp else 17.sp , fontWeight = FontWeight(if (pagerState.currentPage == 0) 600 else 500) , color = if (pagerState.currentPage == 0) p_color1 else customBlack3)
-                )
-            }
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .clickable {
-
-                    }
-                    .drawBehind {
-                        drawLine(
-                            color = if (pagerState.currentPage == 1) p_color1 else customWhite2,
-                            start = Offset(0f, size.height),
-                            end = Offset(size.width, size.height),
-                            strokeWidth = if (pagerState.currentPage == 1) 2.dp.toPx() else 0.dp.toPx()
-                        )
-                    }
-                    .padding(vertical = 8.dp, horizontal = 26.dp)
-
-            ) {
-                Text(
-                    text = "Training Program",
-                    style = TextStyle(fontSize = if (pagerState.currentPage == 1) 22.sp else 17.sp , fontWeight = FontWeight(if (pagerState.currentPage == 1) 600 else 500) , color = if (pagerState.currentPage == 1) p_color1 else customBlack3)
-                )
-            }
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .clickable {
-
-                    }
-                    .drawBehind {
-                        drawLine(
-                            color = if (pagerState.currentPage == 2) p_color1 else customWhite2,
-                            start = Offset(0f, size.height),
-                            end = Offset(size.width, size.height),
-                            strokeWidth = if (pagerState.currentPage == 2) 2.dp.toPx() else 0.dp.toPx()
-                        )
-                    }
-                    .padding(vertical = 8.dp, horizontal = 26.dp)
-
-            ) {
-                Text(
-                    text = "Info",
-                    style = TextStyle(fontSize = if (pagerState.currentPage == 2) 22.sp else 17.sp , fontWeight = FontWeight(if (pagerState.currentPage == 2) 600 else 500) , color = if (pagerState.currentPage == 2) p_color1 else customBlack3)
-                )
-            }
-        }
-
-
-
-        HorizontalPager(state = pagerState) {
             if (pagerState.currentPage == 0) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(customWhite0)
+                        .height(750.dp)
                 ) {
-
+                    Text(text = "Courses")
+                }
+            } else if (pagerState.currentPage == 1){
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(customWhite0)
+                        .height(280.dp)
+                ) {
+                    Text(text = "Training program")
+                }
+            } else if (pagerState.currentPage == 3){
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(customWhite0)
+                        .height(650.dp)
+                ) {
+                    Text(text = "Info")
                 }
             }
         }
 
-
-        Spacer(modifier = Modifier.height(450.dp))
 
     }
 
@@ -502,6 +537,7 @@ private fun AcademyScreen_prev() {
                     academyId = 1,
                     modifier = Modifier
                         .background(background_color_0)
+                        .fillMaxHeight()
                 )
             }
         }
