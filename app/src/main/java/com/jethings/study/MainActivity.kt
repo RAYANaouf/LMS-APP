@@ -183,7 +183,7 @@ fun mainScreen(
                         )
                     },
                     onClick = {
-                        navController.navigate(academyHome(it))
+                        navController.navigate(academyScreen(it))
                     },
                     onClose = {
                         drawerState = false
