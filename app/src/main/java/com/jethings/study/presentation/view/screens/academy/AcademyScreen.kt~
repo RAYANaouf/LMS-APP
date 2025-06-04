@@ -509,7 +509,7 @@ fun SharedTransitionScope.AcademyScreen(
                 ) {
                     Text(text = "Training program")
                 }
-            } else if (pagerState.currentPage == 2){
+            } else if (pagerState.currentPage == 3){
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
