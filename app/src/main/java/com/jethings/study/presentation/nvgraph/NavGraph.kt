@@ -39,6 +39,7 @@ import com.jethings.study.presentation.view.screens.createAcademy.CreateAcademyS
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.CreateSuperAdminScreen
 import com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel.CreateSuperAdminViewModel
+import com.jethings.study.presentation.view.screens.createTrainingProgram.CreateTrainingPrograms
 import com.jethings.study.presentation.view.screens.home.HomeScreen
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
@@ -363,6 +364,32 @@ fun NavGraph(
 
 
                 AcademyHome(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
+            }
+
+
+            /*****************************  Create training program ****************************/
+
+            composable<createTrainingProgram> {
+
+
+
+                SideEffect {
+                    currentPage(createTrainingProgram)
+                }
+
+
+                set_system_bars_color(customWhite0 , background_color_0)
+
+
+                CreateTrainingPrograms(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(

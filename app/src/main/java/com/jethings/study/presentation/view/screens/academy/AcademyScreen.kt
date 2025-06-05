@@ -68,6 +68,7 @@ import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyOwnerList
 import com.jethings.study.presentation.nvgraph.academyOwnerScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
+import com.jethings.study.presentation.nvgraph.createTrainingProgram
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack3
@@ -511,12 +512,13 @@ fun SharedTransitionScope.AcademyScreen(
                 }
             } else if (pagerState.currentPage == 1){
                 Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .height(750.dp)
                         .fillMaxWidth()
                         .padding(vertical = 12.dp)
                 ) {
-                    Column(
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(150.dp)
@@ -530,19 +532,22 @@ fun SharedTransitionScope.AcademyScreen(
                             modifier = Modifier.fillMaxSize()
                         )
 
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .fillMaxWidth(0.7f)
-                                .height(35.dp)
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(p_color2)
-                        ) {
-                            Text(
-                                text = "Create Training Program",
-                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customWhite0)
-                            )
-                        }
+                    }
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxWidth(0.7f)
+                            .height(35.dp)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(p_color2)
+                            .clickable {
+                                onNavigate(createTrainingProgram)
+                            }
+                    ) {
+                        Text(
+                            text = "Create Training Program",
+                            style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customWhite0)
+                        )
                     }
                 }
 
@@ -550,7 +555,7 @@ fun SharedTransitionScope.AcademyScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .height(280.dp)
+                        .height(750.dp)
                 ) {
                     Text(text = "Info")
                 }
