@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -71,6 +72,7 @@ import com.jethings.study.presentation.ui.theme.customWhite1
 import com.jethings.study.presentation.ui.theme.customWhite2
 import com.jethings.study.presentation.ui.theme.customWhite3
 import com.jethings.study.presentation.ui.theme.customWhite5
+import com.jethings.study.presentation.ui.theme.customWhite7
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.ui.theme.p_color3
@@ -502,18 +504,32 @@ fun SharedTransitionScope.AcademyScreen(
                     Text(text = "Courses")
                 }
             } else if (pagerState.currentPage == 1){
-                Box(
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .height(280.dp)
+                        .fillMaxHeight()
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp)
                 ) {
-                    Text(text = "Training program")
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(120.dp)
+                            .padding(horizontal = 16.dp)
+                            .border(
+                                width = 1.dp,
+                                color = customWhite7,
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                    ) {
+
+                    }
                 }
+
             } else if (pagerState.currentPage == 2){
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .height(650.dp)
+                        .height(280.dp)
                 ) {
                     Text(text = "Info")
                 }
