@@ -57,6 +57,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyOwnerList
@@ -506,22 +512,37 @@ fun SharedTransitionScope.AcademyScreen(
             } else if (pagerState.currentPage == 1){
                 Column(
                     modifier = Modifier
-                        .fillMaxHeight()
+                        .height(750.dp)
                         .fillMaxWidth()
                         .padding(vertical = 12.dp)
                 ) {
-                    Box(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(120.dp)
-                            .padding(horizontal = 16.dp)
-                            .border(
-                                width = 1.dp,
-                                color = customWhite7,
-                                shape = RoundedCornerShape(10.dp)
-                            )
+                            .height(150.dp)
                     ) {
+                        val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.empty))
+                        val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
 
+                        LottieAnimation(
+                            composition = composition ,
+                            progress = progress.value ,
+                            modifier = Modifier.fillMaxSize()
+                        )
+
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth(0.7f)
+                                .height(35.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(p_color2)
+                        ) {
+                            Text(
+                                text = "Create Training Program",
+                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customWhite0)
+                            )
+                        }
                     }
                 }
 
