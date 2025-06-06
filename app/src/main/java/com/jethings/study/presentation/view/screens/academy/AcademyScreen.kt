@@ -498,68 +498,74 @@ fun SharedTransitionScope.AcademyScreen(
         }
 
         HorizontalPager(
+            beyondViewportPageCount = pagerState.pageCount,
+            userScrollEnabled = false,
             state = pagerState,
             modifier = Modifier
                 .fillMaxSize()
-        ) {
-            if (pagerState.currentPage == 0) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .height(750.dp)
-                ) {
-                    Text(text = "Courses")
-                }
-            } else if (pagerState.currentPage == 1){
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .height(750.dp)
-                        .fillMaxWidth()
-                        .padding(vertical = 12.dp)
-                ) {
+        ) { page ->
+            when(page){
+                0 ->{
                     Box(
                         modifier = Modifier
+                            .fillMaxSize()
+                            .height(750.dp)
+                    ) {
+                        Text(text = "Courses")
+                    }
+                }
+                1 ->{
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .height(750.dp)
                             .fillMaxWidth()
-                            .height(150.dp)
+                            .padding(vertical = 12.dp)
                     ) {
-                        val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.empty))
-                        val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(150.dp)
+                        ) {
+                            val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.empty))
+                            val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
 
-                        LottieAnimation(
-                            composition = composition ,
-                            progress = progress.value ,
-                            modifier = Modifier.fillMaxSize()
-                        )
+                            LottieAnimation(
+                                composition = composition ,
+                                progress = progress.value ,
+                                modifier = Modifier.fillMaxSize()
+                            )
 
-                    }
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxWidth(0.7f)
-                            .height(35.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(p_color2)
-                            .clickable {
-                                onNavigate(createTrainingProgram)
-                            }
-                    ) {
-                        Text(
-                            text = "Create Training Program",
-                            style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customWhite0)
-                        )
+                        }
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth(0.7f)
+                                .height(35.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(p_color2)
+                                .clickable {
+                                    onNavigate(createTrainingProgram)
+                                }
+                        ) {
+                            Text(
+                                text = "Create Training Program",
+                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customWhite0)
+                            )
+                        }
                     }
                 }
-
-            } else if (pagerState.currentPage == 2){
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .height(750.dp)
-                ) {
-                    Text(text = "Info")
+                2 ->{
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .height(750.dp)
+                    ) {
+                        Text(text = "Info")
+                    }
                 }
             }
+
         }
 
 

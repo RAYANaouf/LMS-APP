@@ -437,8 +437,6 @@ fun CreateTrainingPrograms(
                             .clip(RoundedCornerShape(12.dp))
                             .background(customWhite3)
                             .clickable {
-                                if(done)
-                                    return@clickable
                                 coroutineScope.launch {
                                     if (pagerState.currentPage != 0) {
                                         pagerState.animateScrollToPage(pagerState.currentPage - 1)
@@ -465,8 +463,6 @@ fun CreateTrainingPrograms(
                             .clip(RoundedCornerShape(12.dp))
                             .background(p_color1)
                             .clickable {
-                                if(done)
-                                    return@clickable
                                 coroutineScope.launch {
                                     if (pagerState.currentPage != 1) {
                                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
