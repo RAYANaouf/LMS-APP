@@ -216,7 +216,7 @@ val koinModule = module{
 
     viewModel {
         CreateTrainingProgramViewModel(
-            trainingProgramManager = get()
+
         )
     }
 

@@ -40,6 +40,7 @@ import com.jethings.study.presentation.view.screens.createAcademy.viewModel.Crea
 import com.jethings.study.presentation.view.screens.createSuperAdmin.CreateSuperAdminScreen
 import com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel.CreateSuperAdminViewModel
 import com.jethings.study.presentation.view.screens.createTrainingProgram.CreateTrainingPrograms
+import com.jethings.study.presentation.view.screens.createTrainingProgram.viewModel.CreateTrainingProgramViewModel
 import com.jethings.study.presentation.view.screens.home.HomeScreen
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
@@ -388,8 +389,13 @@ fun NavGraph(
 
                 set_system_bars_color(customWhite0 , background_color_0)
 
+                val viewModel = koinViewModel<CreateTrainingProgramViewModel>()
 
                 CreateTrainingPrograms(
+                    onEvent = viewModel::onEvent,
+                    onDone = {
+                        navController.popBackStack()
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(

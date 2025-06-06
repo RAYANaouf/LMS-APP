@@ -43,6 +43,8 @@ object Constants {
     const val ADD_ACADEMY_OWNER          = "/academy/{id}/add-owner"
     const val GET_ACADEMIES_BY_OWNER_ID  = "/academy/user/{id}"
 
+    //training program
+    const val CREATE_TrainingProgram             = "/training-program/create"
 
     val topBarMenu = listOf( "Help" , "Settings"  , "App Info" ,  "About Us" , "Log Out")
 
