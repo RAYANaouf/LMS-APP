@@ -22,4 +22,5 @@ interface LocalUserManager {
     fun getAllAccounts() : Flow<List<Account>>
 
     suspend fun setSelectedAcademy( academy : Academy) : Boolean
+    suspend fun readSelectedAcademy() : Flow<Academy?>
 }

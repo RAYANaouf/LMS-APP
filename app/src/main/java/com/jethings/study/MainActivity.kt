@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.NavGraph
 import com.jethings.study.presentation.nvgraph.academyHome
@@ -183,6 +184,13 @@ fun mainScreen(
                         )
                     },
                     onClick = {
+                        viewModel.onEvent(
+                            MainEvent.SelectAcademy(Academy(id = it)),{
+                                Toast.makeText(context , "select academy" , Toast.LENGTH_SHORT).show()
+                            },{
+                                Toast.makeText(context , "failed to select academy" , Toast.LENGTH_SHORT).show()
+                            }
+                        )
                         navController.navigate(academyScreen(it))
                     },
                     onClose = {

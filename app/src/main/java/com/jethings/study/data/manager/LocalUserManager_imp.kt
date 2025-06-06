@@ -18,6 +18,7 @@ import com.jethings.study.util.objects.Constants
 import com.jethings.study.util.objects.Constants.APP_ENRTY
 import com.jethings.study.util.objects.Constants.USER_SETTINGS
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 class LocalUserManager_imp(
@@ -137,6 +138,24 @@ class LocalUserManager_imp(
             Log.d("log out error : " , e.toString())
             return false
         }
+    }
+
+    override suspend fun readSelectedAcademy() : Flow<Academy?> {
+        return context.dataStore.data
+            .map { data ->
+                if(data[PrefrencesKeys.ACADEMY_ID] == null || data[PrefrencesKeys.ACADEMY_ID] == 0)
+                    null
+                else
+                    Academy(
+                        id = data[PrefrencesKeys.ACADEMY_ID] ?: 0,
+                        name = data[PrefrencesKeys.ACADEMY_NAME] ?: "",
+                        logo = data[PrefrencesKeys.ACADEMY_LOGO] ?: ""
+                    )
+            }
+            .catch {
+                emit(null)
+            }
+
     }
 }
 
