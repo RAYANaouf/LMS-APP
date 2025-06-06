@@ -2,6 +2,7 @@ package com.jethings.study.domain.manager
 
 
 import com.jethings.study.data.db.entities.Account
+import com.jethings.study.data.db.entities.entities.Academy
 import kotlinx.coroutines.flow.Flow
 
 interface LocalUserManager {
@@ -20,5 +21,5 @@ interface LocalUserManager {
     fun isLogInAccount() : Account?
     fun getAllAccounts() : Flow<List<Account>>
 
-
+    suspend fun setSelectedAcademy( academy : Academy) : Boolean
 }

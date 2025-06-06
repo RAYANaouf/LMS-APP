@@ -28,16 +28,17 @@ sealed class CreateTrainingProgramResponse{
 
 @Serializable
 data class CreateTrainingProgramSuccessResponse(
-    val id               : Int = 0 ,
-    val name             : String = "",
-    val description      : String = "",
+    val id               : Int     = 0 ,
+    val academyId        : Long    = 0 ,
+    val name             : String  = "",
+    val description      : String  = "",
     val targetAudience   : String? = "",
     val prerequisites    : String? = "",
     val whatYouWillLearn : String? = "",
     val whatYouCanDoAfter: String? = "",
-    val minAge           : Int? = 0,
-    val maxAge           : Int? = 0,
-    val price            : Float? = 0f
+    val minAge           : Int?    = 0,
+    val maxAge           : Int?    = 0,
+    val price            : Float?  = 0f
 )
 
 @Serializable

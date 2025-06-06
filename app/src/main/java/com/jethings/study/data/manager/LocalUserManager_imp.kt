@@ -12,6 +12,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.jethings.study.data.db.entities.Account
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.domain.manager.LocalUserManager
 import com.jethings.study.util.objects.Constants
 import com.jethings.study.util.objects.Constants.APP_ENRTY
@@ -123,6 +124,20 @@ class LocalUserManager_imp(
     override fun getAllAccounts(): Flow<List<Account>> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun setSelectedAcademy(academy : Academy) : Boolean {
+        try {
+            context.dataStore.edit { settings ->
+                settings[PrefrencesKeys.ACADEMY_ID] = academy.id
+                settings[PrefrencesKeys.ACADEMY_NAME] = academy.name
+                settings[PrefrencesKeys.ACADEMY_LOGO] = academy.logo ?: ""
+            }
+            return true
+        }catch (e : Exception){
+            Log.d("log out error : " , e.toString())
+            return false
+        }
+    }
 }
 
 
@@ -143,4 +158,10 @@ private object PrefrencesKeys{
     val IS_STUDENT       = booleanPreferencesKey(name = Constants.IS_STUDENT)
     val IS_PARENT        = booleanPreferencesKey(name = Constants.IS_PARENT)
     val OWNED_ACADEMiES  = intPreferencesKey(name = Constants.OWNED_ACADEMiES)
+
+    //academy
+    val ACADEMY_ID       = intPreferencesKey(name = "ACADEMY_ID")
+    val ACADEMY_NAME     = stringPreferencesKey(name = "ACADEMY_NAME")
+    val ACADEMY_LOGO     = stringPreferencesKey(name = "ACADEMY_LOGO")
+
 }
