@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 // request
 @Serializable
 data class CreateTrainingProgramRequest(
+    val academyId          : Long,
     val name               : String ,
     val description        : String ,
     val targetAudience     : String?,

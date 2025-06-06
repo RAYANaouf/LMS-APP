@@ -159,6 +159,7 @@ class LocalUserManager_imp(
                         logo = data[PrefrencesKeys.ACADEMY_LOGO] ?: ""
                     )
                 }
+
             }
             .catch {
                 emit(null)

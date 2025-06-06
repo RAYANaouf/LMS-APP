@@ -55,6 +55,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.createTrainingProgram.CreateTrainingProgramRequest
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
@@ -76,6 +77,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CreateTrainingPrograms(
     onEvent: (CreateTrainingProgramEvent , onSucess : () -> Unit , onFailure : () -> Unit) -> Unit = {_,_,_ ->},
+    selectedAcademy : Academy? = null,
     onDone : ()->Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -472,29 +474,37 @@ fun CreateTrainingPrograms(
                                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                                     } else {
                                         search = true
-                                        onEvent(
-                                            CreateTrainingProgramEvent.CreateTrainingProgram(
-                                                createTrainingProgramRequest = CreateTrainingProgramRequest(
-                                                    name = name,
-                                                    description = description,
-                                                    prerequisites = prerequisites,
-                                                    whatYouWillLearn = what_learn,
-                                                    minAge = min_age.toIntOrNull() ?: 10,
-                                                    maxAge = max_age.toIntOrNull() ?: 60,
-                                                    price = 0f,
-                                                    targetAudience = "",
-                                                    whatYouCanDoAfter = ""
-                                                )
-                                            ), {
-                                                search = false
-                                                done = true
-                                            }, {
-                                                search = false
-                                                Toast
-                                                    .makeText(context, "Failure", Toast.LENGTH_SHORT)
-                                                    .show()
-                                            }
-                                        )
+                                        if (selectedAcademy == null) {
+                                            Toast.makeText(context , "No selected academy" , Toast.LENGTH_SHORT).show()
+                                            return@launch
+                                        }
+                                        selectedAcademy?.let {
+                                            onEvent(
+                                                CreateTrainingProgramEvent.CreateTrainingProgram(
+                                                    createTrainingProgramRequest = CreateTrainingProgramRequest(
+                                                        academyId = it.id.toLong(),
+                                                        name = name,
+                                                        description = description,
+                                                        prerequisites = prerequisites,
+                                                        whatYouWillLearn = what_learn,
+                                                        minAge = min_age.toIntOrNull() ?: 10,
+                                                        maxAge = max_age.toIntOrNull() ?: 60,
+                                                        price = 0f,
+                                                        targetAudience = "",
+                                                        whatYouCanDoAfter = ""
+                                                    )
+                                                ), {
+                                                    search = false
+                                                    done = true
+                                                }, {
+                                                    search = false
+                                                    Toast
+                                                        .makeText(context, "Failure", Toast.LENGTH_SHORT)
+                                                        .show()
+                                                }
+                                            )
+                                        }
+
                                     }
                                 }
                             }

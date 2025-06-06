@@ -115,7 +115,7 @@ class MainViewModel (
 
             localUserManager.readSelectedAcademy().onEach { academy ->
                 selectedAcademy = academy
-            }
+            }.launchIn(viewModelScope)
         }
     }
 

@@ -8,7 +8,7 @@ import com.jethings.study.presentation.view.screens.createTrainingProgram.event.
 import kotlinx.coroutines.launch
 
 class CreateTrainingProgramViewModel(
-    private val trainingProgramManager: TrainingProgramManager
+    private val trainingProgramManager: TrainingProgramManager,
 ) : ViewModel() {
 
 

@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.jetapptech.business.presentation.view.screens.signUp.SignUpScreen
 import com.jethings.study.data.db.entities.Account
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.AcademyHome.AcademyHome
@@ -58,6 +59,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NavGraph(
     navController    : NavHostController = rememberNavController(),
+    selectedAcademy  : Academy? = null,
     startDestination : AppScreen,
     currentPage      : (AppScreen)->Unit = {},
     currentScene     : (String   )->Unit = {},
@@ -393,6 +395,7 @@ fun NavGraph(
 
                 CreateTrainingPrograms(
                     onEvent = viewModel::onEvent,
+                    selectedAcademy = selectedAcademy,
                     onDone = {
                         navController.popBackStack()
                     },

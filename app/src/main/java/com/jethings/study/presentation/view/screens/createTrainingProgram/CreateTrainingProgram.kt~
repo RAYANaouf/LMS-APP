@@ -55,6 +55,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.createTrainingProgram.CreateTrainingProgramRequest
+import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
@@ -76,6 +77,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CreateTrainingPrograms(
     onEvent: (CreateTrainingProgramEvent , onSucess : () -> Unit , onFailure : () -> Unit) -> Unit = {_,_,_ ->},
+    selectedAcademy : Academy? = null,
     onDone : ()->Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -437,6 +439,8 @@ fun CreateTrainingPrograms(
                             .clip(RoundedCornerShape(12.dp))
                             .background(customWhite3)
                             .clickable {
+                                if(done)
+                                    return@clickable
                                 coroutineScope.launch {
                                     if (pagerState.currentPage != 0) {
                                         pagerState.animateScrollToPage(pagerState.currentPage - 1)
@@ -463,14 +467,18 @@ fun CreateTrainingPrograms(
                             .clip(RoundedCornerShape(12.dp))
                             .background(p_color1)
                             .clickable {
+                                if(done)
+                                    return@clickable
                                 coroutineScope.launch {
                                     if (pagerState.currentPage != 1) {
                                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                                     } else {
                                         search = true
+                                        
                                         onEvent(
                                             CreateTrainingProgramEvent.CreateTrainingProgram(
                                                 createTrainingProgramRequest = CreateTrainingProgramRequest(
+                                                    academyId = selectedAcademy.id.toLong(),
                                                     name = name,
                                                     description = description,
                                                     prerequisites = prerequisites,

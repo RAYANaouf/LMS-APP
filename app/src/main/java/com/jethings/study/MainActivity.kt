@@ -218,10 +218,14 @@ fun mainScreen(
                             .windowInsetsPadding(WindowInsets.statusBars)
                     ) {
                         AnimatedVisibility(visible = viewModel.show_topbar && windowInfo.screenWidthInfo !is WindowInfo.WindowType.Expanded) {
+
+                            Log.d("test : " , viewModel.selectedAcademy.toString())
+
                             JethingsTopBar(
-                                img       = viewModel.topBarImg,
-                                title     = viewModel.topBarTxt,
-                                elevation = viewModel.topbar_shadow,
+                                drawableImg = viewModel.topBarImg,
+                                drawableRes = false,
+                                title       = if(viewModel.selectedAcademy != null) viewModel.selectedAcademy?.name ?: "" else viewModel.topBarTxt,
+                                elevation   = viewModel.topbar_shadow,
                                 onEvent = {
                                     if (it is MainEvent.LogOutEvent){
                                         viewModel.onEvent(
