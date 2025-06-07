@@ -60,8 +60,10 @@ import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.NavGraph
 import com.jethings.study.presentation.nvgraph.academyHome
 import com.jethings.study.presentation.nvgraph.academyScreen
+import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.logInScreen
 import com.jethings.study.presentation.nvgraph.profileScreen
+import com.jethings.study.presentation.nvgraph.signUpScreen
 import com.jethings.study.presentation.ui.theme.StudyTheme
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.background_color_1
@@ -175,6 +177,7 @@ fun mainScreen(
             ) {
                 NavigationDrawer(
                     myAcademies = viewModel.myAcademies,
+                    selectAcademy = viewModel.selectedAcademy,
                     account = viewModel.account,
                     onEvent = {event,onSuccess,onFailure->
                         viewModel.onEvent(
@@ -183,14 +186,22 @@ fun mainScreen(
                             onFailure
                         )
                     },
-                    onClick = {
+                    onSelectAcademy = {
                         viewModel.onEvent(
-                            MainEvent.SelectAcademy(Academy(id = it)),{
+                            MainEvent.SelectAcademy(it),{
+                                navController.navigate(academyScreen(it.id)){
+                                    popUpTo(homeScreen){
+                                        inclusive = true
+                                    }
+                                }
+                                drawerState = false
                                 Toast.makeText(context , "select academy" , Toast.LENGTH_SHORT).show()
                             },{
                                 Toast.makeText(context , "failed to select academy" , Toast.LENGTH_SHORT).show()
                             }
                         )
+                    },
+                    onClick = {
                         navController.navigate(academyScreen(it))
                     },
                     onClose = {
@@ -223,6 +234,7 @@ fun mainScreen(
 
                             JethingsTopBar(
                                 drawableImg = viewModel.topBarImg,
+                                img         = viewModel.selectedAcademy?.logo ?: "",
                                 drawableRes = viewModel.selectedAcademy == null,
                                 title       = if(viewModel.selectedAcademy != null) viewModel.selectedAcademy?.name ?: "" else viewModel.topBarTxt,
                                 elevation   = viewModel.topbar_shadow,

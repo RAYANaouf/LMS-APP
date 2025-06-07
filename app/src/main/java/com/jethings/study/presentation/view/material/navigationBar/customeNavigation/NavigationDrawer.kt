@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -75,12 +76,14 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun NavigationDrawer(
-    onEvent : (MainEvent , onSuccess : ()->Unit , onFailure : ()->Unit , )->Unit = {_,_,_->},
-    account: Account?,
+    onEvent   : (MainEvent , onSuccess : ()->Unit , onFailure : ()->Unit , )->Unit = {_,_,_->},
+    account   : Account?,
     myAcademies : List<Academy> = listOf(Academy(id = -1)),
-    modifier: Modifier = Modifier,
-    onClick: (Int) -> Unit = {},
-    onClose: () -> Unit = {} // Optional callback if needed
+    modifier  : Modifier = Modifier,
+    onSelectAcademy : (Academy)->Unit = {},
+    selectAcademy   : Academy? = null,
+    onClick   : (Int) -> Unit = {},
+    onClose   : () -> Unit = {} // Optional callback if needed
 ) {
 
 
@@ -201,35 +204,16 @@ fun NavigationDrawer(
                         text = "My Academy",
                         notification = account.ownedAcademies,
                         myAcademies = myAcademies,
+                        selectedAcademy = selectAcademy,
                         delayMillis = if (account.isSuperAdmin) 5 * 500L else 1 * 500L, // delay between items
                         onClick = {
-                            // handle navigation or logout here
-                            onClick(it)
-                            onClose()
-                        }
-                    )
-                    DrawerItem(
-                        icon = R.drawable.teacher,
-                        text = "My Teacher",
-                        delayMillis = if (account.isSuperAdmin) 6 * 500L else 2 * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
-                        }
-                    )
-                    DrawerItem(
-                        icon = R.drawable.student,
-                        text = "My Student",
-                        delayMillis = if (account.isSuperAdmin) 7 * 500L else 3 * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
+                            onSelectAcademy(it)
                         }
                     )
                     DrawerItem(
                         icon = R.drawable.statistics,
                         text = "Statistics",
-                        delayMillis = if (account.isSuperAdmin) 8 * 500L else 4 * 500L, // delay between items
+                        delayMillis = if (account.isSuperAdmin) 6 * 500L else 2 * 500L, // delay between items
                         onClick = {
                             // handle navigation or logout here
                             onClose()
@@ -238,7 +222,7 @@ fun NavigationDrawer(
                     DrawerItem(
                         icon = R.drawable.settings,
                         text = "Settings",
-                        delayMillis = if (account.isSuperAdmin) 9 * 500L else 5 * 500L, // delay between items
+                        delayMillis = if (account.isSuperAdmin) 7 * 500L else 3 * 500L, // delay between items
                         onClick = {
                             // handle navigation or logout here
                             onClose()
@@ -306,9 +290,10 @@ fun ExpendedDrawerItem(
     text : String,
     @DrawableRes icon : Int,
     notification      : Int = -1,
-    myAcademies        : List<Academy> = listOf(Academy(id = -1)),
-    delayMillis: Long,
-    onClick: (Int) -> Unit
+    selectedAcademy   : Academy? = null,
+    myAcademies       : List<Academy> = listOf(Academy(id = -1)),
+    delayMillis       : Long,
+    onClick           : (Academy) -> Unit
 ) {
     val visible = remember { mutableStateOf(false) }
 
@@ -393,7 +378,8 @@ fun ExpendedDrawerItem(
                             modifier = Modifier
                                 .heightIn(max = 50.dp)
                         )
-                    }else{
+                    }
+                    else{
                         myAcademies.forEachIndexed { index, academy ->
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
@@ -401,22 +387,40 @@ fun ExpendedDrawerItem(
                                     .fillMaxWidth()
                                     .height(50.dp)
                                     .clickable {
-                                        onClick(academy.id)
+                                        onClick(academy)
                                     }
                                     .padding(horizontal = 8.dp)
                             ) {
-                                Box(
-                                    contentAlignment = Alignment.TopCenter,
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = Modifier
                                         .fillMaxHeight()
                                         .width(26.dp)
                                 ) {
-                                    Spacer(
+                                    Box(
+                                        contentAlignment = Alignment.TopCenter,
                                         modifier = Modifier
                                             .fillMaxHeight(if (index == myAcademies.size - 1) 0.5f else 1f)
-                                            .width(2.dp)
-                                            .background(p_color1)
-                                    )
+                                    ){
+                                        Spacer(
+                                            modifier = Modifier
+                                                .fillMaxHeight()
+                                                .width(2.dp)
+                                                .background(p_color1)
+                                        )
+                                        if(selectedAcademy!= null && selectedAcademy.id == academy.id){
+                                            Spacer(
+                                                modifier = Modifier
+                                                    .size(10.dp)
+                                                    .offset(y = 5.dp)
+                                                    .clip(CircleShape)
+                                                    .background(p_color1)
+                                                    .align(if (index == myAcademies.size - 1) Alignment.BottomCenter else Alignment.Center)
+                                            )
+                                        }
+                                    }
+
+
                                 }
                                 Spacer(modifier = Modifier.width(12.dp))
                                 AsyncImage(

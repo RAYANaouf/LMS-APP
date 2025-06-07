@@ -134,17 +134,32 @@ class MainViewModel (
         current_screen = appScreen
         when(current_screen){
             homeScreen->{
-                //top bar
-                show_topbar      =  true
-                topbar_shadow    =  2.dp
-                setTopBarInfo(img = R.drawable.app_store_logo_none_background , txt = "Dirassa" )
+                if (account!= null && account?.isSuperAdmin == true){
+                    //top bar
+                    show_topbar      =  true
+                    topbar_shadow    =  2.dp
+                    setTopBarInfo(img = R.drawable.app_store_logo_none_background , txt = "Dirassa" )
 
-                //bottom bar
-                show_bottombar   =  true
-                bottombar_shadow =  0.dp
+                    //bottom bar
+                    show_bottombar   =  true
+                    bottombar_shadow =  0.dp
 
-                //navigation drawer
-                show_navigationDrawer = true
+                    //navigation drawer
+                    show_navigationDrawer = true
+                }else{
+                    //top bar
+                    show_topbar      =  true
+                    topbar_shadow    =  2.dp
+                    setTopBarInfo(img = R.drawable.app_store_logo_none_background , txt = "Dirassa" )
+
+                    //bottom bar
+                    show_bottombar   =  false
+                    bottombar_shadow =  0.dp
+
+                    //navigation drawer
+                    show_navigationDrawer = true
+                }
+
             }
             profileScreen->{
                 //top bar
