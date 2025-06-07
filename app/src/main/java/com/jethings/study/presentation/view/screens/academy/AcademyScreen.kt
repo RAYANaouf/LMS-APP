@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.academy
 
+import android.graphics.Paint.Align
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -7,7 +8,6 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -18,12 +18,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -35,15 +33,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -515,6 +509,16 @@ fun SharedTransitionScope.AcademyScreen(
                     }
                 }
                 1 ->{
+
+                    LaunchedEffect(academy) {
+                        onEvent(
+                            AcademyEvent.GetAllTrainingProgramByAcademy(academy_id = academyId),{
+                                Toast.makeText(context , "Success" ,Toast.LENGTH_SHORT).show()
+                            },{
+                                Toast.makeText(context , "Failure" ,Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
@@ -522,36 +526,70 @@ fun SharedTransitionScope.AcademyScreen(
                             .fillMaxWidth()
                             .padding(vertical = 12.dp)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(150.dp)
-                        ) {
-                            val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.empty))
-                            val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
+                        if (academy?.trainingPrograms?.isEmpty() == true) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(150.dp)
+                                ) {
+                                    val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.empty))
+                                    val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
 
-                            LottieAnimation(
-                                composition = composition ,
-                                progress = progress.value ,
-                                modifier = Modifier.fillMaxSize()
-                            )
+                                    LottieAnimation(
+                                        composition = composition ,
+                                        progress = progress.value ,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
 
-                        }
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .fillMaxWidth(0.7f)
-                                .height(35.dp)
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(p_color2)
-                                .clickable {
-                                    onNavigate(createTrainingProgram)
                                 }
-                        ) {
-                            Text(
-                                text = "Create Training Program",
-                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customWhite0)
-                            )
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.7f)
+                                        .height(35.dp)
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .background(p_color2)
+                                        .clickable {
+                                            onNavigate(createTrainingProgram)
+                                        }
+                                ) {
+                                    Text(
+                                        text = "Create Training Program",
+                                        style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customWhite0)
+                                    )
+                                }
+                            }
+                        }else{
+                            academy?.trainingPrograms?.forEach {
+                                Surface(
+                                    shadowElevation = 2.dp,
+                                    shape = RoundedCornerShape(12.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(180.dp)
+                                        .padding(horizontal = 16.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                    ) {
+                                        AsyncImage(
+                                            model = it.coverPhoto,
+                                            contentDescription = null,
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(100.dp)
+                                                .background(customWhite1)
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }

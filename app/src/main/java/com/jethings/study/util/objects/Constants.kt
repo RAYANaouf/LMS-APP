@@ -45,6 +45,7 @@ object Constants {
 
     //training program
     const val CREATE_TrainingProgram             = "/training-program/create"
+    const val GET_ALL_TrainingProgram_BY_ACADEMY = "/training-program/academy/{id}"
 
     val topBarMenu = listOf( "Help" , "Settings"  , "App Info" ,  "About Us" , "Log Out")
 

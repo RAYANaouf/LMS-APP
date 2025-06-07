@@ -201,8 +201,12 @@ fun mainScreen(
                             }
                         )
                     },
-                    onClick = {
-                        navController.navigate(academyScreen(it))
+                    onNavigate = {
+                        navController.navigate(it){
+                            popUpTo(it){
+                                inclusive = true
+                            }
+                        }
                     },
                     onClose = {
                         drawerState = false

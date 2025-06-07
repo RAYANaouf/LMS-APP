@@ -18,7 +18,7 @@ data class GetAcademyByIdSuccessResponse(
     val phone      : String?   = null,
     val email      : String?   = null,
     val logo       : String?   = null,
-    val owners     : List<Int>? = null,
+    val owners     : List<Int> = emptyList(),
 )
 
 @Serializable

@@ -61,6 +61,8 @@ import com.jethings.study.MainEvent
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.Account
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customWhite0
@@ -82,8 +84,8 @@ fun NavigationDrawer(
     modifier  : Modifier = Modifier,
     onSelectAcademy : (Academy)->Unit = {},
     selectAcademy   : Academy? = null,
-    onClick   : (Int) -> Unit = {},
-    onClose   : () -> Unit = {} // Optional callback if needed
+    onNavigate   : (AppScreen) -> Unit = {},
+    onClose      : () -> Unit = {} // Optional callback if needed
 ) {
 
 
@@ -198,6 +200,16 @@ fun NavigationDrawer(
                             )
                         }
                     }
+
+                    DrawerItem(
+                        icon = R.drawable.user,
+                        text = "Profile",
+                        delayMillis = if (account.isSuperAdmin) 5 * 500L else 1 * 500L, // delay between items
+                        onClick = {
+                            onNavigate(profileScreen)
+                            onClose()
+                        }
+                    )
                     // Animated menu items
                     ExpendedDrawerItem(
                         icon = R.drawable.academy_icon,
@@ -205,7 +217,7 @@ fun NavigationDrawer(
                         notification = account.ownedAcademies,
                         myAcademies = myAcademies,
                         selectedAcademy = selectAcademy,
-                        delayMillis = if (account.isSuperAdmin) 5 * 500L else 1 * 500L, // delay between items
+                        delayMillis = if (account.isSuperAdmin) 6 * 500L else 2 * 500L, // delay between items
                         onClick = {
                             onSelectAcademy(it)
                         }
@@ -213,7 +225,7 @@ fun NavigationDrawer(
                     DrawerItem(
                         icon = R.drawable.statistics,
                         text = "Statistics",
-                        delayMillis = if (account.isSuperAdmin) 6 * 500L else 2 * 500L, // delay between items
+                        delayMillis = if (account.isSuperAdmin) 7 * 500L else 3 * 500L, // delay between items
                         onClick = {
                             // handle navigation or logout here
                             onClose()
@@ -222,7 +234,7 @@ fun NavigationDrawer(
                     DrawerItem(
                         icon = R.drawable.settings,
                         text = "Settings",
-                        delayMillis = if (account.isSuperAdmin) 7 * 500L else 3 * 500L, // delay between items
+                        delayMillis = if (account.isSuperAdmin) 8 * 500L else 4 * 500L, // delay between items
                         onClick = {
                             // handle navigation or logout here
                             onClose()
