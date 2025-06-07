@@ -475,6 +475,7 @@ fun CreateTrainingPrograms(
                                     } else {
                                         search = true
                                         if (selectedAcademy == null) {
+                                            search = false
                                             Toast.makeText(context , "No selected academy" , Toast.LENGTH_SHORT).show()
                                             return@launch
                                         }

@@ -474,31 +474,38 @@ fun CreateTrainingPrograms(
                                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                                     } else {
                                         search = true
-                                        
-                                        onEvent(
-                                            CreateTrainingProgramEvent.CreateTrainingProgram(
-                                                createTrainingProgramRequest = CreateTrainingProgramRequest(
-                                                    academyId = selectedAcademy.id.toLong(),
-                                                    name = name,
-                                                    description = description,
-                                                    prerequisites = prerequisites,
-                                                    whatYouWillLearn = what_learn,
-                                                    minAge = min_age.toIntOrNull() ?: 10,
-                                                    maxAge = max_age.toIntOrNull() ?: 60,
-                                                    price = 0f,
-                                                    targetAudience = "",
-                                                    whatYouCanDoAfter = ""
-                                                )
-                                            ), {
-                                                search = false
-                                                done = true
-                                            }, {
-                                                search = false
-                                                Toast
-                                                    .makeText(context, "Failure", Toast.LENGTH_SHORT)
-                                                    .show()
-                                            }
-                                        )
+                                        if (selectedAcademy == null) {
+                                            sea = false
+                                            Toast.makeText(context , "No selected academy" , Toast.LENGTH_SHORT).show()
+                                            return@launch
+                                        }
+                                        selectedAcademy?.let {
+                                            onEvent(
+                                                CreateTrainingProgramEvent.CreateTrainingProgram(
+                                                    createTrainingProgramRequest = CreateTrainingProgramRequest(
+                                                        academyId = it.id.toLong(),
+                                                        name = name,
+                                                        description = description,
+                                                        prerequisites = prerequisites,
+                                                        whatYouWillLearn = what_learn,
+                                                        minAge = min_age.toIntOrNull() ?: 10,
+                                                        maxAge = max_age.toIntOrNull() ?: 60,
+                                                        price = 0f,
+                                                        targetAudience = "",
+                                                        whatYouCanDoAfter = ""
+                                                    )
+                                                ), {
+                                                    search = false
+                                                    done = true
+                                                }, {
+                                                    search = false
+                                                    Toast
+                                                        .makeText(context, "Failure", Toast.LENGTH_SHORT)
+                                                        .show()
+                                                }
+                                            )
+                                        }
+
                                     }
                                 }
                             }

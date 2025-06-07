@@ -26,6 +26,7 @@ class TrainingProgramManager_imp(
             val response = client.submitFormWithBinaryData(
                 url = BASE_URL + CREATE_TrainingProgram,
                 formData = formData {
+                    append("academyId" , request.academyId)
                     append("name" , request.name)
                     append("description" , request.description)
 
