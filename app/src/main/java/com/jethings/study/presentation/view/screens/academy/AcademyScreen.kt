@@ -7,7 +7,9 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -39,8 +41,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,6 +78,7 @@ import com.jethings.study.presentation.ui.theme.customWhite2
 import com.jethings.study.presentation.ui.theme.customWhite3
 import com.jethings.study.presentation.ui.theme.customWhite5
 import com.jethings.study.presentation.ui.theme.customWhite7
+import com.jethings.study.presentation.ui.theme.customWhite8
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.ui.theme.p_color3
@@ -125,7 +130,7 @@ fun SharedTransitionScope.AcademyScreen(
 
         Surface(
             color = background_color_0,
-            shadowElevation = 2.dp,
+            shadowElevation = 4.dp,
             modifier = Modifier
                 .zIndex(1f)
         ) {
@@ -568,6 +573,7 @@ fun SharedTransitionScope.AcademyScreen(
                             academy?.trainingPrograms?.forEach {
                                 Surface(
                                     shadowElevation = 2.dp,
+                                    contentColor = Color.White,
                                     shape = RoundedCornerShape(12.dp),
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -577,16 +583,130 @@ fun SharedTransitionScope.AcademyScreen(
                                     Column(
                                         modifier = Modifier
                                             .fillMaxSize()
+                                            .background(Color.White)
                                     ) {
-                                        AsyncImage(
-                                            model = it.coverPhoto,
-                                            contentDescription = null,
-                                            contentScale = ContentScale.Crop,
+                                        Row(
                                             modifier = Modifier
                                                 .fillMaxWidth()
+                                                .padding(8.dp)
                                                 .height(100.dp)
-                                                .background(customWhite1)
-                                        )
+                                        ) {
+                                            if (it.coverPhoto == null || it.coverPhoto == ""){
+                                                Image(
+                                                    painter = painterResource(id = R.drawable.training_program),
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Crop,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth(0.5f)
+                                                        .fillMaxHeight()
+                                                        .clip(RoundedCornerShape(8.dp))
+                                                        .background(customWhite1)
+                                                        .border(
+                                                            width = 1.dp,
+                                                            color = customWhite8,
+                                                            shape = RoundedCornerShape(8.dp)
+                                                        )
+                                                )
+                                            }
+                                            else{
+                                                AsyncImage(
+                                                    model = it.coverPhoto,
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Crop,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth(0.5f)
+                                                        .fillMaxHeight()
+                                                        .clip(RoundedCornerShape(8.dp))
+                                                        .background(customWhite1)
+                                                        .border(
+                                                            width = 1.dp,
+                                                            color = customWhite8,
+                                                            shape = RoundedCornerShape(8.dp)
+                                                        )
+                                                )
+                                            }
+
+                                            Column {
+                                                Row(
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(30.dp)
+                                                        .padding(start = 8.dp)
+                                                ) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .size(22.dp)
+                                                            .background(customWhite1)
+                                                    ) {
+
+                                                    }
+                                                    Text(
+                                                        text = "Active",
+                                                        style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack3)
+                                                    )
+                                                }
+                                                Row(
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(30.dp)
+                                                        .padding(start = 8.dp)
+                                                ) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .size(22.dp)
+                                                            .background(customWhite1)
+                                                    ) {
+
+                                                    }
+                                                    Text(
+                                                        text = "Certificated",
+                                                        style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack3)
+                                                    )
+                                                }
+                                                Row(
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(30.dp)
+                                                        .padding(start = 8.dp)
+                                                ) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .size(22.dp)
+                                                            .background(customWhite1)
+                                                    ) {
+
+                                                    }
+                                                    Text(
+                                                        text = "2600 DA",
+                                                        style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack3)
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        Box(
+                                            modifier = Modifier
+                                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                                                .fillMaxWidth()
+                                        ){
+                                            Text(
+                                                text = it.name,
+                                                style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack3)
+                                            )
+                                        }
+                                        Box(
+                                            modifier = Modifier
+                                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                                                .fillMaxWidth()
+                                        ){
+                                            Text(
+                                                text = it.description ?: "",
+                                                style = TextStyles.Monospace_TextStyles.TextStyleSZ10
+                                                    .copy(color = customBlack3)
+                                            )
+                                        }
                                     }
                                 }
                             }
