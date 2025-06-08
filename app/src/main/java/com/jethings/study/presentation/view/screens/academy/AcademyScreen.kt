@@ -635,11 +635,16 @@ fun SharedTransitionScope.AcademyScreen(
                                                         .padding(start = 8.dp)
                                                 ) {
                                                     Box(
+                                                        contentAlignment = Alignment.Center,
                                                         modifier = Modifier
                                                             .size(22.dp)
-                                                            .background(customWhite1)
                                                     ) {
-
+                                                        Box(
+                                                            modifier = Modifier
+                                                                .size(10.dp)
+                                                                .clip(CircleShape)
+                                                                .background(Color.Green)
+                                                        )
                                                     }
                                                     Text(
                                                         text = "Active",
@@ -654,11 +659,17 @@ fun SharedTransitionScope.AcademyScreen(
                                                         .padding(start = 8.dp)
                                                 ) {
                                                     Box(
+                                                        contentAlignment = Alignment.Center,
                                                         modifier = Modifier
                                                             .size(22.dp)
-                                                            .background(customWhite1)
                                                     ) {
-
+                                                        Image(
+                                                            painter = painterResource(id = R.drawable.certificate),
+                                                            contentDescription = null ,
+                                                            contentScale = ContentScale.Crop,
+                                                            modifier = Modifier
+                                                                .size(12.dp)
+                                                        )
                                                     }
                                                     Text(
                                                         text = "Certificated",
@@ -673,11 +684,17 @@ fun SharedTransitionScope.AcademyScreen(
                                                         .padding(start = 8.dp)
                                                 ) {
                                                     Box(
+                                                        contentAlignment = Alignment.Center,
                                                         modifier = Modifier
                                                             .size(22.dp)
-                                                            .background(customWhite1)
                                                     ) {
-
+                                                        Image(
+                                                            painter = painterResource(id = R.drawable.money),
+                                                            contentDescription = null ,
+                                                            contentScale = ContentScale.Crop,
+                                                            modifier = Modifier
+                                                                .size(12.dp)
+                                                        )
                                                     }
                                                     Text(
                                                         text = "2600 DA",
