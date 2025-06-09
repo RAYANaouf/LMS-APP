@@ -41,6 +41,9 @@ A powerful, cross-role mobile platform for **academies, teachers, students, and 
 ---
 
 ## 📸 Screenshots
+| Login | Signup |
+|-------|--------|
+| ![Login](https://github.com/user-attachments/assets/6d646747-700a-4b95-a17f-919d17453c72) | ![Signup](https://github.com/user-attachments/assets/4e95ca87-d3c6-4af5-9983-37cd0e6c7b03) |
 
 > _(Add screenshots here if available — UI mockups, dashboard views, login screen, etc.)_
 
