@@ -19,7 +19,7 @@ class CreateTrainingProgramViewModel(
                 viewModelScope.launch {
                     val result = trainingProgramManager.createTrainingProgram(
                         event.createTrainingProgramRequest,
-                        cover = null
+                        cover = event.file
                     )
                     if (result is CreateTrainingProgramResponse.Success){
                         onSuccess()

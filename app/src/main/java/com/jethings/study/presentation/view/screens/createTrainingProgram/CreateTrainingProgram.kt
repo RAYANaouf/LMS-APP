@@ -1,7 +1,12 @@
 package com.jethings.study.presentation.view.screens.createTrainingProgram
 
+import android.content.Context
 import android.graphics.Color.parseColor
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -31,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -48,6 +54,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -72,6 +79,9 @@ import com.jethings.study.presentation.view.material.AlphaButton
 import com.jethings.study.presentation.view.screens.createTrainingProgram.event.CreateTrainingProgramEvent
 import com.jethings.study.util.objects.TextStyles
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 
 @Composable
@@ -115,7 +125,23 @@ fun CreateTrainingPrograms(
 
     var coroutineScope = rememberCoroutineScope()
 
+    
+    var coverPhoto by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+
     val context = LocalContext.current
+
+
+    /****** launchers *******/
+
+    var launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            coverPhoto = uri
+        }
+
+    }
 
     Box(
         modifier = modifier
@@ -170,7 +196,7 @@ fun CreateTrainingPrograms(
                             shadowElevation = 2.dp,
                             shape = RoundedCornerShape(12.dp),
                             onClick = {
-
+                                launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -188,28 +214,41 @@ fun CreateTrainingPrograms(
                                         .background(customBlack0.copy(alpha = 0.08f))
                                         .zIndex(2f)
                                 )
-                                Image(
-                                    painter = painterResource(id = R.drawable.training_program),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .blur(
-                                            2.5.dp,
-                                            2.5.dp
-                                        )
-                                )
+                                if ( coverPhoto == null){
 
-                                Text(
-                                    text = "Add Photo",
-                                    style = TextStyle(
-                                        fontSize = 28.sp,
-                                        fontWeight = FontWeight(600),
-                                        color = p_color1
+                                    Image(
+                                        painter = painterResource(id = R.drawable.training_program),
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .blur(
+                                                2.5.dp,
+                                                2.5.dp
+                                            )
                                     )
-                                )
+
+                                    Text(
+                                        text = "Add Photo",
+                                        style = TextStyle(
+                                            fontSize = 28.sp,
+                                            fontWeight = FontWeight(600),
+                                            color = p_color1
+                                        )
+                                    )
+                                }else{
+                                    AsyncImage(
+                                        model = coverPhoto,
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                    )
+                                }
                             }
                         }
+
+
                         Spacer(modifier = Modifier.height(16.dp))
 
                         OutlinedTextField(
@@ -439,7 +478,7 @@ fun CreateTrainingPrograms(
                             .clip(RoundedCornerShape(12.dp))
                             .background(customWhite3)
                             .clickable {
-                                if(done)
+                                if (done)
                                     return@clickable
                                 coroutineScope.launch {
                                     if (pagerState.currentPage != 0) {
@@ -467,7 +506,7 @@ fun CreateTrainingPrograms(
                             .clip(RoundedCornerShape(12.dp))
                             .background(p_color1)
                             .clickable {
-                                if(done)
+                                if (done)
                                     return@clickable
                                 coroutineScope.launch {
                                     if (pagerState.currentPage != 1) {
@@ -476,10 +515,19 @@ fun CreateTrainingPrograms(
                                         search = true
                                         if (selectedAcademy == null) {
                                             search = false
-                                            Toast.makeText(context , "No selected academy" , Toast.LENGTH_SHORT).show()
+                                            Toast
+                                                .makeText(
+                                                    context,
+                                                    "No selected academy",
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                .show()
                                             return@launch
                                         }
                                         selectedAcademy?.let {
+                                            val file = coverPhoto?.let {
+                                                uriToFile(context, it)
+                                            }
                                             onEvent(
                                                 CreateTrainingProgramEvent.CreateTrainingProgram(
                                                     createTrainingProgramRequest = CreateTrainingProgramRequest(
@@ -493,14 +541,19 @@ fun CreateTrainingPrograms(
                                                         price = 0f,
                                                         targetAudience = "",
                                                         whatYouCanDoAfter = ""
-                                                    )
+                                                    ),
+                                                    file
                                                 ), {
                                                     search = false
                                                     done = true
                                                 }, {
                                                     search = false
                                                     Toast
-                                                        .makeText(context, "Failure", Toast.LENGTH_SHORT)
+                                                        .makeText(
+                                                            context,
+                                                            "Failure",
+                                                            Toast.LENGTH_SHORT
+                                                        )
                                                         .show()
                                                 }
                                             )
@@ -539,6 +592,19 @@ fun CreateTrainingPrograms(
 
         }
     }
+}
+
+
+
+fun uriToFile(context: Context, uri: Uri): File? {
+    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+    val file = File(context.cacheDir, "cover_photo.jpg") // You can customize the name
+    inputStream?.use { input ->
+        FileOutputStream(file).use { output ->
+            input.copyTo(output)
+        }
+    }
+    return file
 }
 
 

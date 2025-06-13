@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -113,7 +114,8 @@ fun TrainingProgramPage(
                     )
                 }
             }
-        }else{
+        }
+        else{
             academy?.trainingPrograms?.forEach {
                 Surface(
                     shadowElevation = 2.dp,
@@ -280,6 +282,7 @@ fun TrainingProgramPage(
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }

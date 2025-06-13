@@ -29,6 +29,8 @@ class TrainingProgramManager_imp(
 
     override suspend fun createTrainingProgram(request: CreateTrainingProgramRequest , cover : File?): CreateTrainingProgramResponse {
         return try {
+
+            Log.d("request ==> " , request.toString())
             val response = client.submitFormWithBinaryData(
                 url = BASE_URL + CREATE_TrainingProgram,
                 formData = formData {
