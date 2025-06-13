@@ -31,6 +31,8 @@ import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.AcademyHome.AcademyHome
+import com.jethings.study.presentation.view.screens.TrainingProgram.TrainingProgram
+import com.jethings.study.presentation.view.screens.TrainingProgram.viewModel.TrainingProgramViewModel
 import com.jethings.study.presentation.view.screens.academy.AcademyScreen
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
 import com.jethings.study.presentation.view.screens.academyOwnerList.AcademyOwnerList
@@ -399,6 +401,33 @@ fun NavGraph(
                     onDone = {
                         navController.popBackStack()
                     },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
+            }
+
+
+            /*****************************   training program ****************************/
+
+            composable<TrainingProgramScreen> {
+
+
+
+                SideEffect {
+                    currentPage(TrainingProgramScreen)
+                }
+
+
+                set_system_bars_color(customWhite0 , background_color_0)
+
+                val viewModel = koinViewModel<TrainingProgramViewModel>()
+
+                TrainingProgram(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(

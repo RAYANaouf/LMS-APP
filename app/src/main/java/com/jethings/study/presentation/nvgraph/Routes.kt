@@ -54,4 +54,6 @@ data class academyHome(val academy_id: Int)  : AppScreen()
 
 @Serializable
 object createTrainingProgram : AppScreen()
+@Serializable
+object TrainingProgramScreen : AppScreen()
 

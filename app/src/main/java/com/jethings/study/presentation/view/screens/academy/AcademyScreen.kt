@@ -63,6 +63,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
 import com.jethings.study.presentation.nvgraph.academyOwnerList
 import com.jethings.study.presentation.nvgraph.academyOwnerScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
@@ -575,6 +576,9 @@ fun SharedTransitionScope.AcademyScreen(
                                     shadowElevation = 2.dp,
                                     contentColor = Color.White,
                                     shape = RoundedCornerShape(12.dp),
+                                    onClick = {
+                                        onNavigate(TrainingProgramScreen)
+                                    },
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .height(180.dp)
