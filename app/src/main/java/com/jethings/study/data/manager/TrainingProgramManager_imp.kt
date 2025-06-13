@@ -35,6 +35,10 @@ class TrainingProgramManager_imp(
                     append("academyId" , request.academyId)
                     append("name" , request.name)
                     append("description" , request.description)
+                    append("targetAudience" , request.description)
+                    append("prerequisites" , request.description)
+                    append("whatYouWillLearn" , request.description)
+                    append("whatYouCanDoAfter" , request.description)
 
                     //only append image if file is not null
                     cover?.let{
