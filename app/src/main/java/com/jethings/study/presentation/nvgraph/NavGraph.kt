@@ -28,10 +28,11 @@ import androidx.navigation.toRoute
 import com.jetapptech.business.presentation.view.screens.signUp.SignUpScreen
 import com.jethings.study.data.db.entities.Account
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.view.screens.AcademyHome.AcademyHome
-import com.jethings.study.presentation.view.screens.TrainingProgram.TrainingProgram
+import com.jethings.study.presentation.view.screens.TrainingProgram.trainingProgramScreen
 import com.jethings.study.presentation.view.screens.TrainingProgram.viewModel.TrainingProgramViewModel
 import com.jethings.study.presentation.view.screens.academy.AcademyScreen
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
@@ -417,9 +418,10 @@ fun NavGraph(
             composable<TrainingProgramScreen> {
 
 
+                val args = it.toRoute<TrainingProgramScreen>()
 
                 SideEffect {
-                    currentPage(TrainingProgramScreen)
+                    currentPage(args)
                 }
 
 
@@ -427,7 +429,13 @@ fun NavGraph(
 
                 val viewModel = koinViewModel<TrainingProgramViewModel>()
 
-                TrainingProgram(
+                trainingProgramScreen(
+                    trainingProgram = TrainingProgram(
+                        id = args.trainingProgram_id.toLong(),
+                        name = args.title,
+                        description = args.desc,
+                        coverPhoto = args.coverPhoto
+                    ),
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(

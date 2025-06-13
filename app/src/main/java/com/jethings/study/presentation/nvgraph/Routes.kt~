@@ -59,6 +59,6 @@ data class TrainingProgramScreen(
     val trainingProgram_id: Int,
     val title       : String,
     val desc        : String,
-    val coverPhoto  : String = ""
+    val coverPhoto  : String
 ) : AppScreen()
 

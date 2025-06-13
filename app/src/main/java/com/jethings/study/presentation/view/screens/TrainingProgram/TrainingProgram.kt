@@ -9,13 +9,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.jethings.study.data.db.entities.entities.TrainingProgram
+import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customWhite1
 
 @Composable
-fun TrainingProgram(
+fun trainingProgramScreen(
+    trainingProgram: TrainingProgram,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -27,7 +32,13 @@ fun TrainingProgram(
                 .height(170.dp)
                 .background(customWhite1)
         ) {
-
+            AsyncImage(
+                model = trainingProgram.coverPhoto,
+                contentDescription = null ,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+            )
         }
     }
 }
@@ -36,7 +47,8 @@ fun TrainingProgram(
 @Preview
 @Composable
 private fun TrainingProgram_preview() {
-    TrainingProgram(
+    trainingProgramScreen(
+        trainingProgram = TrainingProgram(),
         modifier = Modifier
             .width(340.dp)
             .background(background_color_0)

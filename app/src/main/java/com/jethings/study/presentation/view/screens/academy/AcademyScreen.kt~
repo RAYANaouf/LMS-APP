@@ -577,14 +577,7 @@ fun SharedTransitionScope.AcademyScreen(
                                     contentColor = Color.White,
                                     shape = RoundedCornerShape(12.dp),
                                     onClick = {
-                                        onNavigate(
-                                            TrainingProgramScreen(
-                                                trainingProgram_id = it.id.toInt(),
-                                                title      = it.name,
-                                                desc       = it.description ?: "",
-                                                coverPhoto = it.coverPhoto ?: ""
-                                            )
-                                        )
+                                        onNavigate(TrainingProgramScreen)
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
