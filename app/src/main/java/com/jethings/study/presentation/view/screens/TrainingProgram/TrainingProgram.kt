@@ -41,7 +41,13 @@ import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite1
 import com.jethings.study.presentation.ui.theme.p_color2
+import com.jethings.study.presentation.view.screens.TrainingProgram.component.AfterThePogramSection.AfterTheProgramSection
+import com.jethings.study.presentation.view.screens.TrainingProgram.component.budget.BudgetSection
 import com.jethings.study.presentation.view.screens.TrainingProgram.component.cover.Cover
+import com.jethings.study.presentation.view.screens.TrainingProgram.component.desc.Desc
+import com.jethings.study.presentation.view.screens.TrainingProgram.component.forWho.ForWhoSection
+import com.jethings.study.presentation.view.screens.TrainingProgram.component.name.TrainingName
+import com.jethings.study.presentation.view.screens.TrainingProgram.component.whatWeWillLearn.WhatWeWillLearn
 import com.jethings.study.util.objects.TextStyles
 
 @Composable
@@ -57,94 +63,43 @@ fun trainingProgramScreen(
             trainingProgram = trainingProgram
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(18.dp))
 
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(
-                text = trainingProgram.name,
-                style = TextStyles.Monospace_TextStyles.TextStyleSZ7.copy(color = customBlack3)
-            )
-        }
+        TrainingName(
+            trainingProgram = trainingProgram
+        )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(20.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.certificate),
-                        contentDescription = null,
-                        contentScale = ContentScale.Inside,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
-                }
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "Certified",
-                    style = TextStyle(fontWeight = FontWeight(500), fontSize = 14.sp)
-                )
-            }
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(20.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.money),
-                        contentDescription = null,
-                        contentScale = ContentScale.Inside,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
-                }
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "Price : ${trainingProgram.price ?: "0"} DA",
-                    style = TextStyle(fontWeight = FontWeight(500), fontSize = 14.sp)
-                )
-            }
-        }
+        BudgetSection(
+            trainingProgram = trainingProgram
+        )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(
-                text = "Descriptions",
-                style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack3)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
+        Desc(
+            trainingProgram = trainingProgram
+        )
 
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(
-                text = trainingProgram.description  ?: "",
-                style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack4)
-            )
-        }
+        Spacer(modifier = Modifier.height(28.dp))
+
+        ForWhoSection(
+            trainingProgram = trainingProgram
+        )
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        WhatWeWillLearn(
+            trainingProgram = trainingProgram
+        )
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        AfterTheProgramSection(
+            trainingProgram = trainingProgram
+        )
+
+
     }
 }
 

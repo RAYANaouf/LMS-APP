@@ -75,7 +75,7 @@ fun Cover(
                 contentDescription = null,
                 tint = customWhite0,
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(16.dp)
             )
         }
         AsyncImage(
