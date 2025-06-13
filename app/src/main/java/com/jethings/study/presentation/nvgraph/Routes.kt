@@ -54,7 +54,7 @@ data class academyHome(val academy_id: Int)  : AppScreen()
 
 
 
-
+@Serializable
 object manageAcademy : AppScreen()
 
 @Serializable

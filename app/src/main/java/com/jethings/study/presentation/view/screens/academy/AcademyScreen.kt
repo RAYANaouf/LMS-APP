@@ -164,7 +164,7 @@ fun SharedTransitionScope.AcademyScreen(
                 Spacer(modifier = Modifier.height(35.dp))
 
                 ActionBtnsSection(
-
+                    onNavigate = onNavigate
                 )
 
 
