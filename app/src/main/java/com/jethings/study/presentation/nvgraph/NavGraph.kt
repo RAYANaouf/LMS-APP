@@ -465,6 +465,13 @@ fun NavGraph(
                 //val viewModel = koinViewModel<TrainingProgramViewModel>()
 
                 ManageAcademyScreen(
+                    onNavigate = {
+                        navController.navigate(createTrainingProgram){
+                            popUpTo(manageAcademy){
+                                inclusive = true
+                            }
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(

@@ -2,6 +2,7 @@ package com.jethings.study.presentation.view.screens.manageAcademy
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,14 +27,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jethings.study.R
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.createTrainingProgram
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.p_color1_dark
 import com.jethings.study.presentation.ui.theme.p_color2_dark
 import com.jethings.study.util.objects.TextStyles
+import kotlinx.serialization.Serializable
 
 
 @Composable
 fun ManageAcademyScreen(
+    onNavigate : (AppScreen)->Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -49,6 +54,9 @@ fun ManageAcademyScreen(
                 .height(55.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(p_color1_dark)
+                .clickable {
+
+                }
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -78,6 +86,9 @@ fun ManageAcademyScreen(
                 .height(55.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(p_color2_dark)
+                .clickable {
+                    onNavigate(createTrainingProgram)
+                }
         ) {
             Box(
                 contentAlignment = Alignment.Center,
