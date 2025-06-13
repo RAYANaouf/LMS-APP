@@ -49,6 +49,7 @@ import com.jethings.study.presentation.view.screens.home.HomeScreen
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
 import com.jethings.study.presentation.view.screens.logIn.LogInScreen
 import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewModel
+import com.jethings.study.presentation.view.screens.manageAcademy.ManageAcademyScreen
 import com.jethings.study.presentation.view.screens.profile.ProfileScreen
 import com.jethings.study.presentation.view.screens.profile.viewModel.ProfileViewModel
 import com.jethings.study.presentation.view.screens.signUp.signUpViewModel.SignUpViewModel
@@ -436,6 +437,34 @@ fun NavGraph(
                         description = args.desc,
                         coverPhoto = args.coverPhoto
                     ),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
+            }
+
+
+
+
+
+            /*****************************   manage Academy ****************************/
+
+            composable<manageAcademy> {
+
+                SideEffect {
+                    currentPage(manageAcademy)
+                }
+
+
+                set_system_bars_color(customWhite0 , background_color_0)
+
+                //val viewModel = koinViewModel<TrainingProgramViewModel>()
+
+                ManageAcademyScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(

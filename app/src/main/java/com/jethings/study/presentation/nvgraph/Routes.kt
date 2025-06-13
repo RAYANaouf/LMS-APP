@@ -52,6 +52,11 @@ object academyOwnerList  : AppScreen()
 @Serializable
 data class academyHome(val academy_id: Int)  : AppScreen()
 
+
+
+
+object manageAcademy : AppScreen()
+
 @Serializable
 object createTrainingProgram : AppScreen()
 @Serializable

@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.manageAcademy
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite3
@@ -25,6 +27,7 @@ import com.jethings.study.util.objects.TextStyles
 
 @Composable
 fun ActionBtnsSection(
+    onNavigate : (AppScreen) ->Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -43,11 +46,11 @@ fun ActionBtnsSection(
                 .clip(RoundedCornerShape(12.dp))
                 .background(p_color1)
                 .clickable {
-
+                    onNavigate(manageAcademy)
                 }
         ) {
             Text(
-                text = "Edit",
+                text = "Manage",
                 style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customWhite0)
             )
         }
