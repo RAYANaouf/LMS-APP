@@ -53,9 +53,7 @@ fun trainingProgramScreen(
         modifier = modifier
     ) {
 
-        Cover(
-            trainingProgram = trainingProgram
-        )
+        Cover()
 
         Spacer(modifier = Modifier.height(16.dp))
 
