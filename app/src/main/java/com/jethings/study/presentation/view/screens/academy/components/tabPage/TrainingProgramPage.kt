@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -59,12 +60,14 @@ fun TrainingProgramPage(
     modifier: Modifier = Modifier
 ) {
 
+    val context = LocalContext.current
+
     LaunchedEffect(academyId) {
         onEvent(
             AcademyEvent.GetAllTrainingProgramByAcademy(academy_id = academyId),{
-                //Toast.makeText(context , "Success" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(context , "Success ${if(academy?.trainingPrograms?.isEmpty() == true){"Empty"} else {"Filled"}}" , Toast.LENGTH_SHORT).show()
             },{
-                //Toast.makeText(context , "Failure" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(context , "Failure" , Toast.LENGTH_SHORT).show()
             }
         )
     }

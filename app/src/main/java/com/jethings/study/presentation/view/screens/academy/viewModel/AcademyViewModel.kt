@@ -24,6 +24,9 @@ class AcademyViewModel(
     var academy by mutableStateOf<Academy?>(null)
         private set
 
+
+
+
     fun onEvent( event : AcademyEvent , onSuccess : ()->Unit = {} , onFailure : ()->Unit = {}){
         when(event){
             is AcademyEvent.GetAcademyDetails -> {
