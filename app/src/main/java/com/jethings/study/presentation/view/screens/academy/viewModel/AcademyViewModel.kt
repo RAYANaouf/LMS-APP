@@ -17,6 +17,7 @@ import com.jethings.study.presentation.view.screens.academy.events.AcademyEvent
 import kotlinx.coroutines.launch
 
 class AcademyViewModel(
+    private val academyId : Int ,
     private val academyManager: AcademyManager,
     private val trainingProgramManager: TrainingProgramManager
 ) : ViewModel() {
@@ -25,23 +26,21 @@ class AcademyViewModel(
         private set
 
 
+    init {
+        getAcademyDetails()
+    }
 
+    private fun getAcademyDetails() {
+        viewModelScope.launch {
+            val result = academyManager.getAcademyById(academyId)
+            if (result is GetAcademyByIdResponse.Success) {
+                academy = Academy(id = result.data.id, name = result.data.name , email = result.data.email , phone = result.data.phone , logo = result.data.logo , owners = result.data.owners)
+            }
+        }
+    }
 
     fun onEvent( event : AcademyEvent , onSuccess : ()->Unit = {} , onFailure : ()->Unit = {}){
         when(event){
-            is AcademyEvent.GetAcademyDetails -> {
-                viewModelScope.launch {
-                    val result = academyManager.getAcademyById(event.academy_id)
-                    if(result is GetAcademyByIdResponse.Success){
-                        academy = Academy(id = result.data.id, name = result.data.name , email = result.data.email , phone = result.data.phone , logo = result.data.logo , owners = result.data.owners)
-                        onSuccess()
-                    }else if(result is GetAcademyByIdResponse.Failure){
-                        onFailure()
-                    }else{
-                        onFailure()
-                    }
-                }
-            }
             is AcademyEvent.GetAllTrainingProgramByAcademy ->{
                 viewModelScope.launch {
                     val result = trainingProgramManager.getAllByAcademy(event.academy_id)

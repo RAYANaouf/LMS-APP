@@ -184,8 +184,9 @@ val koinModule = module{
         )
     }
 
-    viewModel {
+    viewModel { (academyId : Int) ->
         AcademyViewModel(
+            academyId = academyId,
             academyManager = get(),
             trainingProgramManager = get()
         )
