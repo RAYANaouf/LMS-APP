@@ -31,6 +31,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -82,6 +83,8 @@ import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.ui.theme.p_color5
 import com.jethings.study.presentation.view.screens.home.components.SuperAdminSection.SuperAdminSection
 import com.jethings.study.presentation.view.screens.home.components.academySection.academySection
+import com.jethings.study.presentation.view.screens.home.components.bestTrainingProgramSection.BestTrainingPrograms
+import com.jethings.study.presentation.view.screens.home.components.homeSlider.HomePageTrainingProgramSlider
 import com.jethings.study.presentation.view.screens.home.components.teacherSection.TeacherSection
 import com.jethings.study.presentation.view.screens.home.events.HomeEvents
 import com.jethings.study.util.objects.TextStyles
@@ -178,7 +181,7 @@ fun SharedTransitionScope.HomeScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(55.dp)
+                    .height(65.dp)
             ) {
 
                 Spacer(Modifier.width(16.dp))
@@ -187,8 +190,11 @@ fun SharedTransitionScope.HomeScreen(
                     shadowElevation = 3.dp,
                     color = customWhite0,
                     shape = RoundedCornerShape(8.dp),
+                    onClick = {
+
+                    },
                     modifier = Modifier
-                        .size(45.dp)
+                        .size(40.dp)
                 ) {
                     Box(
                         contentAlignment = Alignment.Center,
@@ -196,11 +202,11 @@ fun SharedTransitionScope.HomeScreen(
                             .fillMaxSize()
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Home,
+                            imageVector = Icons.Default.Person,
                             contentDescription = null,
                             tint = customBlack7,
                             modifier = Modifier
-                                .size(26.dp)
+                                .size(22.dp)
                         )
                     }
                 }
@@ -211,8 +217,11 @@ fun SharedTransitionScope.HomeScreen(
                     shadowElevation = 3.dp,
                     color = customWhite0,
                     shape = RoundedCornerShape(8.dp),
+                    onClick = {
+
+                    },
                     modifier = Modifier
-                        .size(45.dp)
+                        .size(40.dp)
                 ) {
                     Box(
                         contentAlignment = Alignment.Center,
@@ -223,7 +232,7 @@ fun SharedTransitionScope.HomeScreen(
                             contentDescription = null,
                             tint = customBlack7,
                             modifier = Modifier
-                                .size(26.dp)
+                                .size(22.dp)
                         )
                     }
                 }
@@ -232,6 +241,12 @@ fun SharedTransitionScope.HomeScreen(
                 Spacer(Modifier.width(16.dp))
 
             }
+
+            HomePageTrainingProgramSlider()
+
+            //posts section
+
+            BestTrainingPrograms()
         }
     }
 
