@@ -14,6 +14,7 @@ import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.TrainingProgramManager
 import com.jethings.study.presentation.view.screens.academy.events.AcademyEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class AcademyViewModel(
@@ -25,13 +26,15 @@ class AcademyViewModel(
     var academy by mutableStateOf<Academy?>(null)
         private set
 
+    private var academyLoadJob: Job? = null
+
 
     init {
         getAcademyDetails()
     }
 
     private fun getAcademyDetails() {
-        viewModelScope.launch {
+        academyLoadJob = viewModelScope.launch {
             val result = academyManager.getAcademyById(academyId)
             if (result is GetAcademyByIdResponse.Success) {
                 academy = Academy(id = result.data.id, name = result.data.name , email = result.data.email , phone = result.data.phone , logo = result.data.logo , owners = result.data.owners)
@@ -43,6 +46,9 @@ class AcademyViewModel(
         when(event){
             is AcademyEvent.GetAllTrainingProgramByAcademy ->{
                 viewModelScope.launch {
+                    //wait for academy to be loaded
+                    academyLoadJob?.join()
+
                     val result = trainingProgramManager.getAllByAcademy(event.academy_id)
                     if(result is GetAllByAcademyResponse.Success){
                         //academy  =result.data.trainingPrograms
