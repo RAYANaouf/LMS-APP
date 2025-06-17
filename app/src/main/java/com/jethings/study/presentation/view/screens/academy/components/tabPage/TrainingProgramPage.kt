@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
@@ -38,6 +39,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
 import com.jethings.study.presentation.nvgraph.createTrainingProgram
@@ -79,6 +81,15 @@ fun TrainingProgramPage(
             .fillMaxWidth()
             .padding(vertical = 12.dp)
     ) {
+
+//        Row(
+//            verticalAlignment = Alignment.CenterVertically,
+//            modifier = Modifier
+//                .height(55.dp)
+//        ) {
+//
+//        }
+
         if (academy?.trainingPrograms?.isEmpty() == true) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -288,5 +299,25 @@ fun TrainingProgramPage(
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
+}
+
+
+@Preview
+@Composable
+private fun TrainingProgramPage_prev() {
+    TrainingProgramPage(
+        academyId = 0,
+        academy = Academy(
+            trainingPrograms = listOf(
+                TrainingProgram(name = "Kotlin" , description = "Kotlin course for biggeners"),
+                TrainingProgram(name = "python" , description = "Kotlin course for biggeners"),
+                TrainingProgram(name = "Kotlin" , description = "Kotlin course for biggeners"),
+                TrainingProgram(name = "Kotlin" , description = "Kotlin course for biggeners"),
+                TrainingProgram(name = "Kotlin" , description = "Kotlin course for biggeners"),
+            )
+        )
+    )
 }

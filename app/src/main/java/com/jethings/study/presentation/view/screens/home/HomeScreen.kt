@@ -29,6 +29,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -66,11 +68,14 @@ import com.jethings.study.presentation.nvgraph.superAdminScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack5
+import com.jethings.study.presentation.ui.theme.customBlack7
 import com.jethings.study.presentation.ui.theme.customBlack8
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite1
 import com.jethings.study.presentation.ui.theme.customWhite3
 import com.jethings.study.presentation.ui.theme.customWhite5
+import com.jethings.study.presentation.ui.theme.customWhite7
+import com.jethings.study.presentation.ui.theme.customWhite8
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.ui.theme.p_color4
@@ -162,13 +167,71 @@ fun SharedTransitionScope.HomeScreen(
             Spacer(modifier = Modifier.height(180.dp))
 
         }
-    }else{
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
+    }
+    else{
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
                 .fillMaxSize()
         ) {
-            Text(text = "Home page for non Admin")
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp)
+            ) {
+
+                Spacer(Modifier.width(16.dp))
+
+                Surface(
+                    shadowElevation = 3.dp,
+                    color = customWhite0,
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .size(45.dp)
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = null,
+                            tint = customBlack7,
+                            modifier = Modifier
+                                .size(26.dp)
+                        )
+                    }
+                }
+                Spacer(
+                    Modifier.weight(1f)
+                )
+                Surface(
+                    shadowElevation = 3.dp,
+                    color = customWhite0,
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .size(45.dp)
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = null,
+                            tint = customBlack7,
+                            modifier = Modifier
+                                .size(26.dp)
+                        )
+                    }
+                }
+
+
+                Spacer(Modifier.width(16.dp))
+
+            }
         }
     }
 

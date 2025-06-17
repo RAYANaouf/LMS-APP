@@ -100,7 +100,7 @@ fun NavGraph(
                 }
 
 
-                set_system_bars_color(customWhite0 , background_color_0)
+                set_system_bars_color(background_color_0 , background_color_0)
 
                 val viewModel : HomeViewModel = koinViewModel()
 

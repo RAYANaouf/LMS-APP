@@ -114,22 +114,8 @@ fun SharedTransitionScope.AcademyScreen(
     val pagerState = rememberPagerState {
         3
     }
-    val coroutineScope = rememberCoroutineScope()
 
 
-    /*** effect  ***/
-//    LaunchedEffect(key1 = academyId) {
-//        Log.d("get academy by id" , "===> $academyId")
-//        onEvent(
-//            AcademyEvent.GetAcademyDetails(
-//                academy_id = academyId
-//            ),{
-//                //Toast.makeText(context , "Academy details refreshed. ${academy?.logo}" , Toast.LENGTH_SHORT).show()
-//            },{
-//                //Toast.makeText(context , "Error in getting Academy details." , Toast.LENGTH_SHORT).show()
-//            }
-//        )
-//    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
