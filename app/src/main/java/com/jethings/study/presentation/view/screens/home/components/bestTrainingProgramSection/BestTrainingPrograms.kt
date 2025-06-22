@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.ui.theme.customBlack0
 import com.jethings.study.presentation.ui.theme.customBlack2
 import com.jethings.study.presentation.ui.theme.customBlack3
@@ -43,6 +45,7 @@ import com.jethings.study.util.objects.TextStyles
 
 @Composable
 fun BestTrainingPrograms(
+    trainingProgramList : List<TrainingProgram> = emptyList(),
     modifier: Modifier = Modifier
 ) {
 
@@ -79,96 +82,97 @@ fun BestTrainingPrograms(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            for ( i in 1..10){
-                item {
-                    Surface(
-                        shadowElevation = 2.dp,
-                        shape = RoundedCornerShape(12.dp),
+
+
+            items(trainingProgramList){
+                Surface(
+                    shadowElevation = 2.dp,
+                    shape = RoundedCornerShape(12.dp),
 //                            border = BorderStroke(
 //                                width = 1.dp,
 //                                color = customWhite3
 //                            ),
+                    modifier = Modifier
+                        .height(180.dp)
+                        .width(150.dp)
+                ) {
+                    Column(
                         modifier = Modifier
-                            .height(180.dp)
-                            .width(150.dp)
+                            .fillMaxSize()
                     ) {
-                        Column(
+                        AsyncImage(
+                            model = it.coverPhoto,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .fillMaxSize()
+                                .padding(8.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(customWhite2)
+                                .height(90.dp)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                        ) {
+                            Text(
+                                text = it.name,
+                                style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack3 ),
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis
+
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
                         ) {
                             AsyncImage(
                                 model = "",
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
-                                    .padding(8.dp)
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .background(customWhite2)
-                                    .height(90.dp)
+                                    .size(20.dp)
+                                    .clip(CircleShape)
+                                    .background(customBlack0.copy(alpha = 0.3f))
                             )
                             Box(
                                 modifier = Modifier
                                     .padding(horizontal = 8.dp)
+                                    .weight(1f)
                             ) {
                                 Text(
-                                    text = "The name of the training programThe name of the training programThe name of the training program",
-                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack3 ),
-                                    maxLines = 2,
+                                    text = "Teacher name",
+                                    style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack3 , fontSize = 10.sp),
+                                    maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
 
                                 )
                             }
-
-                            Spacer(modifier = Modifier.weight(1f))
-
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .padding(horizontal = 8.dp)
-                            ) {
-                                AsyncImage(
-                                    model = "",
+                            Row {
+                                Icon(
+                                    imageVector = Icons.Default.Star,
                                     contentDescription = null,
-                                    contentScale = ContentScale.Crop,
+                                    tint = p_color4,
                                     modifier = Modifier
-                                        .size(20.dp)
-                                        .clip(CircleShape)
-                                        .background(customBlack0.copy(alpha = 0.3f))
+                                        .size(16.dp)
                                 )
-                                Box(
-                                    modifier = Modifier
-                                        .padding(horizontal = 8.dp)
-                                        .weight(1f)
-                                ) {
-                                    Text(
-                                        text = "Teacher name",
-                                        style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack3 , fontSize = 10.sp),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-
-                                    )
-                                }
-                                Row {
-                                    Icon(
-                                        imageVector = Icons.Default.Star,
-                                        contentDescription = null,
-                                        tint = p_color4,
-                                        modifier = Modifier
-                                            .size(16.dp)
-                                    )
-                                    Text(
-                                        text = "4.1",
-                                        fontSize = 12.sp,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                }
+                                Text(
+                                    text = "4.1",
+                                    fontSize = 12.sp,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
                             }
-                            Spacer(modifier = Modifier.height(8.dp))
                         }
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
             }
+
         }
     }
 

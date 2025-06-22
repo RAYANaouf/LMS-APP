@@ -62,6 +62,7 @@ import com.jethings.study.R
 import com.jethings.study.data.db.entities.Account
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.SuperAdmin
+import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
@@ -79,13 +80,14 @@ import com.jethings.study.presentation.view.screens.home.events.HomeEvents
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.HomeScreen(
-    account        : Account? = null,
+    account             : Account? = null,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    academyList    : List<Academy>    = emptyList(),
-    superAdminList : List<SuperAdmin> = emptyList(),
-    onEvent        : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
-    onNavigate     : (AppScreen) -> Unit = {},
-    modifier       : Modifier = Modifier
+    academyList         : List<Academy>    = emptyList(),
+    superAdminList      : List<SuperAdmin> = emptyList(),
+    trainingProgramList : List<TrainingProgram> = emptyList(),
+    onEvent             : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
+    onNavigate          : (AppScreen) -> Unit = {},
+    modifier            : Modifier = Modifier
 ) {
 
     /*** vars ***/
@@ -232,7 +234,9 @@ fun SharedTransitionScope.HomeScreen(
 
             //posts section
 
-            BestTrainingPrograms()
+            BestTrainingPrograms(
+                trainingProgramList = trainingProgramList
+            )
         }
     }
 

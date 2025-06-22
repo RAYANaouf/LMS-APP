@@ -39,11 +39,9 @@ class HomeViewModel(
             if(response is GetAllTrainingProgramResponse.Success){
                 trainingProgramList.clear()
                 trainingProgramList.addAll(response.data.trainingPrograms)
-
             }else{
                 Toast.makeText(context , "Failed to get Training programs" , Toast.LENGTH_SHORT).show()
                 Log.d("get all training program : " , response.toString())
-
             }
         }
     }

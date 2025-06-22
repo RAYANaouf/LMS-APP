@@ -109,6 +109,7 @@ fun NavGraph(
                     animatedVisibilityScope = this@composable,
                     superAdminList = viewModel.superAdminList,
                     academyList = viewModel.academyList,
+                    trainingProgramList = viewModel.trainingProgramList,
                     onEvent     = viewModel::onEvent,
                     onNavigate = {
                         navController.navigate( it )
