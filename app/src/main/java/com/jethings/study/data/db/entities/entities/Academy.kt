@@ -17,4 +17,5 @@ data class Academy (
     val logo   : String?    = null,
     val owners : List<Int>  = emptyList(),
     val trainingPrograms : List<TrainingProgram> = emptyList(),
+    val posts            : List<Post>            = emptyList(),
 )
