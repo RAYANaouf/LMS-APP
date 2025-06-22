@@ -1,9 +1,6 @@
 package com.jethings.study.data.api.req_res_classes.PostModule.getAllByAcademy
 
-import com.jethings.study.data.db.entities.Account
-import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.Post
-import com.jethings.study.data.db.entities.entities.TrainingProgram
 import kotlinx.serialization.Serializable
 
 
