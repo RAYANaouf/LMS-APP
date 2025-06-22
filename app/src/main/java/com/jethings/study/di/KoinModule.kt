@@ -11,6 +11,7 @@ import com.jethings.study.data.db.dao.AccountDao
 import com.jethings.study.data.manager.AcademyManager_imp
 import com.jethings.study.data.manager.AppEntryManager_imp
 import com.jethings.study.data.manager.LocalUserManager_imp
+import com.jethings.study.data.manager.PostManager_imp
 import com.jethings.study.data.manager.RemoteAccountManager_imp
 import com.jethings.study.data.manager.SuperAcademyManager_imp
 import com.jethings.study.data.manager.TrainingProgramManager_imp
@@ -18,6 +19,7 @@ import com.jethings.study.data.manager.UserManager_imp
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.AppEntryManager
 import com.jethings.study.domain.manager.LocalUserManager
+import com.jethings.study.domain.manager.PostManager
 import com.jethings.study.domain.manager.RemoteAccountManager
 import com.jethings.study.domain.manager.SuperAdminManager
 import com.jethings.study.domain.manager.TrainingProgramManager
@@ -143,6 +145,12 @@ val koinModule = module{
         )
     }
 
+    single<PostManager> {
+        PostManager_imp(
+            client = get()
+        )
+    }
+
 
 
     /********************  viewModels   **************************/
@@ -182,6 +190,7 @@ val koinModule = module{
             trainingProgramManager = get(),
             academyManager = get(),
             superAdminManager = get(),
+            postManager = get(),
             context = get()
         )
     }

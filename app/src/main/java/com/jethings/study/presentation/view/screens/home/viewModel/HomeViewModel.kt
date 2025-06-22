@@ -8,12 +8,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jethings.study.data.api.req_res_classes.SuperAdminModule.GetAllSuperAdminResponse
 import com.jethings.study.data.api.req_res_classes.AcademyModule.getAllAcademies.GetAllAcademiesResponse
+import com.jethings.study.data.api.req_res_classes.PostModule.getAllPost.GetAllPostsResponse
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramResponse
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramSuccessResponse
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.data.db.entities.entities.Post
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.domain.manager.AcademyManager
+import com.jethings.study.domain.manager.PostManager
 import com.jethings.study.domain.manager.SuperAdminManager
 import com.jethings.study.domain.manager.TrainingProgramManager
 import com.jethings.study.presentation.view.screens.home.events.HomeEvents
@@ -22,13 +25,16 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val trainingProgramManager : TrainingProgramManager,
-    private val academyManager: AcademyManager,
-    private val superAdminManager: SuperAdminManager,
+    private val academyManager         : AcademyManager,
+    private val superAdminManager      : SuperAdminManager,
+    private val postManager            : PostManager,
     private val context : Context
 ) : ViewModel() {
 
 
     val trainingProgramList    = mutableStateListOf<TrainingProgram>()
+    val postList               = mutableStateListOf<Post>()
+
     val academyList            = mutableStateListOf<Academy>()
     val superAdminList         = mutableStateListOf<SuperAdmin>()
 
@@ -39,6 +45,18 @@ class HomeViewModel(
             if(response is GetAllTrainingProgramResponse.Success){
                 trainingProgramList.clear()
                 trainingProgramList.addAll(response.data.trainingPrograms)
+            }else{
+                Toast.makeText(context , "Failed to get Training programs" , Toast.LENGTH_SHORT).show()
+                Log.d("get all training program : " , response.toString())
+            }
+        }
+
+        viewModelScope.launch {
+            val response = postManager.getAll()
+            if(response is GetAllPostsResponse.Success){
+                postList.clear()
+                postList.addAll(response.data.posts)
+                Toast.makeText(context , "Suuccess to get Training programs" , Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(context , "Failed to get Training programs" , Toast.LENGTH_SHORT).show()
                 Log.d("get all training program : " , response.toString())
@@ -75,6 +93,12 @@ class HomeViewModel(
             is HomeEvents.getAllTrainingProgram ->{
                 viewModelScope.launch {
                     val response = trainingProgramManager.getAll()
+                    Toast.makeText(context , "response ${response}" , Toast.LENGTH_SHORT).show()
+                }
+            }
+            is HomeEvents.getAllPost ->{
+                viewModelScope.launch {
+                    val response = postManager.getAll()
                     Toast.makeText(context , "response ${response}" , Toast.LENGTH_SHORT).show()
                 }
             }
