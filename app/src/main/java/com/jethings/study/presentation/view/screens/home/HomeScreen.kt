@@ -165,70 +165,70 @@ fun SharedTransitionScope.HomeScreen(
             modifier = modifier
                 .fillMaxSize()
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(65.dp)
-            ) {
-
-                Spacer(Modifier.width(16.dp))
-
-                Surface(
-                    shadowElevation = 3.dp,
-                    color = customWhite0,
-                    shape = RoundedCornerShape(8.dp),
-                    onClick = {
-
-                    },
-                    modifier = Modifier
-                        .size(40.dp)
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = null,
-                            tint = customBlack7,
-                            modifier = Modifier
-                                .size(22.dp)
-                        )
-                    }
-                }
-                Spacer(
-                    Modifier.weight(1f)
-                )
-                Surface(
-                    shadowElevation = 3.dp,
-                    color = customWhite0,
-                    shape = RoundedCornerShape(8.dp),
-                    onClick = {
-
-                    },
-                    modifier = Modifier
-                        .size(40.dp)
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = null,
-                            tint = customBlack7,
-                            modifier = Modifier
-                                .size(22.dp)
-                        )
-                    }
-                }
-
-
-                Spacer(Modifier.width(16.dp))
-
-            }
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(65.dp)
+//            ) {
+//
+//                Spacer(Modifier.width(16.dp))
+//
+//                Surface(
+//                    shadowElevation = 3.dp,
+//                    color = customWhite0,
+//                    shape = RoundedCornerShape(8.dp),
+//                    onClick = {
+//
+//                    },
+//                    modifier = Modifier
+//                        .size(40.dp)
+//                ) {
+//                    Box(
+//                        contentAlignment = Alignment.Center,
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                    ) {
+//                        Icon(
+//                            imageVector = Icons.Default.Person,
+//                            contentDescription = null,
+//                            tint = customBlack7,
+//                            modifier = Modifier
+//                                .size(22.dp)
+//                        )
+//                    }
+//                }
+//                Spacer(
+//                    Modifier.weight(1f)
+//                )
+//                Surface(
+//                    shadowElevation = 3.dp,
+//                    color = customWhite0,
+//                    shape = RoundedCornerShape(8.dp),
+//                    onClick = {
+//
+//                    },
+//                    modifier = Modifier
+//                        .size(40.dp)
+//                ) {
+//                    Box(
+//                        contentAlignment = Alignment.Center,
+//                        modifier = Modifier.fillMaxSize()
+//                    ) {
+//                        Icon(
+//                            imageVector = Icons.Default.Menu,
+//                            contentDescription = null,
+//                            tint = customBlack7,
+//                            modifier = Modifier
+//                                .size(22.dp)
+//                        )
+//                    }
+//                }
+//
+//
+//                Spacer(Modifier.width(16.dp))
+//
+//            }
 
             HomePageTrainingProgramSlider()
 

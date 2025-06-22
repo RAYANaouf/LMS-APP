@@ -148,7 +148,7 @@ class MainViewModel (
                     show_navigationDrawer = true
                 }else{
                     //top bar
-                    show_topbar      =  false
+                    show_topbar      =  true
                     topbar_shadow    =  2.dp
                     setTopBarInfo(img = R.drawable.app_store_logo_none_background , txt = "Dirassa" )
 
