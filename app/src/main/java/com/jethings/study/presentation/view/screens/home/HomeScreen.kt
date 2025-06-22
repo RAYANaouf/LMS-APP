@@ -67,28 +67,14 @@ import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.superAdminScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
-import com.jethings.study.presentation.ui.theme.customBlack2
-import com.jethings.study.presentation.ui.theme.customBlack5
 import com.jethings.study.presentation.ui.theme.customBlack7
-import com.jethings.study.presentation.ui.theme.customBlack8
 import com.jethings.study.presentation.ui.theme.customWhite0
-import com.jethings.study.presentation.ui.theme.customWhite1
-import com.jethings.study.presentation.ui.theme.customWhite3
-import com.jethings.study.presentation.ui.theme.customWhite5
-import com.jethings.study.presentation.ui.theme.customWhite7
-import com.jethings.study.presentation.ui.theme.customWhite8
-import com.jethings.study.presentation.ui.theme.p_color1
-import com.jethings.study.presentation.ui.theme.p_color2
-import com.jethings.study.presentation.ui.theme.p_color4
-import com.jethings.study.presentation.ui.theme.p_color5
 import com.jethings.study.presentation.view.screens.home.components.SuperAdminSection.SuperAdminSection
 import com.jethings.study.presentation.view.screens.home.components.academySection.academySection
 import com.jethings.study.presentation.view.screens.home.components.bestTrainingProgramSection.BestTrainingPrograms
 import com.jethings.study.presentation.view.screens.home.components.homeSlider.HomePageTrainingProgramSlider
 import com.jethings.study.presentation.view.screens.home.components.teacherSection.TeacherSection
 import com.jethings.study.presentation.view.screens.home.events.HomeEvents
-import com.jethings.study.util.objects.TextStyles
-import java.time.format.TextStyle
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

@@ -63,7 +63,7 @@ fun TabSection(
                 .padding(vertical = 8.dp, horizontal = 26.dp)
         ) {
             Text(
-                text = "Courses",
+                text = "Post",
                 style = TextStyle(fontSize = if (pagerState.currentPage == 0) 22.sp else 17.sp , fontWeight = FontWeight(if (pagerState.currentPage == 0) 600 else 500) , color = if (pagerState.currentPage == 0) p_color1 else customBlack3)
             )
         }

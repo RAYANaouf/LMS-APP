@@ -6,10 +6,14 @@ import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.createT
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.createTrainingProgram.CreateTrainingProgramResponse
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllByAcademy.GetAllByAcademyResponse
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllByAcademy.GetAllByAcademySuccessResponse
+import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramFailureResponse
+import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramResponse
+import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramSuccessResponse
 import com.jethings.study.domain.manager.TrainingProgramManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
 import com.jethings.study.util.objects.Constants.CREATE_TrainingProgram
+import com.jethings.study.util.objects.Constants.GET_ALL_TrainingProgram
 import com.jethings.study.util.objects.Constants.GET_ALL_TrainingProgram_BY_ACADEMY
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -29,8 +33,6 @@ class TrainingProgramManager_imp(
 
     override suspend fun createTrainingProgram(request: CreateTrainingProgramRequest , cover : File?): CreateTrainingProgramResponse {
         return try {
-
-            Log.d("request ==> " , request.toString())
             val response = client.submitFormWithBinaryData(
                 url = BASE_URL + CREATE_TrainingProgram,
                 formData = formData {
@@ -68,7 +70,8 @@ class TrainingProgramManager_imp(
             }
 
 
-        }catch (e : Exception){
+        }
+        catch (e : Exception){
             Log.d("exception create training program  " , e.toString() )
             CreateTrainingProgramResponse.Exception(e)
         }
@@ -88,10 +91,27 @@ class TrainingProgramManager_imp(
             }else{
                 GetAllByAcademyResponse.Failure(response.body())
             }
-        }catch (e : Exception){
+        }
+        catch (e : Exception){
 
             Log.d("the exception get training programs by academy " , e.toString() )
             GetAllByAcademyResponse.Exception(e)
+        }
+    }
+
+    override suspend fun getAll(): GetAllTrainingProgramResponse {
+        return try {
+            val response = client.get(BASE_URL + GET_ALL_TrainingProgram){
+                contentType(ContentType.Application.Json)
+            }
+
+            if (response.status == HttpStatusCode.OK){
+                GetAllTrainingProgramResponse.Success(data = GetAllTrainingProgramSuccessResponse(response.body()))
+            }else{
+                GetAllTrainingProgramResponse.Failure(data = response.body())
+            }
+        }catch (e : Exception){
+            GetAllTrainingProgramResponse.Exception(e)
         }
     }
 

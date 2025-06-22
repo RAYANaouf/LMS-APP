@@ -179,8 +179,10 @@ val koinModule = module{
 
     viewModel {
         HomeViewModel(
+            trainingProgramManager = get(),
             academyManager = get(),
-            superAdminManager = get()
+            superAdminManager = get(),
+            context = get()
         )
     }
 
