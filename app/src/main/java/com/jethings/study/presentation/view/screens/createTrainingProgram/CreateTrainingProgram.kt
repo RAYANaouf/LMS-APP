@@ -68,7 +68,7 @@ import com.jethings.study.presentation.ui.theme.customBlack6
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite3
 import com.jethings.study.presentation.ui.theme.p_color1
-import com.jethings.study.presentation.view.screens.createTrainingProgram.event.CreatePost
+import com.jethings.study.presentation.view.screens.createTrainingProgram.event.CreateTrainingProgramEvent
 import com.jethings.study.util.objects.TextStyles
 import kotlinx.coroutines.launch
 import java.io.File
@@ -78,7 +78,7 @@ import java.io.InputStream
 
 @Composable
 fun CreateTrainingPrograms(
-    onEvent: (CreatePost, onSucess : () -> Unit, onFailure : () -> Unit) -> Unit = { _, _, _ ->},
+    onEvent: (CreateTrainingProgramEvent, onSucess : () -> Unit, onFailure : () -> Unit) -> Unit = { _, _, _ ->},
     selectedAcademy : Academy? = null,
     onDone : ()->Unit = {},
     modifier: Modifier = Modifier
@@ -521,7 +521,7 @@ fun CreateTrainingPrograms(
                                                 uriToFile(context, it)
                                             }
                                             onEvent(
-                                                CreatePost.CreateTrainingProgram(
+                                                CreateTrainingProgramEvent.CreateTrainingProgram(
                                                     createTrainingProgramRequest = CreateTrainingProgramRequest(
                                                         academyId = it.id.toLong(),
                                                         name = name,
