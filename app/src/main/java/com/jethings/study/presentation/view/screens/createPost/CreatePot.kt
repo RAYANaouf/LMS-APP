@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.jethings.study.R
+import com.jethings.study.data.api.req_res_classes.PostModule.createPost.CreatePostRequest
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.createTrainingProgram.CreateTrainingProgramRequest
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.presentation.ui.theme.customBlack0
@@ -101,8 +102,8 @@ fun CreatePost(
     }
 
     Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
+        modifier = modifier
+            .fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Surface(
@@ -225,7 +226,7 @@ fun CreatePost(
             modifier = Modifier
                 .animateContentSize()
                 .height(55.dp)
-                .weight(1f)
+                .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(p_color1)
@@ -250,18 +251,11 @@ fun CreatePost(
                                 uriToFile(context, it)
                             }
                             onEvent(
-                                CreateTrainingProgramEvent.CreateTrainingProgram(
-                                    createTrainingProgramRequest = CreateTrainingProgramRequest(
+                                CreatePostEvent.CreatePost(
+                                    createPostRequest = CreatePostRequest(
                                         academyId = it.id.toLong(),
-                                        name = name,
-                                        description = description,
-                                        prerequisites = prerequisites,
-                                        whatYouWillLearn = what_learn,
-                                        minAge = min_age.toIntOrNull() ?: 10,
-                                        maxAge = max_age.toIntOrNull() ?: 60,
-                                        price = 0f,
-                                        targetAudience = "",
-                                        whatYouCanDoAfter = ""
+                                        title = title,
+                                        content = content
                                     ),
                                     file
                                 ), {
@@ -283,11 +277,14 @@ fun CreatePost(
                 }
         ) {
             Text(
-                text = if(pagerState.currentPage == 1) "Create" else "Next",
+                text = "Publish",
                 style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customWhite0),
                 modifier = Modifier.align(Alignment.Center)
             )
         }
+
+
+        Spacer(Modifier.height(35.dp))
 
 
     }
