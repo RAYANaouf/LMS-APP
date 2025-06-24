@@ -259,6 +259,7 @@ fun CreatePost(
                                     ),
                                     file
                                 ), {
+                                    Toast.makeText(context , "we just success" , Toast.LENGTH_SHORT).show()
                                     search = false
                                     done = true
                                 }, {
