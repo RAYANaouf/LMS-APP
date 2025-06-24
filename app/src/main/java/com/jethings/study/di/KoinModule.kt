@@ -28,6 +28,7 @@ import com.jethings.study.presentation.view.screens.TrainingProgram.viewModel.Tr
 import com.jethings.study.presentation.view.screens.academy.viewModel.AcademyViewModel
 import com.jethings.study.presentation.view.screens.academyOwners.viewModel.AcademyOwnersViewModel
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
+import com.jethings.study.presentation.view.screens.createPost.viewmodel.CreatePostViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel.CreateSuperAdminViewModel
 import com.jethings.study.presentation.view.screens.createTrainingProgram.viewModel.CreateTrainingProgramViewModel
 import com.jethings.study.presentation.view.screens.home.viewModel.HomeViewModel
@@ -237,6 +238,12 @@ val koinModule = module{
     viewModel {
         TrainingProgramViewModel(
 
+        )
+    }
+
+    viewModel {
+        CreatePostViewModel(
+            postManager = get()
         )
     }
 

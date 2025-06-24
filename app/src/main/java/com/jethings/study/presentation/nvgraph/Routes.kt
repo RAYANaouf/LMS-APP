@@ -57,6 +57,7 @@ data class academyHome(val academy_id: Int)  : AppScreen()
 @Serializable
 object manageAcademy : AppScreen()
 
+//training program
 @Serializable
 object createTrainingProgram : AppScreen()
 @Serializable
@@ -67,3 +68,7 @@ data class TrainingProgramScreen(
     val coverPhoto  : String = ""
 ) : AppScreen()
 
+
+//post
+@Serializable
+object createPost : AppScreen()

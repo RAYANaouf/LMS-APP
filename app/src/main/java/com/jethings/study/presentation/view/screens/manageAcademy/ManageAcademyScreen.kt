@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jethings.study.R
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.createPost
 import com.jethings.study.presentation.nvgraph.createTrainingProgram
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.p_color1_dark
@@ -55,7 +56,7 @@ fun ManageAcademyScreen(
                 .clip(RoundedCornerShape(16.dp))
                 .background(p_color1_dark)
                 .clickable {
-
+                    onNavigate(createPost)
                 }
         ) {
             Box(

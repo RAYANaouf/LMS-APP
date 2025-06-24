@@ -41,6 +41,8 @@ import com.jethings.study.presentation.view.screens.academyOwners.viewModel.Acad
 import com.jethings.study.presentation.view.screens.addOwner.AcademyOwnerScreen
 import com.jethings.study.presentation.view.screens.createAcademy.CreateAcademyScreen
 import com.jethings.study.presentation.view.screens.createAcademy.viewModel.CreateAcademyViewModel
+import com.jethings.study.presentation.view.screens.createPost.CreatePost
+import com.jethings.study.presentation.view.screens.createPost.viewmodel.CreatePostViewModel
 import com.jethings.study.presentation.view.screens.createSuperAdmin.CreateSuperAdminScreen
 import com.jethings.study.presentation.view.screens.createSuperAdmin.viewModel.CreateSuperAdminViewModel
 import com.jethings.study.presentation.view.screens.createTrainingProgram.CreateTrainingPrograms
@@ -88,8 +90,6 @@ fun NavGraph(
         ) {
 
 
-
-            /***************************** home ****************************/
 
             /***************************** home ****************************/
 
@@ -436,7 +436,29 @@ fun NavGraph(
             }
 
 
+            /*****************************   create post    ****************************/
 
+            composable<createPost> {
+
+                SideEffect {
+                    currentPage(createPost)
+                }
+
+                set_system_bars_color(background_color_0 , background_color_0)
+
+                val viewModel = koinViewModel<CreatePostViewModel>()
+
+                CreatePost(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                        )
+                )
+
+            }
 
 
             /*****************************   manage Academy ****************************/
@@ -454,7 +476,7 @@ fun NavGraph(
 
                 ManageAcademyScreen(
                     onNavigate = {
-                        navController.navigate(createTrainingProgram){
+                        navController.navigate(it){
                             popUpTo(manageAcademy){
                                 inclusive = true
                             }
