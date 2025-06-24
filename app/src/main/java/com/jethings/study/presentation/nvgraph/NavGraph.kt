@@ -449,6 +449,7 @@ fun NavGraph(
                 val viewModel = koinViewModel<CreatePostViewModel>()
 
                 CreatePost(
+                    selectedAcademy = selectedAcademy,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
