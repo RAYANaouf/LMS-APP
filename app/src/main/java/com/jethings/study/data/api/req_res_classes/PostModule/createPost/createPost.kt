@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 // request
 @Serializable
 data class CreatePostRequest(
-    val academyId          : Long,
+    val academyId          : Int,
     val title              : String ,
     val content            : String ,
 )

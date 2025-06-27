@@ -50,8 +50,12 @@ class PostManager_imp(
             )
 
             if ( response.status == HttpStatusCode.Created ) {
+                Log.d("create post request : " , response.status.value.toString())
                 CreatePostResponse.Success(response.body())
             }else{
+                Log.d("create post request (error) : " , request.toString())
+                Log.d("create post request (error) : " , response.body<String>().toString())
+                Log.d("create post request (error) : " , response.status.value.toString())
                 CreatePostResponse.Failure(response.body())
             }
 

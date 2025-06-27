@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.createPost
 
+import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -58,10 +59,11 @@ import com.jethings.study.presentation.ui.theme.customBlack6
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.view.screens.createPost.event.CreatePostEvent
-import com.jethings.study.presentation.view.screens.createTrainingProgram.event.CreateTrainingProgramEvent
-import com.jethings.study.presentation.view.screens.createTrainingProgram.uriToFile
 import com.jethings.study.util.objects.TextStyles
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 @Composable
 fun CreatePost(
@@ -246,14 +248,15 @@ fun CreatePost(
                                 .show()
                             return@launch
                         }
-                        selectedAcademy?.let {
+                        selectedAcademy.let {
                             val file = coverPhoto?.let {
                                 uriToFile(context, it)
                             }
+                            Toast.makeText(context , "file : ${file?.name}" , Toast.LENGTH_SHORT).show()
                             onEvent(
                                 CreatePostEvent.CreatePost(
                                     createPostRequest = CreatePostRequest(
-                                        academyId = it.id.toLong(),
+                                        academyId = it.id,
                                         title = title,
                                         content = content
                                     ),
@@ -267,7 +270,7 @@ fun CreatePost(
                                     Toast
                                         .makeText(
                                             context,
-                                            "Failure",
+                                            "Failure !!!",
                                             Toast.LENGTH_SHORT
                                         )
                                         .show()
@@ -289,6 +292,19 @@ fun CreatePost(
 
 
     }
+}
+
+
+fun uriToFile(context: Context, uri: Uri): File? {
+    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+    val fileName = "post_photo_${System.currentTimeMillis()}.jpg"
+    val file = File(context.cacheDir, fileName)
+    inputStream?.use { input ->
+        FileOutputStream(file).use { output ->
+            input.copyTo(output)
+        }
+    }
+    return file
 }
 
 
