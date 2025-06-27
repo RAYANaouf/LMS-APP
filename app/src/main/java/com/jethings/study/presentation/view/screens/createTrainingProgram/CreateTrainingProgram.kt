@@ -561,7 +561,8 @@ fun CreateTrainingPrograms(
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
-                }else{
+                }
+                else{
 
                     val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.loading))
                     val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)

@@ -1,6 +1,7 @@
 package com.jethings.study.presentation.view.screens.createPost
 
 import android.content.Context
+import android.graphics.Color.parseColor
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -30,6 +31,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -50,6 +53,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.api.req_res_classes.PostModule.createPost.CreatePostRequest
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.createTrainingProgram.CreateTrainingProgramRequest
@@ -103,192 +111,249 @@ fun CreatePost(
 
     }
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Surface(
-            shadowElevation = 2.dp,
-            shape = RoundedCornerShape(12.dp),
-            onClick = {
-                launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp)
-                .padding(horizontal = 16.dp)
-        ) {
+
+
+        if (done){
+            val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.lottie_done))
+            val progress    by animateLottieCompositionAsState(
+                composition = composition,
+            )
+
+            LaunchedEffect(key1 = progress) {
+                if(progress == 1f){
+                    onDone()
+                }
+            }
+
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color(parseColor("#55000000")))
+                    .zIndex(10f)
             ) {
-                Spacer(
+                LottieAnimation(
+                    composition = composition,
+                    progress = {
+                        progress
+                    },
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(customBlack0.copy(alpha = 0.08f))
-                        .zIndex(2f)
+                        .fillMaxWidth(0.8f)
                 )
-                if ( coverPhoto == null){
-
-                    Image(
-                        painter = painterResource(id = R.drawable.training_program),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .blur(
-                                2.5.dp,
-                                2.5.dp
-                            )
-                    )
-
-                    Text(
-                        text = "Add Photo",
-                        style = TextStyle(
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight(600),
-                            color = p_color1
-                        )
-                    )
-                }else{
-                    AsyncImage(
-                        model = coverPhoto,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
-                }
             }
         }
 
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value         = title,
-            onValueChange = {
-                title = it
-            },
-            textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = p_color1),
-            label         = {
-                Text(
-                    text = "title",
-                    style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack6),
-                )
-            },
-            leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.post), contentDescription = null , tint = p_color1 ,  modifier = Modifier.size(26.dp))
-            },
-            shape = RoundedCornerShape(12.dp),
-            colors = TextFieldDefaults.colors().copy(focusedContainerColor = customWhite0 , unfocusedContainerColor = customWhite0 , focusedLabelColor = p_color1 , focusedIndicatorColor = p_color1 , cursorColor = p_color1 ),
-            modifier       = Modifier
-                .heightIn(min = 45.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-
-        Spacer(modifier = Modifier.height(26.dp))
-
-        Box(
+        Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .fillMaxSize()
         ) {
-            Text(
-                text = "Content",
-                style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack6)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value         = content,
-            onValueChange = {
-                content = it
-            },
-            textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack6),
-            placeholder   = {
-                Text(
-                    text = "content of the post ...",
-                    style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack6),
-                )
-            },
-            shape = RoundedCornerShape(8.dp),
-            colors = TextFieldDefaults.colors().copy(focusedContainerColor = customWhite0 , unfocusedContainerColor = customWhite0 , focusedLabelColor = p_color1 , focusedIndicatorColor = p_color1 , cursorColor = p_color1 ),
-            modifier       = Modifier
-                .heightIn(min = 150.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
+            Spacer(modifier = Modifier.height(16.dp))
+            Surface(
+                shadowElevation = 2.dp,
+                shape = RoundedCornerShape(12.dp),
+                onClick = {
+                    launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .padding(horizontal = 16.dp)
+            ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(customBlack0.copy(alpha = 0.08f))
+                            .zIndex(2f)
+                    )
+                    if ( coverPhoto == null){
 
-        Spacer(Modifier.weight(1f))
-
-        Box(
-            modifier = Modifier
-                .animateContentSize()
-                .height(55.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(p_color1)
-                .clickable {
-                    if (done)
-                        return@clickable
-                    coroutineScope.launch {
-                        search = true
-                        if (selectedAcademy == null) {
-                            search = false
-                            Toast
-                                .makeText(
-                                    context,
-                                    "No selected academy",
-                                    Toast.LENGTH_SHORT
+                        Image(
+                            painter = painterResource(id = R.drawable.training_program),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .blur(
+                                    2.5.dp,
+                                    2.5.dp
                                 )
-                                .show()
-                            return@launch
-                        }
-                        selectedAcademy.let {
-                            val file = coverPhoto?.let {
-                                uriToFile(context, it)
-                            }
-                            Toast.makeText(context , "file : ${file?.name}" , Toast.LENGTH_SHORT).show()
-                            onEvent(
-                                CreatePostEvent.CreatePost(
-                                    createPostRequest = CreatePostRequest(
-                                        academyId = it.id,
-                                        title = title,
-                                        content = content
-                                    ),
-                                    file
-                                ), {
-                                    Toast.makeText(context , "we just success" , Toast.LENGTH_SHORT).show()
-                                    search = false
-                                    done = true
-                                }, {
+                        )
+
+                        Text(
+                            text = "Add Photo",
+                            style = TextStyle(
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight(600),
+                                color = p_color1
+                            )
+                        )
+                    }else{
+                        AsyncImage(
+                            model = coverPhoto,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                    }
+                }
+            }
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value         = title,
+                onValueChange = {
+                    title = it
+                },
+                textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = p_color1),
+                label         = {
+                    Text(
+                        text = "title",
+                        style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack6),
+                    )
+                },
+                leadingIcon = {
+                    Icon(painter = painterResource(id = R.drawable.post), contentDescription = null , tint = p_color1 ,  modifier = Modifier.size(26.dp))
+                },
+                shape = RoundedCornerShape(12.dp),
+                colors = TextFieldDefaults.colors().copy(focusedContainerColor = customWhite0 , unfocusedContainerColor = customWhite0 , focusedLabelColor = p_color1 , focusedIndicatorColor = p_color1 , cursorColor = p_color1 ),
+                modifier       = Modifier
+                    .heightIn(min = 45.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
+
+            Spacer(modifier = Modifier.height(26.dp))
+
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(
+                    text = "Content",
+                    style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack6)
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value         = content,
+                onValueChange = {
+                    content = it
+                },
+                textStyle     = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack6),
+                placeholder   = {
+                    Text(
+                        text = "content of the post ...",
+                        style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack6),
+                    )
+                },
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors().copy(focusedContainerColor = customWhite0 , unfocusedContainerColor = customWhite0 , focusedLabelColor = p_color1 , focusedIndicatorColor = p_color1 , cursorColor = p_color1 ),
+                modifier       = Modifier
+                    .heightIn(min = 150.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
+
+            Spacer(Modifier.weight(1f))
+
+
+            if (!search){
+                Box(
+                    modifier = Modifier
+                        .animateContentSize()
+                        .height(55.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(p_color1)
+                        .clickable {
+                            if (done)
+                                return@clickable
+                            coroutineScope.launch {
+                                search = true
+                                if (selectedAcademy == null) {
                                     search = false
                                     Toast
                                         .makeText(
                                             context,
-                                            "Failure !!!",
+                                            "No selected academy",
                                             Toast.LENGTH_SHORT
                                         )
                                         .show()
+                                    return@launch
                                 }
-                            )
+                                selectedAcademy.let {
+                                    val file = coverPhoto?.let {
+                                        uriToFile(context, it)
+                                    }
+                                    Toast.makeText(context , "file : ${file?.name}" , Toast.LENGTH_SHORT).show()
+                                    onEvent(
+                                        CreatePostEvent.CreatePost(
+                                            createPostRequest = CreatePostRequest(
+                                                academyId = it.id,
+                                                title = title,
+                                                content = content
+                                            ),
+                                            file
+                                        ), {
+                                            Toast.makeText(context , "we just success" , Toast.LENGTH_SHORT).show()
+                                            search = false
+                                            done = true
+                                        }, {
+                                            search = false
+                                            Toast
+                                                .makeText(
+                                                    context,
+                                                    "Failure !!!",
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                .show()
+                                        }
+                                    )
+                                }
+                            }
                         }
-                    }
+                ) {
+                    Text(
+                        text = "Publish",
+                        style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customWhite0),
+                        modifier = Modifier.align(Alignment.Center)
+                    )
                 }
-        ) {
-            Text(
-                text = "Publish",
-                style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customWhite0),
-                modifier = Modifier.align(Alignment.Center)
-            )
+            }
+            else{
+
+                val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.loading))
+                val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
+
+                LottieAnimation(
+                    composition = composition ,
+                    progress = progress.value ,
+                    modifier = Modifier
+                        .animateContentSize()
+                        .height(55.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                )
+
+            }
+
+            Spacer(Modifier.height(35.dp))
+
+
         }
-
-
-        Spacer(Modifier.height(35.dp))
 
 
     }

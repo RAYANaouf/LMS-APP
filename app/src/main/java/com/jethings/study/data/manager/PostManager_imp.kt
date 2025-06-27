@@ -41,7 +41,7 @@ class PostManager_imp(
 
                     //only append image if file is not null
                     cover?.let{
-                        append("cover" , it.readBytes() , Headers.build {
+                        append("photo" , it.readBytes() , Headers.build {
                             append(HttpHeaders.ContentType , "image/jpg")
                             append(HttpHeaders.ContentDisposition , "filename=${cover.name}")
                         })
