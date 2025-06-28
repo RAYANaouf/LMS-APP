@@ -69,9 +69,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCancellationBehavior
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.Account
@@ -84,6 +86,7 @@ import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.superAdminScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
+import com.jethings.study.presentation.ui.theme.customBlack5
 import com.jethings.study.presentation.ui.theme.customBlack7
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite1
@@ -96,7 +99,9 @@ import com.jethings.study.presentation.view.screens.home.components.bestTraining
 import com.jethings.study.presentation.view.screens.home.components.homeSlider.HomePageTrainingProgramSlider
 import com.jethings.study.presentation.view.screens.home.components.teacherSection.TeacherSection
 import com.jethings.study.presentation.view.screens.home.events.HomeEvents
+import com.jethings.study.util.objects.TextStyles
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.Async
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -200,6 +205,8 @@ fun SharedTransitionScope.HomeScreen(
 
                 val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.heart))
                 val progress = animateLottieCompositionAsState(composition = composition , iterations = 1)
+                val animatable = rememberLottieAnimatable()
+
 
                 var liked by rememberSaveable {
                     mutableStateOf(false)
@@ -208,7 +215,6 @@ fun SharedTransitionScope.HomeScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1f)
                         .padding(horizontal = 8.dp , vertical = 16.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .background(customWhite0)
@@ -217,7 +223,7 @@ fun SharedTransitionScope.HomeScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .height(45.dp)
-                            .padding(horizontal = 12.dp)
+                            .padding(horizontal = 16.dp)
                     ) {
                         Box(
                             modifier = Modifier
@@ -225,20 +231,54 @@ fun SharedTransitionScope.HomeScreen(
                                 .size(30.dp)
                                 .background(customWhite1)
                         ){
-
+                            AsyncImage(
+                                model = post.academy?.logo,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
                         }
                         Spacer(Modifier.width(8.dp))
-                        Text("Academy Name")
+                        Text(
+                            post.academy?.name ?: ""
+                        )
                     }
+
+                    if(post.title != ""){
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp , end = 12.dp , bottom = 8.dp)
+                        ) {
+                            Text(
+                                text = post.title,
+                                style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack5)
+                            )
+                        }
+                    }
+
                     AsyncImage(
                         model = post.photo,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(1f)
+                            .aspectRatio(1f)
                             .background(customWhite1)
                     )
+                    if(post.content != ""){
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp , end = 12.dp , top = 8.dp)
+                        ) {
+                            Text(
+                                text = post.content,
+                                style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack5)
+                            )
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .height(45.dp)
@@ -252,7 +292,11 @@ fun SharedTransitionScope.HomeScreen(
                                     if (!liked) {
                                         liked = true
                                         scope.launch {
-
+                                            animatable.animate(
+                                                composition = composition,
+                                                speed = 3f,
+                                                cancellationBehavior = LottieCancellationBehavior.OnIterationFinish
+                                            )
                                         }
                                     } else {
                                         liked = false
@@ -260,9 +304,10 @@ fun SharedTransitionScope.HomeScreen(
                                     }
                                 }
                         ){
+
                             LottieAnimation(
                                 composition = composition ,
-                                progress = progress.progress ,
+                                progress = if (liked) animatable.progress else 0f ,
                                 modifier = Modifier
                                     .size(45.dp)
                                     .background(customWhite1)
@@ -312,7 +357,12 @@ private fun HomeScreen_preview() {
                     animatedVisibilityScope = this ,
                     trainingProgramList = listOf(TrainingProgram(),TrainingProgram(),TrainingProgram()),
                     academyList = listOf(Academy(name = "Daracedemy") , Academy(name = "Djabali Academy"), Academy(name = "Achbal Academy")) ,
-                    postList = listOf(Post(photo = "https://storage.googleapis.com/daracademyfireproject.appspot.com/post_cover/dd6e06cf-900d-4594-9b85-68b58712556c.jpg"),Post(),Post(),Post(),),
+                    postList = listOf(
+                        Post(photo = "https://storage.googleapis.com/daracademyfireproject.appspot.com/post_cover/dd6e06cf-900d-4594-9b85-68b58712556c.jpg" , content = "the content of the post..."),
+                        Post(),
+                        Post(),
+                        Post()
+                    ),
                     modifier = Modifier
                         .fillMaxSize()
                         .background(background_color_0)

@@ -13,5 +13,7 @@ data class Post (
     val id       : Long        = 0,
     val title    : String      = "",
     val content  : String      = "",
-    val photo    : String?     = ""
+    val photo    : String?     = "",
+
+    val academy: Academy?      = null
 )

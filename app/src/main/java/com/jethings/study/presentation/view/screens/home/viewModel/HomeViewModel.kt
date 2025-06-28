@@ -56,7 +56,7 @@ class HomeViewModel(
             if(response is GetAllPostsResponse.Success){
                 postList.clear()
                 postList.addAll(response.data.posts)
-                Toast.makeText(context , "Suuccess to get Training programs" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(context , "Success to get Training programs" , Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(context , "Failed to get Training programs" , Toast.LENGTH_SHORT).show()
                 Log.d("get all training program : " , response.toString())
