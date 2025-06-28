@@ -200,7 +200,8 @@ val koinModule = module{
         AcademyViewModel(
             academyId = academyId,
             academyManager = get(),
-            trainingProgramManager = get()
+            trainingProgramManager = get(),
+            postManager = get()
         )
     }
 

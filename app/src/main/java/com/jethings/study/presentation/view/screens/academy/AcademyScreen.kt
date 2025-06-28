@@ -64,6 +64,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.data.db.entities.entities.Post
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
 import com.jethings.study.presentation.nvgraph.academyOwnerList
@@ -176,7 +177,9 @@ fun SharedTransitionScope.AcademyScreen(
         ) { page ->
             when(page){
                 0 ->{
-                    PostPage()
+                    PostPage(
+                        postList = academy?.posts ?: emptyList()
+                    )
                 }
                 1 ->{
                     TrainingProgramPage(
