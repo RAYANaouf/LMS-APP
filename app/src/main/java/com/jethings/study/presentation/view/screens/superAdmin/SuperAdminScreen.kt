@@ -253,7 +253,7 @@ fun SharedTransitionScope.SuperAdminScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        text = "Delete",
+                        text = "Deactivate",
                         style = TextStyle(
                             color = p_color5,
                             fontSize = 15.sp,
@@ -281,7 +281,7 @@ fun SharedTransitionScope.SuperAdminScreen(
 @Composable
 private fun SuperAdminScreen_prev() {
     SharedTransitionLayout {
-        NavHost(navController = rememberNavController(), startDestination = superAdminScreen ){
+        NavHost(navController = rememberNavController(), startDestination = superAdminScreen(1) ){
             composable<superAdminScreen> {
                 SuperAdminScreen(
                     animatedVisibilityScope = this,
