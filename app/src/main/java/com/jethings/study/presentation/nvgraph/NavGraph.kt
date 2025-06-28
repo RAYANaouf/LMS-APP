@@ -105,13 +105,14 @@ fun NavGraph(
                 val viewModel : HomeViewModel = koinViewModel()
 
                 HomeScreen(
-                    account     = account,
+                    account             = account,
                     animatedVisibilityScope = this@composable,
-                    superAdminList = viewModel.superAdminList,
-                    academyList = viewModel.academyList,
+                    superAdminList      = viewModel.superAdminList,
+                    academyList         = viewModel.academyList,
                     trainingProgramList = viewModel.trainingProgramList,
-                    onEvent     = viewModel::onEvent,
-                    onNavigate = {
+                    postList            = viewModel.postList,
+                    onEvent             = viewModel::onEvent,
+                    onNavigate          = {
                         navController.navigate( it )
                     },
                     modifier    = Modifier

@@ -7,6 +7,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,10 +45,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,9 +67,16 @@ import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.Account
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.data.db.entities.entities.Post
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.AppScreen
@@ -70,12 +86,17 @@ import com.jethings.study.presentation.nvgraph.superAdminScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack7
 import com.jethings.study.presentation.ui.theme.customWhite0
+import com.jethings.study.presentation.ui.theme.customWhite1
+import com.jethings.study.presentation.ui.theme.customWhite3
+import com.jethings.study.presentation.ui.theme.customWhite5
+import com.jethings.study.presentation.ui.theme.customWhite8
 import com.jethings.study.presentation.view.screens.home.components.SuperAdminSection.SuperAdminSection
 import com.jethings.study.presentation.view.screens.home.components.academySection.academySection
 import com.jethings.study.presentation.view.screens.home.components.bestTrainingProgramSection.BestTrainingPrograms
 import com.jethings.study.presentation.view.screens.home.components.homeSlider.HomePageTrainingProgramSlider
 import com.jethings.study.presentation.view.screens.home.components.teacherSection.TeacherSection
 import com.jethings.study.presentation.view.screens.home.events.HomeEvents
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -85,6 +106,7 @@ fun SharedTransitionScope.HomeScreen(
     academyList         : List<Academy>    = emptyList(),
     superAdminList      : List<SuperAdmin> = emptyList(),
     trainingProgramList : List<TrainingProgram> = emptyList(),
+    postList            : List<Post> = emptyList(),
     onEvent             : (HomeEvents , onSuccess : () -> Unit, onFailure : () -> Unit) -> Unit = {_,_,_->},
     onNavigate          : (AppScreen) -> Unit = {},
     modifier            : Modifier = Modifier
@@ -92,6 +114,7 @@ fun SharedTransitionScope.HomeScreen(
 
     /*** vars ***/
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
         onEvent(
@@ -164,79 +187,113 @@ fun SharedTransitionScope.HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(65.dp)
-//            ) {
-//
-//                Spacer(Modifier.width(16.dp))
-//
-//                Surface(
-//                    shadowElevation = 3.dp,
-//                    color = customWhite0,
-//                    shape = RoundedCornerShape(8.dp),
-//                    onClick = {
-//
-//                    },
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                ) {
-//                    Box(
-//                        contentAlignment = Alignment.Center,
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                    ) {
-//                        Icon(
-//                            imageVector = Icons.Default.Person,
-//                            contentDescription = null,
-//                            tint = customBlack7,
-//                            modifier = Modifier
-//                                .size(22.dp)
-//                        )
-//                    }
-//                }
-//                Spacer(
-//                    Modifier.weight(1f)
-//                )
-//                Surface(
-//                    shadowElevation = 3.dp,
-//                    color = customWhite0,
-//                    shape = RoundedCornerShape(8.dp),
-//                    onClick = {
-//
-//                    },
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                ) {
-//                    Box(
-//                        contentAlignment = Alignment.Center,
-//                        modifier = Modifier.fillMaxSize()
-//                    ) {
-//                        Icon(
-//                            imageVector = Icons.Default.Menu,
-//                            contentDescription = null,
-//                            tint = customBlack7,
-//                            modifier = Modifier
-//                                .size(22.dp)
-//                        )
-//                    }
-//                }
-//
-//
-//                Spacer(Modifier.width(16.dp))
-//
-//            }
 
             HomePageTrainingProgramSlider()
-
-            //posts section
-
             BestTrainingPrograms(
                 trainingProgramList = trainingProgramList
             )
+            //posts section
+
+            postList.forEach { post ->
+
+                val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.heart))
+                val progress = animateLottieCompositionAsState(composition = composition , iterations = 1)
+
+                var liked by rememberSaveable {
+                    mutableStateOf(false)
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .padding(horizontal = 8.dp , vertical = 16.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(customWhite0)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .height(45.dp)
+                            .padding(horizontal = 12.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .size(30.dp)
+                                .background(customWhite1)
+                        ){
+
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Text("Academy Name")
+                    }
+                    AsyncImage(
+                        model = post.photo,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .background(customWhite1)
+                    )
+                    Row(
+                        modifier = Modifier
+                            .height(45.dp)
+                    ) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable {
+                                    if (!liked) {
+                                        liked = true
+                                        scope.launch {
+
+                                        }
+                                    } else {
+                                        liked = false
+
+                                    }
+                                }
+                        ){
+                            LottieAnimation(
+                                composition = composition ,
+                                progress = progress.progress ,
+                                modifier = Modifier
+                                    .size(45.dp)
+                                    .background(customWhite1)
+                            )
+                        }
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                        ){
+                            Icon(
+                                painter = painterResource(R.drawable.commenter),
+                                contentDescription = null,
+                                tint = customBlack7,
+                                modifier = Modifier
+                                    .size(25.dp)
+                            )
+                        }
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .weight(1f)
+                        ){
+
+                        }
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(80.dp))
         }
     }
 
@@ -253,7 +310,9 @@ private fun HomeScreen_preview() {
             composable<homeScreen> {
                 HomeScreen(
                     animatedVisibilityScope = this ,
+                    trainingProgramList = listOf(TrainingProgram(),TrainingProgram(),TrainingProgram()),
                     academyList = listOf(Academy(name = "Daracedemy") , Academy(name = "Djabali Academy"), Academy(name = "Achbal Academy")) ,
+                    postList = listOf(Post(photo = "https://storage.googleapis.com/daracademyfireproject.appspot.com/post_cover/dd6e06cf-900d-4594-9b85-68b58712556c.jpg"),Post(),Post(),Post(),),
                     modifier = Modifier
                         .fillMaxSize()
                         .background(background_color_0)

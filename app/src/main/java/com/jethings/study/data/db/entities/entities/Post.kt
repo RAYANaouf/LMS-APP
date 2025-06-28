@@ -12,5 +12,6 @@ data class Post (
     @PrimaryKey()
     val id       : Long        = 0,
     val title    : String      = "",
-    val content  : String      = ""
+    val content  : String      = "",
+    val photo    : String?     = ""
 )
