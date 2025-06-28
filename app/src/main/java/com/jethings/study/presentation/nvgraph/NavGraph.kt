@@ -113,7 +113,10 @@ fun NavGraph(
                     postList            = viewModel.postList,
                     onEvent             = viewModel::onEvent,
                     onNavigate          = {
-                        navController.navigate( it )
+                        val screen = it
+                        navController.navigate( it ){
+
+                        }
                     },
                     modifier    = Modifier
                         .fillMaxSize()

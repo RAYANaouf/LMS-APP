@@ -82,6 +82,7 @@ import com.jethings.study.data.db.entities.entities.Post
 import com.jethings.study.data.db.entities.entities.SuperAdmin
 import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.superAdminScreen
@@ -97,6 +98,7 @@ import com.jethings.study.presentation.view.screens.home.components.SuperAdminSe
 import com.jethings.study.presentation.view.screens.home.components.academySection.academySection
 import com.jethings.study.presentation.view.screens.home.components.bestTrainingProgramSection.BestTrainingPrograms
 import com.jethings.study.presentation.view.screens.home.components.homeSlider.HomePageTrainingProgramSlider
+import com.jethings.study.presentation.view.screens.home.components.postSection.PostSection
 import com.jethings.study.presentation.view.screens.home.components.teacherSection.TeacherSection
 import com.jethings.study.presentation.view.screens.home.events.HomeEvents
 import com.jethings.study.util.objects.TextStyles
@@ -197,146 +199,22 @@ fun SharedTransitionScope.HomeScreen(
 
             HomePageTrainingProgramSlider()
             BestTrainingPrograms(
-                trainingProgramList = trainingProgramList
+                trainingProgramList = trainingProgramList,
+                onClick = {
+                    onNavigate(
+                        TrainingProgramScreen(
+                            trainingProgram_id = it.id.toInt(),
+                            title = it.name,
+                            desc = it.description ?: "",
+                            coverPhoto = it.coverPhoto ?: "",
+                        )
+                    )
+                }
             )
             //posts section
-
-            postList.forEach { post ->
-
-                val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.heart))
-                val progress = animateLottieCompositionAsState(composition = composition , iterations = 1)
-                val animatable = rememberLottieAnimatable()
-
-
-                var liked by rememberSaveable {
-                    mutableStateOf(false)
-                }
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp , vertical = 16.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(customWhite0)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .height(45.dp)
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(30.dp)
-                                .background(customWhite1)
-                        ){
-                            AsyncImage(
-                                model = post.academy?.logo,
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            )
-                        }
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            post.academy?.name ?: ""
-                        )
-                    }
-
-                    if(post.title != ""){
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 16.dp , end = 12.dp , bottom = 8.dp)
-                        ) {
-                            Text(
-                                text = post.title,
-                                style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack5)
-                            )
-                        }
-                    }
-
-                    AsyncImage(
-                        model = post.photo,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f)
-                            .background(customWhite1)
-                    )
-                    if(post.content != ""){
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 16.dp , end = 12.dp , top = 8.dp)
-                        ) {
-                            Text(
-                                text = post.content,
-                                style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack5)
-                            )
-                        }
-                    }
-                    Row(
-                        modifier = Modifier
-                            .height(45.dp)
-                    ) {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .clickable {
-                                    if (!liked) {
-                                        liked = true
-                                        scope.launch {
-                                            animatable.animate(
-                                                composition = composition,
-                                                speed = 3f,
-                                                cancellationBehavior = LottieCancellationBehavior.OnIterationFinish
-                                            )
-                                        }
-                                    } else {
-                                        liked = false
-
-                                    }
-                                }
-                        ){
-
-                            LottieAnimation(
-                                composition = composition ,
-                                progress = if (liked) animatable.progress else 0f ,
-                                modifier = Modifier
-                                    .size(45.dp)
-                                    .background(customWhite1)
-                            )
-                        }
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                        ){
-                            Icon(
-                                painter = painterResource(R.drawable.commenter),
-                                contentDescription = null,
-                                tint = customBlack7,
-                                modifier = Modifier
-                                    .size(25.dp)
-                            )
-                        }
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .weight(1f)
-                        ){
-
-                        }
-                    }
-                }
-            }
+            PostSection(
+                postList = postList
+            )
 
             Spacer(Modifier.height(80.dp))
         }

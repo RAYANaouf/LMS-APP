@@ -46,6 +46,7 @@ import com.jethings.study.util.objects.TextStyles
 @Composable
 fun BestTrainingPrograms(
     trainingProgramList : List<TrainingProgram> = emptyList(),
+    onClick : (TrainingProgram)->Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -88,10 +89,9 @@ fun BestTrainingPrograms(
                 Surface(
                     shadowElevation = 2.dp,
                     shape = RoundedCornerShape(12.dp),
-//                            border = BorderStroke(
-//                                width = 1.dp,
-//                                color = customWhite3
-//                            ),
+                    onClick = {
+                        onClick(it)
+                    },
                     modifier = Modifier
                         .height(180.dp)
                         .width(150.dp)
