@@ -203,97 +203,15 @@ fun NavigationDrawer(
                             delayMillis = index * 500L, // delay between items
                             onClick = {
                                 // handle navigation or logout here
+                                if (navItem.name == "Profile"){
+                                    onNavigate(profileScreen)
+                                }
                                 onClose()
                             }
                         )
                     }
 
                 }
-
-
-                if (account != null && account.isSuperAdmin) {
-
-                    // Animated menu items
-//                    DrawerItem(
-//                        icon = R.drawable.academy_icon,
-//                        text = "Academy",
-//                        delayMillis = 1 * 500L, // delay between items
-//                        onClick = {
-//                            // handle navigation or logout here
-//                            onClose()
-//                        }
-//                    )
-//                    DrawerItem(
-//                        icon = R.drawable.admin,
-//                        text = "Super Admin",
-//                        delayMillis = 2 * 500L, // delay between items
-//                        onClick = {
-//                            // handle navigation or logout here
-//                            onClose()
-//                        }
-//                    )
-//                    DrawerItem(
-//                        icon = R.drawable.teacher,
-//                        text = "Teacher",
-//                        delayMillis = 3 * 500L, // delay between items
-//                        onClick = {
-//                            // handle navigation or logout here
-//                            onClose()
-//                        }
-//                    )
-//                    DrawerItem(
-//                        icon = R.drawable.student,
-//                        text = "Student",
-//                        delayMillis = 4 * 500L, // delay between items
-//                        onClick = {
-//                            // handle navigation or logout here
-//                            onClose()
-//                        }
-//                    )
-                }
-                if (account != null && account.ownedAcademies > 0){
-
-//                    DrawerItem(
-//                        icon = R.drawable.user,
-//                        text = "Profile",
-//                        delayMillis = if (account.isSuperAdmin) 5 * 500L else 1 * 500L, // delay between items
-//                        onClick = {
-//                            onNavigate(profileScreen)
-//                            onClose()
-//                        }
-//                    )
-//                    // Animated menu items
-//                    ExpendedDrawerItem(
-//                        icon = R.drawable.academy_icon,
-//                        text = "My Academy",
-//                        notification = account.ownedAcademies,
-//                        myAcademies = myAcademies,
-//                        selectedAcademy = selectAcademy,
-//                        delayMillis = if (account.isSuperAdmin) 6 * 500L else 2 * 500L, // delay between items
-//                        onClick = {
-//                            onSelectAcademy(it)
-//                        }
-//                    )
-//                    DrawerItem(
-//                        icon = R.drawable.statistics,
-//                        text = "Statistics",
-//                        delayMillis = if (account.isSuperAdmin) 7 * 500L else 3 * 500L, // delay between items
-//                        onClick = {
-//                            // handle navigation or logout here
-//                            onClose()
-//                        }
-//                    )
-//                    DrawerItem(
-//                        icon = R.drawable.settings,
-//                        text = "Settings",
-//                        delayMillis = if (account.isSuperAdmin) 8 * 500L else 4 * 500L, // delay between items
-//                        onClick = {
-//                            // handle navigation or logout here
-//                            onClose()
-//                        }
-//                    )
-                }
-
 
             }
 

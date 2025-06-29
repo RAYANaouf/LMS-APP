@@ -3,6 +3,7 @@ package com.jethings.study.presentation.view.screens.TrainingProgram.component.c
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.TrainingProgram
@@ -36,16 +38,17 @@ fun Cover(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(220.dp)
+            .aspectRatio(1f)
             .background(customWhite1)
     ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .padding(top = 8.dp, start = 8.dp)
-                .size(36.dp)
+                .padding(top = 12.dp, start = 12.dp)
+                .size(42.dp)
                 .clip(CircleShape)
                 .background(customBlack0.copy(alpha = 0.3f))
+                .zIndex(20f)
                 .clickable {
 
                 }
@@ -62,10 +65,11 @@ fun Cover(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(top = 8.dp, end = 8.dp)
-                .size(36.dp)
+                .padding(top = 12.dp, end = 12.dp)
+                .size(42.dp)
                 .clip(CircleShape)
                 .background(customBlack0.copy(alpha = 0.3f))
+                .zIndex(20f)
                 .clickable {
 
                 }
@@ -75,9 +79,10 @@ fun Cover(
                 contentDescription = null,
                 tint = customWhite0,
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(16.dp)
             )
         }
+
         AsyncImage(
             model = trainingProgram.coverPhoto,
             contentDescription = null ,

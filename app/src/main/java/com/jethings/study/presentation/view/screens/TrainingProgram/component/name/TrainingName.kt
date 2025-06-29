@@ -23,7 +23,7 @@ fun TrainingName (
     ) {
         Text(
             text = trainingProgram.name,
-            style = TextStyles.Monospace_TextStyles.TextStyleSZ7.copy(color = customBlack3)
+            style = TextStyles.Itim_TextStyles.TextStyleSZ4.copy(color = customBlack3)
         )
     }
 }
@@ -33,6 +33,6 @@ fun TrainingName (
 @Composable
 private fun TrainingName_prev() {
     TrainingName(
-        trainingProgram = TrainingProgram()
+        trainingProgram = TrainingProgram(name = "Android Dev")
     )
 }

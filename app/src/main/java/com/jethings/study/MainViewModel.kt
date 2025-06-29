@@ -16,6 +16,7 @@ import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.domain.manager.AcademyManager
 import com.jethings.study.domain.manager.LocalUserManager
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
 import com.jethings.study.presentation.nvgraph.academyScreen
 import com.jethings.study.presentation.nvgraph.createAcademyScreen
 import com.jethings.study.presentation.nvgraph.createSuperAdminScreen
@@ -169,7 +170,7 @@ class MainViewModel (
                     setTopBarInfo(img = R.drawable.app_store_logo_none_background , txt = "Dirassa" )
 
                     //bottom bar
-                    show_bottombar   =  true
+                    show_bottombar   =  false
                     bottombar_shadow =  0.dp
 
 
@@ -183,7 +184,6 @@ class MainViewModel (
 
                     //bottom bar
                     show_bottombar   =  false
-
                     bottombar_shadow =  0.dp
 
 
@@ -254,6 +254,17 @@ class MainViewModel (
             is superAdminScreen ->{
                 //top bar
                 show_topbar      =  true
+                topbar_shadow    =  0.dp
+                //bottom bar
+                show_bottombar   =  false
+                bottombar_shadow =  0.dp
+
+                //navigation drawer
+                show_navigationDrawer = true
+            }
+            is TrainingProgramScreen ->{
+                //top bar
+                show_topbar      =  false
                 topbar_shadow    =  0.dp
                 //bottom bar
                 show_bottombar   =  false

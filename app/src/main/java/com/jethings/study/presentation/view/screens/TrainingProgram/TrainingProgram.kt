@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsEndWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -55,49 +56,52 @@ fun trainingProgramScreen(
     trainingProgram: TrainingProgram,
     modifier: Modifier = Modifier
 ) {
-    Column(
+
+
+    LazyColumn(
         modifier = modifier
     ) {
 
-        Cover(
-            trainingProgram = trainingProgram
-        )
+        item{
+            Cover(
+                trainingProgram = trainingProgram
+            )
+            Spacer(modifier = Modifier.height(18.dp))
+            TrainingName(
+                trainingProgram = trainingProgram
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            BudgetSection(
+                trainingProgram = trainingProgram
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            Desc(
+                trainingProgram = trainingProgram
+            )
+            Spacer(modifier = Modifier.height(28.dp))
+        }
 
-        Spacer(modifier = Modifier.height(18.dp))
+        item {
+            ForWhoSection(
+                trainingProgram = trainingProgram
+            )
 
-        TrainingName(
-            trainingProgram = trainingProgram
-        )
+            Spacer(modifier = Modifier.height(28.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+            WhatWeWillLearn(
+                trainingProgram = trainingProgram
+            )
 
-        BudgetSection(
-            trainingProgram = trainingProgram
-        )
+            Spacer(modifier = Modifier.height(28.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+            AfterTheProgramSection(
+                trainingProgram = trainingProgram
+            )
+        }
 
-        Desc(
-            trainingProgram = trainingProgram
-        )
-
-        Spacer(modifier = Modifier.height(28.dp))
-
-        ForWhoSection(
-            trainingProgram = trainingProgram
-        )
-
-        Spacer(modifier = Modifier.height(28.dp))
-
-        WhatWeWillLearn(
-            trainingProgram = trainingProgram
-        )
-
-        Spacer(modifier = Modifier.height(28.dp))
-
-        AfterTheProgramSection(
-            trainingProgram = trainingProgram
-        )
+        item {
+            Spacer(Modifier.height(150.dp))
+        }
 
 
     }

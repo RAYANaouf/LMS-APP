@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.ui.theme.customBlack3
 import com.jethings.study.presentation.ui.theme.customBlack4
@@ -26,10 +29,13 @@ fun ForWhoSection(
     ) {
         Text(
             text = "For who",
-            style = TextStyles.Monospace_TextStyles.TextStyleSZ8.copy(color = customBlack3)
+            style = TextStyle(
+                fontSize = 20.sp,
+                fontWeight = FontWeight(600)
+            )
         )
     }
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.height(6.dp))
 
     Box(
         modifier = Modifier
@@ -37,7 +43,9 @@ fun ForWhoSection(
     ) {
         Text(
             text = trainingProgram.description  ?: "",
-            style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = customBlack4)
+            style = TextStyle(
+                fontSize = 14.sp
+            )
         )
     }
 }
