@@ -180,15 +180,34 @@ fun NavigationDrawer(
                 }
 
                 items.forEachIndexed { index, navItem ->
-                    DrawerItem(
-                        icon = navItem.icon,
-                        text = navItem.name,
-                        delayMillis = index * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
-                        }
-                    )
+                    if (navItem.name == "My Academy"){
+                        if (account == null)
+                            return@forEachIndexed
+                        // Animated menu items
+                        ExpendedDrawerItem(
+                            icon = R.drawable.academy_icon,
+                            text = "My Academy",
+                            notification = account.ownedAcademies,
+                            myAcademies = myAcademies,
+                            selectedAcademy = selectAcademy,
+                            delayMillis = index *  500L, // delay between items
+                            onClick = {
+                                onSelectAcademy(it)
+                            }
+                        )
+                    }
+                    else{
+                        DrawerItem(
+                            icon = navItem.icon,
+                            text = navItem.name,
+                            delayMillis = index * 500L, // delay between items
+                            onClick = {
+                                // handle navigation or logout here
+                                onClose()
+                            }
+                        )
+                    }
+
                 }
 
 
