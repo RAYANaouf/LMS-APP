@@ -33,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -61,6 +62,7 @@ import com.jethings.study.MainEvent
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.Account
 import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
@@ -147,50 +149,19 @@ fun NavigationDrawer(
                     .weight(1f)
                     .verticalScroll(rememberScrollState())
             ) {
-                if (account != null && account.isSuperAdmin) {
-
-                    // Animated menu items
-                    DrawerItem(
-                        icon = R.drawable.academy_icon,
-                        text = "Academy",
-                        delayMillis = 1 * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
-                        }
-                    )
-                    DrawerItem(
-                        icon = R.drawable.admin,
-                        text = "Super Admin",
-                        delayMillis = 2 * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
-                        }
-                    )
-                    DrawerItem(
-                        icon = R.drawable.teacher,
-                        text = "Teacher",
-                        delayMillis = 3 * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
-                        }
-                    )
-                    DrawerItem(
-                        icon = R.drawable.student,
-                        text = "Student",
-                        delayMillis = 4 * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
-                        }
-                    )
+                val items = remember {
+                    mutableStateListOf<navItem>()
                 }
-                if (account != null && account.ownedAcademies > 0){
 
-                    if (myAcademies.size == 1 && myAcademies[0].id == -1){
-                        LaunchedEffect(true) {
+                LaunchedEffect(account) {
+                    if (account != null && account.isSuperAdmin){
+                        items.add(navItem(name = "Academy" , icon = R.drawable.academy_icon))
+                        items.add(navItem(name = "Super Admin" , icon = R.drawable.admin))
+                        items.add(navItem(name = "Teacher" , icon = R.drawable.teacher))
+                        items.add(navItem(name = "Student" , icon = R.drawable.student))
+                    }
+                    if (account != null && account.ownedAcademies > 0){
+                        if (myAcademies.size == 1 && myAcademies[0].id == -1){
                             onEvent(
                                 MainEvent.GetMyAcademiesEvent(account.userId ),{
 
@@ -199,48 +170,112 @@ fun NavigationDrawer(
                                 }
                             )
                         }
+                        items.add(navItem(name = "Profile" , icon = R.drawable.user))
+                        items.add(navItem(name = "My Academy" , icon = R.drawable.academy_icon))
+                        items.add(navItem(name = "Statistics" , icon = R.drawable.statistics))
                     }
+                    if(account != null){
+                        items.add(navItem(name = "Settings" , icon = R.drawable.settings))
+                    }
+                }
 
+                items.forEachIndexed { index, navItem ->
                     DrawerItem(
-                        icon = R.drawable.user,
-                        text = "Profile",
-                        delayMillis = if (account.isSuperAdmin) 5 * 500L else 1 * 500L, // delay between items
-                        onClick = {
-                            onNavigate(profileScreen)
-                            onClose()
-                        }
-                    )
-                    // Animated menu items
-                    ExpendedDrawerItem(
-                        icon = R.drawable.academy_icon,
-                        text = "My Academy",
-                        notification = account.ownedAcademies,
-                        myAcademies = myAcademies,
-                        selectedAcademy = selectAcademy,
-                        delayMillis = if (account.isSuperAdmin) 6 * 500L else 2 * 500L, // delay between items
-                        onClick = {
-                            onSelectAcademy(it)
-                        }
-                    )
-                    DrawerItem(
-                        icon = R.drawable.statistics,
-                        text = "Statistics",
-                        delayMillis = if (account.isSuperAdmin) 7 * 500L else 3 * 500L, // delay between items
-                        onClick = {
-                            // handle navigation or logout here
-                            onClose()
-                        }
-                    )
-                    DrawerItem(
-                        icon = R.drawable.settings,
-                        text = "Settings",
-                        delayMillis = if (account.isSuperAdmin) 8 * 500L else 4 * 500L, // delay between items
+                        icon = navItem.icon,
+                        text = navItem.name,
+                        delayMillis = index * 500L, // delay between items
                         onClick = {
                             // handle navigation or logout here
                             onClose()
                         }
                     )
                 }
+
+
+                if (account != null && account.isSuperAdmin) {
+
+                    // Animated menu items
+//                    DrawerItem(
+//                        icon = R.drawable.academy_icon,
+//                        text = "Academy",
+//                        delayMillis = 1 * 500L, // delay between items
+//                        onClick = {
+//                            // handle navigation or logout here
+//                            onClose()
+//                        }
+//                    )
+//                    DrawerItem(
+//                        icon = R.drawable.admin,
+//                        text = "Super Admin",
+//                        delayMillis = 2 * 500L, // delay between items
+//                        onClick = {
+//                            // handle navigation or logout here
+//                            onClose()
+//                        }
+//                    )
+//                    DrawerItem(
+//                        icon = R.drawable.teacher,
+//                        text = "Teacher",
+//                        delayMillis = 3 * 500L, // delay between items
+//                        onClick = {
+//                            // handle navigation or logout here
+//                            onClose()
+//                        }
+//                    )
+//                    DrawerItem(
+//                        icon = R.drawable.student,
+//                        text = "Student",
+//                        delayMillis = 4 * 500L, // delay between items
+//                        onClick = {
+//                            // handle navigation or logout here
+//                            onClose()
+//                        }
+//                    )
+                }
+                if (account != null && account.ownedAcademies > 0){
+
+//                    DrawerItem(
+//                        icon = R.drawable.user,
+//                        text = "Profile",
+//                        delayMillis = if (account.isSuperAdmin) 5 * 500L else 1 * 500L, // delay between items
+//                        onClick = {
+//                            onNavigate(profileScreen)
+//                            onClose()
+//                        }
+//                    )
+//                    // Animated menu items
+//                    ExpendedDrawerItem(
+//                        icon = R.drawable.academy_icon,
+//                        text = "My Academy",
+//                        notification = account.ownedAcademies,
+//                        myAcademies = myAcademies,
+//                        selectedAcademy = selectAcademy,
+//                        delayMillis = if (account.isSuperAdmin) 6 * 500L else 2 * 500L, // delay between items
+//                        onClick = {
+//                            onSelectAcademy(it)
+//                        }
+//                    )
+//                    DrawerItem(
+//                        icon = R.drawable.statistics,
+//                        text = "Statistics",
+//                        delayMillis = if (account.isSuperAdmin) 7 * 500L else 3 * 500L, // delay between items
+//                        onClick = {
+//                            // handle navigation or logout here
+//                            onClose()
+//                        }
+//                    )
+//                    DrawerItem(
+//                        icon = R.drawable.settings,
+//                        text = "Settings",
+//                        delayMillis = if (account.isSuperAdmin) 8 * 500L else 4 * 500L, // delay between items
+//                        onClick = {
+//                            // handle navigation or logout here
+//                            onClose()
+//                        }
+//                    )
+                }
+
+
             }
 
         }
@@ -457,6 +492,14 @@ fun ExpendedDrawerItem(
         }
     }
 }
+
+
+
+
+private data class navItem(
+    val name : String ,
+    val icon : Int
+)
 
 
 @Preview
