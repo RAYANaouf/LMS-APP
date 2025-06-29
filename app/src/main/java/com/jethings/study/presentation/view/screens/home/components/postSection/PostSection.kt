@@ -1,6 +1,8 @@
 package com.jethings.study.presentation.view.screens.home.components.postSection
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,10 +42,16 @@ import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Post
+import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customBlack5
 import com.jethings.study.presentation.ui.theme.customBlack7
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite1
+import com.jethings.study.presentation.ui.theme.customWhite2
+import com.jethings.study.presentation.ui.theme.customWhite3
+import com.jethings.study.presentation.ui.theme.customWhite4
+import com.jethings.study.presentation.ui.theme.customWhite7
+import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.util.objects.TextStyles
 import kotlinx.coroutines.launch
 
@@ -71,15 +79,18 @@ fun PostSection(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp , vertical = 16.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .padding( vertical = 16.dp)
                     .background(customWhite0)
+                    .border(
+                        width = 0.5.dp,
+                        color = customWhite4,
+                    )
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .height(45.dp)
-                        .padding(horizontal = 16.dp)
+                        .padding(start = 16.dp)
                 ) {
                     Box(
                         modifier = Modifier
@@ -99,6 +110,38 @@ fun PostSection(
                     Text(
                         post.academy?.name ?: ""
                     )
+                    Spacer(Modifier.weight(1f))
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .width(85.dp)
+                            .fillMaxHeight()
+                            .padding(vertical = 6.dp)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(customWhite3)
+                            .clickable {
+
+                            }
+                    ) {
+                        Text(
+                            text = "Visit",
+                            style = TextStyles.Itim_TextStyles.TextStyleSZ8.copy(color = customBlack4)
+                        )
+                    }
+
+                    Spacer(Modifier.width(10.dp))
+
+                    Icon(
+                        painter = painterResource(R.drawable.three_points),
+                        contentDescription = null,
+                        tint = customWhite7,
+                        modifier = Modifier
+                            .height(35.dp)
+                            .clickable {
+
+                            }
+                    )
+
                 }
 
                 if(post.title != ""){
@@ -122,6 +165,10 @@ fun PostSection(
                         .fillMaxWidth()
                         .aspectRatio(1f)
                         .background(customWhite1)
+                        .border(
+                            width = 0.5.dp,
+                            color = customWhite2
+                        )
                 )
                 if(post.content != ""){
                     Row(
