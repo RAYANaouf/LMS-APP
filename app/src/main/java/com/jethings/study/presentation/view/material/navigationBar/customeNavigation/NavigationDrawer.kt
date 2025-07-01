@@ -65,6 +65,7 @@ import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.profileScreen
+import com.jethings.study.presentation.nvgraph.settingScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customWhite0
@@ -205,6 +206,8 @@ fun NavigationDrawer(
                                 // handle navigation or logout here
                                 if (navItem.name == "Profile"){
                                     onNavigate(profileScreen)
+                                }else if(navItem.name == "Settings"){
+                                    onNavigate(settingScreen)
                                 }
                                 onClose()
                             }

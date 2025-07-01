@@ -54,6 +54,7 @@ import com.jethings.study.presentation.view.screens.logIn.viewModel.LogInViewMod
 import com.jethings.study.presentation.view.screens.manageAcademy.ManageAcademyScreen
 import com.jethings.study.presentation.view.screens.profile.ProfileScreen
 import com.jethings.study.presentation.view.screens.profile.viewModel.ProfileViewModel
+import com.jethings.study.presentation.view.screens.setting.SettingScreen
 import com.jethings.study.presentation.view.screens.signUp.signUpViewModel.SignUpViewModel
 import com.jethings.study.presentation.view.screens.superAdmin.SuperAdminScreen
 import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAdminViewModel
@@ -585,8 +586,19 @@ fun NavGraph(
             }
 
 
-            /***************************** on boarding ****************************/
+            /*****************************   setting   ****************************/
 
+            composable<settingScreen> {
+
+                SideEffect {
+                    currentPage(settingScreen)
+                }
+
+                SettingScreen(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                )
+            }
 
             /***************************** on boarding ****************************/
 

@@ -12,6 +12,8 @@ open class AppScreen()
 object logInScreen : AppScreen()
 @Serializable
 object signUpScreen : AppScreen()
+@Serializable
+object settingScreen : AppScreen()
 
 
 @Serializable
