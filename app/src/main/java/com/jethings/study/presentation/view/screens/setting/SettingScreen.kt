@@ -19,9 +19,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.jethings.study.R
+import com.jethings.study.data.db.entities.Account
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack1
 import com.jethings.study.presentation.ui.theme.customBlack5
@@ -43,19 +54,52 @@ import com.jethings.study.presentation.ui.theme.customWhite2
 import com.jethings.study.presentation.ui.theme.customWhite3
 import com.jethings.study.presentation.ui.theme.customWhite7
 import com.jethings.study.presentation.ui.theme.p_color1
+import com.jethings.study.presentation.view.screens.setting.scene.bottomSheetScene.ManageAccountsBottomSheet.ManageAccountBottomSheet
 import com.jethings.study.util.objects.TextStyles
+import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingScreen(
+    account : Account? = Account(firstName = "rayan" , lastName = "aouf"),
     modifier: Modifier = Modifier
 ) {
+
+    val scope = rememberCoroutineScope()
+    val manageAccountsSheet = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+    var showManageAccountSheet by remember {
+        mutableStateOf(false)
+    }
+    LaunchedEffect(true) {
+        showManageAccountSheet = false
+        manageAccountsSheet.hide()
+    }
+
+
+    if(showManageAccountSheet){
+        ManageAccountBottomSheet(
+            sheetState = manageAccountsSheet,
+            account    = account,
+            onDismiss  = {
+                scope.launch {
+                    showManageAccountSheet = false
+                    manageAccountsSheet.hide()
+                }
+            }
+        )
+    }
+
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
+
 
 
         Spacer(Modifier.fillMaxWidth().height(55.dp))
@@ -88,7 +132,10 @@ fun SettingScreen(
                     .fillMaxWidth()
                     .height(75.dp)
                     .clickable {
-
+                        scope.launch {
+                            showManageAccountSheet = true
+                            manageAccountsSheet.show()
+                        }
                     }
                     .padding(start = 16.dp , end = 8.dp)
             ) {

@@ -55,6 +55,7 @@ import com.jethings.study.presentation.view.screens.manageAcademy.ManageAcademyS
 import com.jethings.study.presentation.view.screens.profile.ProfileScreen
 import com.jethings.study.presentation.view.screens.profile.viewModel.ProfileViewModel
 import com.jethings.study.presentation.view.screens.setting.SettingScreen
+import com.jethings.study.presentation.view.screens.setting.viewmodel.SettingsViewModel
 import com.jethings.study.presentation.view.screens.signUp.signUpViewModel.SignUpViewModel
 import com.jethings.study.presentation.view.screens.superAdmin.SuperAdminScreen
 import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAdminViewModel
@@ -594,7 +595,10 @@ fun NavGraph(
                     currentPage(settingScreen)
                 }
 
+                val viewModel = koinViewModel<SettingsViewModel>()
+
                 SettingScreen(
+                    account = viewModel.account,
                     modifier = Modifier
                         .padding(paddingValues)
                 )
