@@ -1,5 +1,10 @@
 package com.jethings.study.presentation.view.screens.profile
 
+import android.content.Context
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,6 +31,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,12 +67,30 @@ import com.jethings.study.presentation.ui.theme.p_color5
 import com.jethings.study.presentation.view.material.AlphaButton
 import com.jethings.study.presentation.view.material.AlphaTextFields.AlphaTextField
 import com.jethings.study.util.objects.TextStyles
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 @Composable
 fun ProfileScreen(
     account : Account? = Account(),
     modifier: Modifier = Modifier
 ) {
+
+
+
+    var profilePhoto by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+
+    /****** launchers *******/
+
+    var launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            profilePhoto = uri
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,6 +109,9 @@ fun ProfileScreen(
                     .size(150.dp)
                     .clip(CircleShape)
                     .background(customWhite3)
+                    .clickable {
+                        launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.admin),
@@ -370,6 +400,20 @@ fun ProfileScreen(
 
     }
 }
+
+
+
+fun uriToFile(context: Context, uri: Uri): File? {
+    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+    val file = File(context.cacheDir, "user_profilePhoto.jpg") // You can customize the name
+    inputStream?.use { input ->
+        FileOutputStream(file).use { output ->
+            input.copyTo(output)
+        }
+    }
+    return file
+}
+
 
 
 @Preview

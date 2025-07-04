@@ -227,7 +227,8 @@ val koinModule = module{
 
     viewModel {
         ProfileViewModel(
-            localUserManager = get()
+            localUserManager = get(),
+            userManager      = get()
         )
     }
 

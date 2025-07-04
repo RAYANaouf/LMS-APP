@@ -171,11 +171,11 @@ fun NavigationDrawer(
                                 }
                             )
                         }
-                        items.add(navItem(name = "Profile" , icon = R.drawable.user))
                         items.add(navItem(name = "My Academy" , icon = R.drawable.academy_icon))
                         items.add(navItem(name = "Statistics" , icon = R.drawable.statistics))
                     }
                     if(account != null){
+                        items.add(navItem(name = "Profile" , icon = R.drawable.user))
                         items.add(navItem(name = "Settings" , icon = R.drawable.settings))
                     }
                 }

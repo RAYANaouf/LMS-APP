@@ -84,7 +84,6 @@ fun CreateAcademyScreen(
         if (uri != null) {
             logo = uri
         }
-        
     }
 
 

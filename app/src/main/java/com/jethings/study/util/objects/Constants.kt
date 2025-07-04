@@ -31,6 +31,7 @@ object Constants {
     const val CREATE_SUPER_ADMIN   = "/auth/createSuperAdmin"
     //user
     const val GET_USER_BY_EMAIL       = "/user/by-email/{email}"
+    const val UPDATE_PROFILE_PHOTO    = "/user/change-profilePhoto/{id}"
     //super admin
     const val GET_ALL_SUPER_ADMIN       = "/super-admin/all"
     const val GET_SUPER_ADMIN_BY_ID     = "/super-admin/"
@@ -43,7 +44,7 @@ object Constants {
     const val ADD_ACADEMY_OWNER          = "/academy/{id}/add-owner"
     const val GET_ACADEMIES_BY_OWNER_ID  = "/academy/user/{id}"
 
-    //training program
+    //course
     const val GET_ALL_COURSE             = "/course/all"
     const val CREATE_COURSE              = "/course/create"
     const val GET_ALL_COURSE_BY_ACADEMY  = "/course/academy/{id}"
