@@ -12,9 +12,9 @@ import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllT
 import com.jethings.study.domain.manager.TrainingProgramManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
-import com.jethings.study.util.objects.Constants.CREATE_TrainingProgram
-import com.jethings.study.util.objects.Constants.GET_ALL_TrainingProgram
-import com.jethings.study.util.objects.Constants.GET_ALL_TrainingProgram_BY_ACADEMY
+import com.jethings.study.util.objects.Constants.CREATE_COURSE
+import com.jethings.study.util.objects.Constants.GET_ALL_COURSE
+import com.jethings.study.util.objects.Constants.GET_ALL_COURSE_BY_ACADEMY
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.formData
@@ -34,7 +34,7 @@ class TrainingProgramManager_imp(
     override suspend fun createTrainingProgram(request: CreateTrainingProgramRequest , cover : File?): CreateTrainingProgramResponse {
         return try {
             val response = client.submitFormWithBinaryData(
-                url = BASE_URL + CREATE_TrainingProgram,
+                url = BASE_URL + CREATE_COURSE,
                 formData = formData {
                     append("academyId" , request.academyId)
                     append("name" , request.name)
@@ -79,7 +79,7 @@ class TrainingProgramManager_imp(
 
     override suspend fun getAllByAcademy(academyId: Int): GetAllByAcademyResponse {
         return try{
-            var path =  GET_ALL_TrainingProgram_BY_ACADEMY.replace("{id}" , academyId.toString())
+            var path =  GET_ALL_COURSE_BY_ACADEMY.replace("{id}" , academyId.toString())
             val  response = client.get( BASE_URL + path ){
                 contentType(ContentType.Application.Json)
             }
@@ -101,7 +101,7 @@ class TrainingProgramManager_imp(
 
     override suspend fun getAll(): GetAllTrainingProgramResponse {
         return try {
-            val response = client.get(BASE_URL + GET_ALL_TrainingProgram){
+            val response = client.get(BASE_URL + GET_ALL_COURSE){
                 contentType(ContentType.Application.Json)
             }
 

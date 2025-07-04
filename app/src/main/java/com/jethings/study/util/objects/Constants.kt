@@ -44,9 +44,9 @@ object Constants {
     const val GET_ACADEMIES_BY_OWNER_ID  = "/academy/user/{id}"
 
     //training program
-    const val GET_ALL_TrainingProgram             = "/training-program/all"
-    const val CREATE_TrainingProgram             = "/training-program/create"
-    const val GET_ALL_TrainingProgram_BY_ACADEMY = "/training-program/academy/{id}"
+    const val GET_ALL_COURSE             = "/course/all"
+    const val CREATE_COURSE              = "/course/create"
+    const val GET_ALL_COURSE_BY_ACADEMY  = "/course/academy/{id}"
     //Post
     const val GET_ALL_POST             = "/post/all"
     const val CREATE_POST              = "/post/create"
