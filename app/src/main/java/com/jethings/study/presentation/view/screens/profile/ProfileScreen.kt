@@ -27,9 +27,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,11 +68,13 @@ import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.presentation.ui.theme.p_color5
 import com.jethings.study.presentation.view.material.AlphaButton
 import com.jethings.study.presentation.view.material.AlphaTextFields.AlphaTextField
+import com.jethings.study.presentation.view.screens.profile.bottomSheet.EditProfilePhotoBottomSheet
 import com.jethings.study.util.objects.TextStyles
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     account : Account? = Account(),
@@ -83,13 +87,32 @@ fun ProfileScreen(
         mutableStateOf<Uri?>(null)
     }
 
+    var showBottomBar by remember {
+        mutableStateOf(false)
+    }
+
 
     /****** launchers *******/
 
     var launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
             profilePhoto = uri
+            showBottomBar = true
         }
+    }
+
+    val bottomSheetState = rememberModalBottomSheetState()
+
+
+
+    if(showBottomBar){
+        EditProfilePhotoBottomSheet(
+            sheetState = bottomSheetState,
+            url = profilePhoto,
+            onDismiss = {
+                showBottomBar = false
+            }
+        )
     }
 
     Column(
