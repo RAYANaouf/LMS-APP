@@ -69,6 +69,7 @@ import com.jethings.study.presentation.ui.theme.p_color5
 import com.jethings.study.presentation.view.material.AlphaButton
 import com.jethings.study.presentation.view.material.AlphaTextFields.AlphaTextField
 import com.jethings.study.presentation.view.screens.profile.bottomSheet.EditProfilePhotoBottomSheet
+import com.jethings.study.presentation.view.screens.profile.event.ProfileEvent
 import com.jethings.study.util.objects.TextStyles
 import java.io.File
 import java.io.FileOutputStream
@@ -77,6 +78,7 @@ import java.io.InputStream
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
+    onEvent : (ProfileEvent , onSuccess : ()->Unit , onFailure : ()->Unit  )->Unit = {_,_,_->} ,
     account : Account? = Account(),
     modifier: Modifier = Modifier
 ) {
@@ -107,10 +109,13 @@ fun ProfileScreen(
 
     if(showBottomBar){
         EditProfilePhotoBottomSheet(
-            sheetState = bottomSheetState,
-            url = profilePhoto,
-            onDismiss = {
+            sheetState   = bottomSheetState,
+            profilePhoto = profilePhoto,
+            onDismiss    = {
                 showBottomBar = false
+            },
+            onUploadClick = {
+
             }
         )
     }

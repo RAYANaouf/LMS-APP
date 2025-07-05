@@ -214,7 +214,8 @@ fun NavGraph(
                 val viewModel = koinViewModel<ProfileViewModel>()
 
                 ProfileScreen(
-                    account = viewModel.user,
+                    onEvent  = viewModel::onEvent,
+                    account  = viewModel.user,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(

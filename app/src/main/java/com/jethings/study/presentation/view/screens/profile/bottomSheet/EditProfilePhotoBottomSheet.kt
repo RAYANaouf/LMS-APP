@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.profile.bottomSheet
 
+import android.graphics.Paint.Align
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,16 +38,18 @@ import com.jethings.study.presentation.ui.theme.customBlack5
 import com.jethings.study.presentation.ui.theme.customBlack6
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite5
+import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.util.objects.TextStyles
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfilePhotoBottomSheet(
-    sheetState : SheetState,
-    onDismiss  : ()->Unit = {},
-    url        : Uri?,
-    modifier   : Modifier = Modifier
+    sheetState    : SheetState,
+    onDismiss     : ()->Unit = {},
+    profilePhoto  : Uri?,
+    onUploadClick : ()->Unit ,
+    modifier      : Modifier = Modifier
 ) {
 
     ModalBottomSheet(
@@ -65,7 +68,41 @@ fun EditProfilePhotoBottomSheet(
                 .fillMaxHeight()
                 .background(customWhite0)
         ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 26.dp , bottom = 26.dp)
+            ) {
+                AsyncImage(
+                    model = profilePhoto,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(150.dp)
+                        .clip(CircleShape)
+                )
+            }
 
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+                    .padding(horizontal = 55.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .clickable {
+                        onUploadClick()
+                    }
+                    .background(p_color1)
+            ) {
+                Text(
+                    text = "Upload",
+                    style = TextStyle(
+                        color = customWhite0,
+                    )
+                )
+            }
         }
     }
 
@@ -76,8 +113,11 @@ fun EditProfilePhotoBottomSheet(
 @Composable
 private fun EditProfilePhotoBottomSheet_prev() {
     EditProfilePhotoBottomSheet(
-        url = null,
+        profilePhoto = null,
         onDismiss = {
+
+        },
+        onUploadClick = {
 
         },
         sheetState = rememberModalBottomSheetState()
