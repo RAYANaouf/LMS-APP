@@ -64,24 +64,38 @@ class UserManager_imp(
 
     override suspend fun updateUserProfilePhoto(userId: Long , profilePhoto : File?): UpdateUserProfilePhotoResponse {
         return try {
-            val response = client.submitFormWithBinaryData(
-                url = BASE_URL + UPDATE_PROFILE_PHOTO,
-                formData = formData {
-                    append("id" , userId)
 
+            Log.d("updating ..  ", "step1")
+            var url = BASE_URL + UPDATE_PROFILE_PHOTO
+            url = url.replace("{id}" , userId.toString())
+
+            Log.d("updating ..  ", url)
+            val response = client.submitFormWithBinaryData(
+                url = url,
+                formData = formData {
+
+                    Log.d("updating ..  ", "step2")
+                    Log.d("updating ..  ", "step3")
                     //only append image if file is not null
                     profilePhoto?.let{
-                        append("logo" , it.readBytes() , Headers.build {
+                        append("profilePhoto" , it.readBytes() , Headers.build {
                             append(HttpHeaders.ContentType , "image/jpg")
                             append(HttpHeaders.ContentDisposition , "filename=${profilePhoto.name}")
                         })
                     }
+
+
+                    Log.d("updating ..  ", "step4")
                 }
             )
 
+
+            Log.d("updating ..  ", "step5")
             if ( response.status == HttpStatusCode.Created ) {
+                Log.d("update success : ", response.body())
                 UpdateUserProfilePhotoResponse.Success(response.body())
             }else{
+                Log.d("update failed : ", response.body())
                 UpdateUserProfilePhotoResponse.Failure(response.body())
             }
 
