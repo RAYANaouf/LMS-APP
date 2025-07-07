@@ -45,6 +45,10 @@ class ProfileViewModel(
                     Log.d("updating photo result : " , result.toString())
                     if(result is UpdateUserProfilePhotoResponse.Success){
                         Log.d("updating photo result :: " , result.data.profilePhoto.toString())
+                        user?.let {
+                            user = it.copy(profilePhoto = result.data.profilePhoto)
+                            localUserManager.saveAccount(it.copy(profilePhoto = result.data.profilePhoto))
+                        }
                         onSuccess()
                     }else if(result is UpdateUserProfilePhotoResponse.Failure){
                         Log.d("updating photo result ::: " , result.data.error.toString())

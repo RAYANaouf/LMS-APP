@@ -23,6 +23,10 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +37,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.jethings.study.R
 import com.jethings.study.data.db.entities.Account
 import com.jethings.study.presentation.ui.theme.customBlack5
 import com.jethings.study.presentation.ui.theme.customBlack6
@@ -48,9 +58,14 @@ fun EditProfilePhotoBottomSheet(
     sheetState    : SheetState,
     onDismiss     : ()->Unit = {},
     profilePhoto  : Uri?,
-    onUploadClick : ()->Unit ,
+    onUploadClick : (onSuccess : ()->Unit , onFailure : ()->Unit)->Unit ,
     modifier      : Modifier = Modifier
 ) {
+
+
+    var searching by remember {
+        mutableStateOf(false)
+    }
 
     ModalBottomSheet(
         onDismissRequest = {
@@ -85,24 +100,52 @@ fun EditProfilePhotoBottomSheet(
             }
 
             Box(
-                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(45.dp)
-                    .padding(horizontal = 55.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .clickable {
-                        onUploadClick()
-                    }
-                    .background(p_color1)
             ) {
-                Text(
-                    text = "Upload",
-                    style = TextStyle(
-                        color = customWhite0,
+
+                if(
+                    !searching
+                ){
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 55.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable {
+                                onUploadClick(
+                                    {
+                                        searching = false
+                                    },{
+                                        searching = false
+                                    }
+                                )
+                                searching = true
+                            }
+                            .background(p_color1)
+                    ) {
+                        Text(
+                            text = "Upload",
+                            style = TextStyle(
+                                color = customWhite0,
+                            )
+                        )
+                    }
+                }else{
+                    val composition by rememberLottieComposition( LottieCompositionSpec.RawRes(R.raw.loading))
+                    val progress = animateLottieCompositionAsState(composition = composition , iterations = LottieConstants.IterateForever)
+
+                    LottieAnimation(
+                        composition = composition ,
+                        progress = progress.value ,
+                        modifier = Modifier.fillMaxSize()
                     )
-                )
+                }
+
             }
+
         }
     }
 
@@ -117,7 +160,7 @@ private fun EditProfilePhotoBottomSheet_prev() {
         onDismiss = {
 
         },
-        onUploadClick = {
+        onUploadClick = { s, f ->
 
         },
         sheetState = rememberModalBottomSheetState()

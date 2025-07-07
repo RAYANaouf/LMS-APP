@@ -69,13 +69,9 @@ class UserManager_imp(
             var url = BASE_URL + UPDATE_PROFILE_PHOTO
             url = url.replace("{id}" , userId.toString())
 
-            Log.d("updating ..  ", url)
             val response = client.submitFormWithBinaryData(
                 url = url,
                 formData = formData {
-
-                    Log.d("updating ..  ", "step2")
-                    Log.d("updating ..  ", "step3")
                     //only append image if file is not null
                     profilePhoto?.let{
                         append("profilePhoto" , it.readBytes() , Headers.build {
@@ -83,14 +79,8 @@ class UserManager_imp(
                             append(HttpHeaders.ContentDisposition , "filename=${profilePhoto.name}")
                         })
                     }
-
-
-                    Log.d("updating ..  ", "step4")
                 }
             )
-
-
-            Log.d("updating ..  ", "step5")
             if ( response.status == HttpStatusCode.Created ) {
                 Log.d("update success : ", response.body())
                 UpdateUserProfilePhotoResponse.Success(response.body())

@@ -2,6 +2,7 @@ package com.jethings.study.presentation.view.screens.profile
 
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -91,7 +92,7 @@ fun ProfileScreen(
         mutableStateOf<Uri?>(null)
     }
 
-    var showBottomBar by remember {
+    var showBottomSheet by remember {
         mutableStateOf(false)
     }
 
@@ -101,7 +102,7 @@ fun ProfileScreen(
     var launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
             profilePhoto = uri
-            showBottomBar = true
+            showBottomSheet = true
         }
     }
 
@@ -109,23 +110,25 @@ fun ProfileScreen(
 
 
 
-    if(showBottomBar){
+    if(showBottomSheet){
         EditProfilePhotoBottomSheet(
             sheetState   = bottomSheetState,
             profilePhoto = profilePhoto,
             onDismiss    = {
-                showBottomBar = false
+                showBottomSheet = false
             },
-            onUploadClick = {
+            onUploadClick = { s, f ->
                 account?.let {
                     onEvent(
                         ProfileEvent.UpdateUserProfilePhotoEvent(
                             account.userId,
                             profilePhoto?.let { it1 -> uriToFile( context , it1) }
                         ),{
-
+                            showBottomSheet = false
+                            s()
                         },{
-
+                            Toast.makeText(context , "Failed to update profile photo", Toast.LENGTH_SHORT).show()
+                            f()
                         }
                     )
                 }
