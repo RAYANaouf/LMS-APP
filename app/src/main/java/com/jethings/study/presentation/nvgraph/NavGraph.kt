@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -422,7 +424,7 @@ fun NavGraph(
                 }
 
 
-                set_system_bars_color(customWhite0 , background_color_0)
+                set_system_bars_color(Color.Transparent , background_color_0)
 
                 val viewModel = koinViewModel<TrainingProgramViewModel>()
 
@@ -435,9 +437,8 @@ fun NavGraph(
                     ),
                     modifier = Modifier
                         .fillMaxSize()
-                        .safeDrawingPadding()
-                        .padding(
-                            paddingValues
+                        .navigationBarsPadding(
+
                         )
                 )
             }
