@@ -23,6 +23,8 @@ fun WhatWeWillLearn(
     trainingProgram: TrainingProgram,
     modifier: Modifier = Modifier
 ) {
+    if (trainingProgram.whatYouWillLearn == null || trainingProgram.targetAudience == "")
+        return
     Box(
         modifier = modifier
             .padding(horizontal = 16.dp)
@@ -42,7 +44,7 @@ fun WhatWeWillLearn(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = trainingProgram.description  ?: "",
+            text =  trainingProgram.whatYouWillLearn ?: "",
             style = TextStyle(
                 fontSize = 14.sp
             )

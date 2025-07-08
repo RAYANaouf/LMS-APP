@@ -17,6 +17,7 @@ data class TrainingProgram (
     val targetAudience     : String?     = null,
     val prerequisites      : String?     = null,
     val whatYouCanDoAfter  : String?     = null,
+    val whatYouWillLearn   : String?     = null,
     val minAge             : String?     = null,
     val maxAge             : String?     = null,
     val price              : String?     = null,

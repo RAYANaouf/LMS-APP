@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -434,10 +435,9 @@ fun NavGraph(
                     ),
                     modifier = Modifier
                         .fillMaxSize()
+                        .safeDrawingPadding()
                         .padding(
-                            top = paddingValues.calculateTopPadding(),
-                            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
-                            end = paddingValues.calculateEndPadding(LayoutDirection.Rtl)
+                            paddingValues
                         )
                 )
             }

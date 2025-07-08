@@ -23,6 +23,8 @@ fun ForWhoSection(
     trainingProgram: TrainingProgram,
     modifier: Modifier = Modifier
 ) {
+    if (trainingProgram.targetAudience == null || trainingProgram.targetAudience == "")
+        return
     Box(
         modifier = modifier
             .padding(horizontal = 16.dp)
@@ -42,7 +44,7 @@ fun ForWhoSection(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = trainingProgram.description  ?: "",
+            text = trainingProgram.targetAudience  ?: "",
             style = TextStyle(
                 fontSize = 14.sp
             )

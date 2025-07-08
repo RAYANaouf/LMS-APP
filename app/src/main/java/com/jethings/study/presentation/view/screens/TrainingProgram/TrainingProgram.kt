@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsEndWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -41,6 +42,7 @@ import com.jethings.study.presentation.ui.theme.customBlack3
 import com.jethings.study.presentation.ui.theme.customBlack4
 import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite1
+import com.jethings.study.presentation.ui.theme.p_color1
 import com.jethings.study.presentation.ui.theme.p_color2
 import com.jethings.study.presentation.view.screens.TrainingProgram.component.AfterThePogramSection.AfterTheProgramSection
 import com.jethings.study.presentation.view.screens.TrainingProgram.component.budget.BudgetSection
@@ -97,10 +99,31 @@ fun trainingProgramScreen(
             AfterTheProgramSection(
                 trainingProgram = trainingProgram
             )
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(p_color1)
+                    .clickable {
+
+                    }
+                    .fillMaxWidth()
+                    .height(45.dp)
+            ) {
+                Text(
+                    text = "Request Course",
+                    style = TextStyle(
+                        color = customWhite0,
+                        fontSize = 20.sp
+                    )
+                )
+            }
         }
 
         item {
-            Spacer(Modifier.height(150.dp))
+            Spacer(Modifier.height(26.dp))
         }
 
 

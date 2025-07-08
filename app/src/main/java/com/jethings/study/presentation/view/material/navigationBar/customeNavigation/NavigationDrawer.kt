@@ -64,6 +64,7 @@ import com.jethings.study.data.db.entities.Account
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.AppScreen
+import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.nvgraph.profileScreen
 import com.jethings.study.presentation.nvgraph.settingScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
@@ -161,6 +162,11 @@ fun NavigationDrawer(
                         items.add(navItem(name = "Teacher" , icon = R.drawable.teacher))
                         items.add(navItem(name = "Student" , icon = R.drawable.student))
                     }
+
+                    if(account != null){
+                        items.add(navItem(name = "Home"     , icon = R.drawable.home))
+                        items.add(navItem(name = "Profile"  , icon = R.drawable.user))
+                    }
                     if (account != null && account.ownedAcademies > 0){
                         if (myAcademies.size == 1 && myAcademies[0].id == -1){
                             onEvent(
@@ -175,7 +181,6 @@ fun NavigationDrawer(
                         items.add(navItem(name = "Statistics" , icon = R.drawable.statistics))
                     }
                     if(account != null){
-                        items.add(navItem(name = "Profile" , icon = R.drawable.user))
                         items.add(navItem(name = "Settings" , icon = R.drawable.settings))
                     }
                 }
@@ -206,6 +211,8 @@ fun NavigationDrawer(
                                 // handle navigation or logout here
                                 if (navItem.name == "Profile"){
                                     onNavigate(profileScreen)
+                                }else if(navItem.name == "Home"){
+                                    onNavigate(homeScreen)
                                 }else if(navItem.name == "Settings"){
                                     onNavigate(settingScreen)
                                 }

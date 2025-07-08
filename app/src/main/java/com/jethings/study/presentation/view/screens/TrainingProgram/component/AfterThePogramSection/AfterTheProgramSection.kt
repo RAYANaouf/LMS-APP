@@ -23,6 +23,8 @@ fun AfterTheProgramSection(
     trainingProgram: TrainingProgram,
     modifier: Modifier = Modifier
 ) {
+    if (trainingProgram.whatYouCanDoAfter == null || trainingProgram.targetAudience == "")
+        return
     Box(
         modifier = modifier
             .padding(horizontal = 16.dp)
@@ -42,7 +44,7 @@ fun AfterTheProgramSection(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = trainingProgram.description  ?: "",
+            text = trainingProgram.whatYouCanDoAfter  ?: "",
             style = TextStyle(
                 fontSize = 14.sp
             )
