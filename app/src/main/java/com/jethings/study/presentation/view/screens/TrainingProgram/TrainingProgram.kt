@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.TrainingProgram
 
+import android.graphics.Color.parseColor
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
@@ -26,9 +27,16 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,14 +44,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.jethings.study.R
 import com.jethings.study.data.db.entities.entities.Academy
 import com.jethings.study.data.db.entities.entities.Post
 import com.jethings.study.data.db.entities.entities.TrainingProgram
+import com.jethings.study.presentation.nvgraph.AppScreen
 import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
 import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
@@ -71,9 +85,49 @@ fun SharedTransitionScope.trainingProgramScreen(
     animatedVisibilityScope : AnimatedVisibilityScope,
     onEvent                 : (CourseEvent , ()->Unit , ()->Unit )->Unit = {_,_,_->},
     trainingProgram         : TrainingProgram,
+    onNavigate              : (AppScreen)->Unit ={},
     modifier                : Modifier = Modifier
 ) {
 
+
+    var trainingProgramRequestStatus by remember {
+        mutableStateOf(trainingProgram.requestState)
+    }
+    var done by remember {
+        mutableStateOf(false)
+    }
+
+    if (done){
+        val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.lottie_done))
+        val progress    by animateLottieCompositionAsState(
+            composition = composition,
+            speed = 2f
+        )
+
+        LaunchedEffect(key1 = progress) {
+            if(progress == 1f){
+                done = false
+                trainingProgramRequestStatus = "Pending"
+            }
+        }
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(parseColor("#55000000")))
+                .zIndex(10f)
+        ) {
+            LottieAnimation(
+                composition = composition,
+                progress = {
+                    progress
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+            )
+        }
+    }
 
     LazyColumn(
         modifier = modifier
@@ -122,13 +176,13 @@ fun SharedTransitionScope.trainingProgramScreen(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(p_color1)
+                    .background(if(trainingProgramRequestStatus == "") p_color1 else if(trainingProgramRequestStatus == "Pending") Green else p_color1 )
                     .clickable {
                         onEvent(
                             CourseEvent.RequestCourse(
                                 courseId = trainingProgram.id
                             ),{
-
+                                done = true
                             },{
 
                             }
@@ -138,7 +192,7 @@ fun SharedTransitionScope.trainingProgramScreen(
                     .height(45.dp)
             ) {
                 Text(
-                    text = "Request Course",
+                    text = if(trainingProgramRequestStatus == "") "Request Course" else if(trainingProgramRequestStatus == "Pending") "Request pending..." else "",
                     style = TextStyle(
                         color = customWhite0,
                         fontSize = 20.sp

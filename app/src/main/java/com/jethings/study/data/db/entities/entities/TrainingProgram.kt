@@ -21,5 +21,6 @@ data class TrainingProgram (
     val minAge             : String?     = null,
     val maxAge             : String?     = null,
     val price              : String?     = null,
-    val enabled            : Boolean     = true
+    val enabled            : Boolean     = true,
+    val requestState       : String      = ""
 )

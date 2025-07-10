@@ -430,12 +430,17 @@ fun NavGraph(
 
                 trainingProgramScreen(
                     animatedVisibilityScope = this@composable,
+                    onEvent = viewModel::onEvent,
                     trainingProgram = TrainingProgram(
                         id = args.trainingProgram_id.toLong(),
                         name = args.title,
                         description = args.desc,
                         coverPhoto = args.coverPhoto
                     ),
+                    onNavigate = { screen->
+                        navController.navigate(screen){
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .navigationBarsPadding(

@@ -23,6 +23,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
+import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
@@ -121,17 +122,21 @@ class TrainingProgramManager_imp(
 
     override suspend fun requestForCourse(request: RequestForCourseRequest): RequestForCourseResponse {
         return try {
-            val response = client.get(BASE_URL + REQUEST_FOR_COURSE){
+            val response = client.post(BASE_URL + REQUEST_FOR_COURSE){
                 contentType(ContentType.Application.Json)
                 setBody(request)
             }
 
             if(response.status == HttpStatusCode.Created){
-                RequestForCourseResponse.Success(response.body())
+                Log.d("request for course Success" , response.body())
+                RequestForCourseResponse.Success(true)
             }else{
+                Log.d("request for course Failure" , response.body())
                 RequestForCourseResponse.Failed(response.body())
             }
         }catch (e : Exception){
+
+            Log.d("request for course Exception" , e.toString())
             RequestForCourseResponse.Exception(e)
         }
     }
