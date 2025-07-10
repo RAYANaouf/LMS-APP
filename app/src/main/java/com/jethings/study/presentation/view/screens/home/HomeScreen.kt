@@ -199,6 +199,7 @@ fun SharedTransitionScope.HomeScreen(
 
             HomePageTrainingProgramSlider()
             BestTrainingPrograms(
+                animatedVisibilityScope = animatedVisibilityScope,
                 trainingProgramList = trainingProgramList,
                 onClick = {
                     onNavigate(

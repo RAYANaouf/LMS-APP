@@ -1,5 +1,8 @@
 package com.jethings.study.presentation.view.screens.TrainingProgram.component.cover
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -30,8 +33,10 @@ import com.jethings.study.presentation.ui.theme.customWhite0
 import com.jethings.study.presentation.ui.theme.customWhite1
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun Cover(
+fun SharedTransitionScope.Cover(
+    animatedVisibilityScope : AnimatedVisibilityScope,
     trainingProgram : TrainingProgram,
     modifier: Modifier = Modifier
 ) {
@@ -88,6 +93,10 @@ fun Cover(
             contentDescription = null ,
             contentScale = ContentScale.Crop,
             modifier = Modifier
+                .sharedElement(
+                    state = rememberSharedContentState(key = "course-${trainingProgram.id}"),
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
                 .fillMaxSize()
         )
     }
@@ -97,7 +106,5 @@ fun Cover(
 @Preview
 @Composable
 private fun Cover_prev() {
-    Cover(
-        trainingProgram = TrainingProgram()
-    )
+
 }

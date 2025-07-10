@@ -1,5 +1,9 @@
 package com.jethings.study.presentation.view.screens.TrainingProgram
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,10 +36,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.jethings.study.R
+import com.jethings.study.data.db.entities.entities.Academy
+import com.jethings.study.data.db.entities.entities.Post
 import com.jethings.study.data.db.entities.entities.TrainingProgram
 import com.jethings.study.presentation.nvgraph.TrainingProgramScreen
+import com.jethings.study.presentation.nvgraph.homeScreen
 import com.jethings.study.presentation.ui.theme.background_color_0
 import com.jethings.study.presentation.ui.theme.customBlack0
 import com.jethings.study.presentation.ui.theme.customBlack3
@@ -51,12 +61,17 @@ import com.jethings.study.presentation.view.screens.TrainingProgram.component.de
 import com.jethings.study.presentation.view.screens.TrainingProgram.component.forWho.ForWhoSection
 import com.jethings.study.presentation.view.screens.TrainingProgram.component.name.TrainingName
 import com.jethings.study.presentation.view.screens.TrainingProgram.component.whatWeWillLearn.WhatWeWillLearn
+import com.jethings.study.presentation.view.screens.TrainingProgram.event.CourseEvent
+import com.jethings.study.presentation.view.screens.home.HomeScreen
 import com.jethings.study.util.objects.TextStyles
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun trainingProgramScreen(
-    trainingProgram: TrainingProgram,
-    modifier: Modifier = Modifier
+fun SharedTransitionScope.trainingProgramScreen(
+    animatedVisibilityScope : AnimatedVisibilityScope,
+    onEvent                 : (CourseEvent , ()->Unit , ()->Unit )->Unit = {_,_,_->},
+    trainingProgram         : TrainingProgram,
+    modifier                : Modifier = Modifier
 ) {
 
 
@@ -66,10 +81,12 @@ fun trainingProgramScreen(
 
         item{
             Cover(
+                animatedVisibilityScope = animatedVisibilityScope,
                 trainingProgram = trainingProgram
             )
             Spacer(modifier = Modifier.height(18.dp))
             TrainingName(
+                animatedVisibilityScope = animatedVisibilityScope,
                 trainingProgram = trainingProgram
             )
             Spacer(modifier = Modifier.height(24.dp))
@@ -107,7 +124,15 @@ fun trainingProgramScreen(
                     .clip(RoundedCornerShape(16.dp))
                     .background(p_color1)
                     .clickable {
+                        onEvent(
+                            CourseEvent.RequestCourse(
+                                courseId = trainingProgram.id
+                            ),{
 
+                            },{
+
+                            }
+                        )
                     }
                     .fillMaxWidth()
                     .height(45.dp)
@@ -131,13 +156,24 @@ fun trainingProgramScreen(
 }
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview
 @Composable
 private fun TrainingProgram_preview() {
-    trainingProgramScreen(
-        trainingProgram = TrainingProgram(),
-        modifier = Modifier
-            .width(340.dp)
-            .background(background_color_0)
-    )
+
+    SharedTransitionLayout {
+
+        NavHost(navController = rememberNavController(), startDestination = TrainingProgramScreen(trainingProgram_id = 0, title = "" , desc = "")){
+            composable<TrainingProgramScreen> {
+                trainingProgramScreen(
+                    animatedVisibilityScope = this ,
+                    trainingProgram = TrainingProgram(),
+                    modifier = Modifier
+                        .width(340.dp)
+                        .background(background_color_0)
+                )
+            }
+        }
+    }
+
 }

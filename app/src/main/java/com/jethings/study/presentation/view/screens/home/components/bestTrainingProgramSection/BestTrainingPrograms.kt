@@ -1,5 +1,8 @@
 package com.jethings.study.presentation.view.screens.home.components.bestTrainingProgramSection
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,8 +46,10 @@ import com.jethings.study.presentation.ui.theme.p_color4
 import com.jethings.study.util.objects.TextStyles
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun BestTrainingPrograms(
+fun SharedTransitionScope.BestTrainingPrograms(
+    animatedVisibilityScope : AnimatedVisibilityScope,
     trainingProgramList : List<TrainingProgram> = emptyList(),
     onClick : (TrainingProgram)->Unit = {},
     modifier: Modifier = Modifier
@@ -105,6 +110,10 @@ fun BestTrainingPrograms(
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
+                                .sharedElement(
+                                    state = rememberSharedContentState(key = "course-${it.id}"),
+                                    animatedVisibilityScope = animatedVisibilityScope
+                                )
                                 .padding(8.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(customWhite2)
@@ -112,13 +121,18 @@ fun BestTrainingPrograms(
                         )
                         Box(
                             modifier = Modifier
+                                .sharedElement(
+                                    state = rememberSharedContentState(key = "course-title-${it.id}"),
+                                    animatedVisibilityScope = animatedVisibilityScope
+                                )
                                 .padding(horizontal = 8.dp)
                         ) {
                             Text(
                                 text = it.name,
                                 style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = customBlack3 ),
                                 maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier
 
                             )
                         }

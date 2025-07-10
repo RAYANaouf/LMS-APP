@@ -240,7 +240,8 @@ val koinModule = module{
 
     viewModel {
         TrainingProgramViewModel(
-
+            trainingProgramManager = get(),
+            localUserManager       = get()
         )
     }
 

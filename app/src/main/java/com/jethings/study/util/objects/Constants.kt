@@ -48,6 +48,8 @@ object Constants {
     const val GET_ALL_COURSE             = "/course/all"
     const val CREATE_COURSE              = "/course/create"
     const val GET_ALL_COURSE_BY_ACADEMY  = "/course/academy/{id}"
+    //enrollment-request
+    const val REQUEST_FOR_COURSE         = "/enrollment-request/create"
     //Post
     const val GET_ALL_POST             = "/post/all"
     const val CREATE_POST              = "/post/create"

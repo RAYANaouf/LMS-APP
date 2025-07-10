@@ -9,17 +9,21 @@ import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllB
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramFailureResponse
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramResponse
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllTrainingProgram.GetAllTrainingProgramSuccessResponse
+import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.requestForCourse.RequestForCourseRequest
+import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.requestForCourse.RequestForCourseResponse
 import com.jethings.study.domain.manager.TrainingProgramManager
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
 import com.jethings.study.util.objects.Constants.CREATE_COURSE
 import com.jethings.study.util.objects.Constants.GET_ALL_COURSE
 import com.jethings.study.util.objects.Constants.GET_ALL_COURSE_BY_ACADEMY
+import com.jethings.study.util.objects.Constants.REQUEST_FOR_COURSE
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
@@ -112,6 +116,23 @@ class TrainingProgramManager_imp(
             }
         }catch (e : Exception){
             GetAllTrainingProgramResponse.Exception(e)
+        }
+    }
+
+    override suspend fun requestForCourse(request: RequestForCourseRequest): RequestForCourseResponse {
+        return try {
+            val response = client.get(BASE_URL + REQUEST_FOR_COURSE){
+                contentType(ContentType.Application.Json)
+                setBody(request)
+            }
+
+            if(response.status == HttpStatusCode.Created){
+                RequestForCourseResponse.Success(response.body())
+            }else{
+                RequestForCourseResponse.Failed(response.body())
+            }
+        }catch (e : Exception){
+            RequestForCourseResponse.Exception(e)
         }
     }
 

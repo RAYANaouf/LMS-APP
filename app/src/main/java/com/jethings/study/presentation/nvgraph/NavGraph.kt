@@ -429,6 +429,7 @@ fun NavGraph(
                 val viewModel = koinViewModel<TrainingProgramViewModel>()
 
                 trainingProgramScreen(
+                    animatedVisibilityScope = this@composable,
                     trainingProgram = TrainingProgram(
                         id = args.trainingProgram_id.toLong(),
                         name = args.title,
