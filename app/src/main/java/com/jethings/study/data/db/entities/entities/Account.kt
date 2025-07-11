@@ -14,7 +14,7 @@ data class Account(
     val lastName      : String  = "",
     val profilePhoto  : String? = "",
     val verified      : Boolean = false,
-    val access_token  : String  = "",
+    val accessToken   : String  = "",
     val phone         : String  = "",
     val email         : String  = "",
     val password      : String  = "",

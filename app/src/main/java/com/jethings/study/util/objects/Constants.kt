@@ -10,6 +10,7 @@ object Constants {
     const val APP_ENRTY          = "APP_ENTRY"
     const val ACCOUNT_ID         = "ACCOUNT_ID"
     const val USER_ID            = "USER_ID"
+    const val ACCESS_TOKEN       = "ACCESS_TOKEN"
     const val USER_FIRST_NAME    = "USER_FIRST_NAME"
     const val USER_LAST_NAME     = "USER_LAST_NAME"
     const val USER_EMAIL         = "USER_EMAIL"

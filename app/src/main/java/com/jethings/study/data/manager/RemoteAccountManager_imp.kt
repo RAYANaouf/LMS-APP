@@ -29,8 +29,6 @@ class RemoteAccountManager_imp(
                 contentType(ContentType.Application.Json)
                 setBody(request)
             }
-            Log.d("response status ", "onEvent: ${response.status}")
-            Log.d("response status ", "onEvent: ${response}")
 
             if ( response.status == HttpStatusCode.Created ) {
                 SignUpResponse.Success(response.body())

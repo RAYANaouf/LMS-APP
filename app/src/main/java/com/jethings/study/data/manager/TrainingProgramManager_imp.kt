@@ -111,6 +111,8 @@ class TrainingProgramManager_imp(
             }
 
             if (response.status == HttpStatusCode.OK){
+                val res = GetAllTrainingProgramSuccessResponse(response.body())
+                Log.d("response ::: " , res.trainingPrograms.toString())
                 GetAllTrainingProgramResponse.Success(data = GetAllTrainingProgramSuccessResponse(response.body()))
             }else{
                 GetAllTrainingProgramResponse.Failure(data = response.body())
