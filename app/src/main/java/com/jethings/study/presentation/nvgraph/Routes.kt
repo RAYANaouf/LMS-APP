@@ -64,10 +64,11 @@ object manageAcademy : AppScreen()
 object createTrainingProgram : AppScreen()
 @Serializable
 data class TrainingProgramScreen(
-    val trainingProgram_id: Int,
-    val title       : String,
-    val desc        : String,
-    val coverPhoto  : String = ""
+    val trainingProgram_id : Int,
+    val title              : String,
+    val desc               : String,
+    val coverPhoto         : String = "",
+    val requestState       : String = ""
 ) : AppScreen()
 
 

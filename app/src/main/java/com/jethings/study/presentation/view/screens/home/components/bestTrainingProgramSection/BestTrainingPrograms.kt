@@ -1,5 +1,6 @@
 package com.jethings.study.presentation.view.screens.home.components.bestTrainingProgramSection
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -33,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,6 +57,7 @@ fun SharedTransitionScope.BestTrainingPrograms(
     modifier: Modifier = Modifier
 ) {
 
+    val context = LocalContext.current
     Column(
         modifier = modifier
     ) {

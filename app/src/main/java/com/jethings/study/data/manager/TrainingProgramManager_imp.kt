@@ -119,27 +119,18 @@ class TrainingProgramManager_imp(
 
                 contentType(ContentType.Application.Json)
 
-                Log.d("heeere ","heree")
-
                 this.headers.append(HttpHeaders.Authorization  , "Bearer $userToken")
 
             }
 
-            // ✅ Explicit check
-            val auth = response.request.headers[HttpHeaders.Authorization]
-            Log.d("debug the header ====>>", auth ?: "Authorization not set")
-            Log.d("debug all header ====>>", "${response.request.headers.names()}")
-
             if (response.status == HttpStatusCode.OK) {
                 val res = GetAllTrainingProgramSuccessResponse(response.body())
-                Log.d("response of jwt get course ====>", res.trainingPrograms.toString())
+                Log.d("get all " , res.trainingPrograms.toString() )
                 GetAllTrainingProgramResponse.Success(data = res)
             } else {
                 GetAllTrainingProgramResponse.Failure(data = response.body())
             }
         } catch (e: Exception) {
-            Log.e("response of jwt get course Exception", "error => ${e.localizedMessage}", e)
-            Log.e("response of jwt get course Exception", "error => ${e.cause} ${e.message} ", e)
             GetAllTrainingProgramResponse.Exception(e)
         }
     }

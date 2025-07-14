@@ -435,7 +435,8 @@ fun NavGraph(
                         id = args.trainingProgram_id.toLong(),
                         name = args.title,
                         description = args.desc,
-                        coverPhoto = args.coverPhoto
+                        coverPhoto = args.coverPhoto,
+                        requestState = args.requestState
                     ),
                     onNavigate = { screen->
                         navController.navigate(screen){

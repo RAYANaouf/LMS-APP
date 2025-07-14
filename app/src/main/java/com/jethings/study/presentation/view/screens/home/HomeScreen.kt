@@ -205,9 +205,10 @@ fun SharedTransitionScope.HomeScreen(
                     onNavigate(
                         TrainingProgramScreen(
                             trainingProgram_id = it.id.toInt(),
-                            title = it.name,
-                            desc = it.description ?: "",
-                            coverPhoto = it.coverPhoto ?: "",
+                            title        = it.name,
+                            desc         = it.description ?: "",
+                            coverPhoto   = it.coverPhoto ?: "",
+                            requestState = it.requestState 
                         )
                     )
                 }

@@ -1,6 +1,7 @@
 package com.jethings.study.presentation.view.screens.TrainingProgram
 
 import android.graphics.Color.parseColor
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
@@ -38,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -95,6 +97,12 @@ fun SharedTransitionScope.trainingProgramScreen(
     }
     var done by remember {
         mutableStateOf(false)
+    }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(trainingProgramRequestStatus) {
+        Toast.makeText(context , "==> " + trainingProgram.requestState  , Toast.LENGTH_SHORT ).show()
     }
 
     if (done){
