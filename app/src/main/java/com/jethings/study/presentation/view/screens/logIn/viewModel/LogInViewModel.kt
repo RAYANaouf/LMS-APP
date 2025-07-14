@@ -27,17 +27,18 @@ class LogInViewModel(
                         Log.d("success to log in =====>> " , response.data.toString())
                         localUserManager.saveAppEntry()
                         localUserManager.saveAccount(Account(
-                            accountId    = response.data.accountId,
-                            userId       = response.data.userId,
-                            firstName    = response.data.firstName,
-                            lastName     = response.data.lastName,
-                            profilePhoto = response.data.profilePhoto,
-                            email        = event.email,
-                            isParent     = response.data.isParent,
-                            isStudent    = response.data.isStudent,
-                            isTeacher    = response.data.isTeacher,
-                            isSuperAdmin = response.data.isSuperAdmin,
-                            password     = event.password,
+                            accountId          = response.data.accountId,
+                            userId             = response.data.userId,
+                            accessToken        = response.data.accessToken,
+                            firstName          = response.data.firstName,
+                            lastName           = response.data.lastName,
+                            profilePhoto       = response.data.profilePhoto,
+                            email              = event.email,
+                            isParent           = response.data.isParent,
+                            isStudent          = response.data.isStudent,
+                            isTeacher          = response.data.isTeacher,
+                            isSuperAdmin       = response.data.isSuperAdmin,
+                            password           = event.password,
                             ownedAcademies     = response.data.ownedAcademies,
                         ))
                         onSucces()

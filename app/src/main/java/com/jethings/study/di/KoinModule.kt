@@ -40,9 +40,13 @@ import com.jethings.study.presentation.view.screens.superAdmin.viewModel.SuperAd
 import com.jethings.study.util.preferencesKeys.preferencesKeys.USER_SETTING
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.HttpSendPipeline
+import io.ktor.client.request.header
+import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -98,6 +102,10 @@ val koinModule = module{
                 json(get()) // 👈 Inject my custom Json instance here
             }
 
+            // 🔧 ✅ FIX TO ENABLE HEADERS
+            install(DefaultRequest) {
+                header(HttpHeaders.UserAgent, "ktor-client") // Prevent Android from blocking headers
+            }
         }
     }
 
@@ -190,10 +198,11 @@ val koinModule = module{
     viewModel {
         HomeViewModel(
             trainingProgramManager = get(),
-            academyManager = get(),
-            superAdminManager = get(),
-            postManager = get(),
-            context = get()
+            localUserManager       = get(),
+            academyManager         = get(),
+            superAdminManager      = get(),
+            postManager            = get(),
+            context                = get()
         )
     }
 

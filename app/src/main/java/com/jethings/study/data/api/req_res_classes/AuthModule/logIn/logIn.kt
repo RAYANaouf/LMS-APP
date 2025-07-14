@@ -22,7 +22,7 @@ sealed class LogInResponse{
 
 @Serializable
 data class LogInSuccessResponse(
-    val access_token       : String  = "",
+    val accessToken        : String  = "",
     val accountId          : Long    = 0L,
     val userId             : Long    = 0L,
     val firstName          : String  = "",

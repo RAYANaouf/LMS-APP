@@ -12,7 +12,7 @@ interface TrainingProgramManager {
 
     suspend fun createTrainingProgram( request : CreateTrainingProgramRequest , cover : File?) : CreateTrainingProgramResponse
     suspend fun getAllByAcademy( academyId : Int ) : GetAllByAcademyResponse
-    suspend fun getAll() : GetAllTrainingProgramResponse
+    suspend fun getAll(userToken : String?) : GetAllTrainingProgramResponse
 
     //requests
     suspend fun requestForCourse( request : RequestForCourseRequest) : RequestForCourseResponse

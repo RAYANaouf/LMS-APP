@@ -44,6 +44,7 @@ class LocalUserManager_imp(
 
 
     override suspend fun saveAccount(account: Account) {
+        Log.d("debug account : " , account.toString())
         context.dataStore.edit { settings ->
             settings[PrefrencesKeys.USER_ACCOUNT_ID]    = account.accountId
             settings[PrefrencesKeys.USER_ID]            = account.userId

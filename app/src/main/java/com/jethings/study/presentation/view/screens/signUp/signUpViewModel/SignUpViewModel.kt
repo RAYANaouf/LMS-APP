@@ -32,7 +32,7 @@ class SignUpViewModel(
                             lastName = event.lastName,
                             phone = event.phone
                         ))
-                        onSuccess(SignUpSuccessResponse(result.data.access_token ))
+                        onSuccess(SignUpSuccessResponse(result.data.accessToken ))
                     }else if (result is SignUpResponse.Failure){
                         onFailure(SignUpFailureResponse(
                             statusCode = result.data.statusCode,

@@ -26,7 +26,7 @@ sealed class SignUpResponse{
 
 @Serializable
 data class SignUpSuccessResponse(
-    val access_token       : String  = "",
+    val accessToken       : String  = "",
     val accountId          : Long    = 0L,
     val userId             : Long    = 0L,
     val firstName          : String  = "",

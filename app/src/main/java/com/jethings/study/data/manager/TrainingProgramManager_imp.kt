@@ -12,6 +12,7 @@ import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.getAllT
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.requestForCourse.RequestForCourseRequest
 import com.jethings.study.data.api.req_res_classes.TrainingProgramModule.requestForCourse.RequestForCourseResponse
 import com.jethings.study.domain.manager.TrainingProgramManager
+import com.jethings.study.presentation.view.screens.AcademyHome.components.AcademicPhases.sections.Header
 import com.jethings.study.util.objects.Constants.BASE_URL
 import com.jethings.study.util.objects.Constants.CREATE_ACADEMY
 import com.jethings.study.util.objects.Constants.CREATE_COURSE
@@ -24,12 +25,18 @@ import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
 import io.ktor.client.request.post
+import io.ktor.client.request.request
 import io.ktor.client.request.setBody
+import io.ktor.client.request.url
+import io.ktor.client.statement.request
+import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.ktor.http.headers
 import java.io.File
 
 class TrainingProgramManager_imp(
@@ -104,23 +111,39 @@ class TrainingProgramManager_imp(
         }
     }
 
-    override suspend fun getAll(): GetAllTrainingProgramResponse {
+    override suspend fun getAll(userToken: String?): GetAllTrainingProgramResponse {
         return try {
-            val response = client.get(BASE_URL + GET_ALL_COURSE){
+            val response = client.request {
+                method = HttpMethod.Get
+                url(BASE_URL + GET_ALL_COURSE)
+
                 contentType(ContentType.Application.Json)
+
+                Log.d("heeere ","heree")
+
+                this.headers.append(HttpHeaders.Authorization  , "Bearer $userToken")
+
             }
 
-            if (response.status == HttpStatusCode.OK){
+            // ✅ Explicit check
+            val auth = response.request.headers[HttpHeaders.Authorization]
+            Log.d("debug the header ====>>", auth ?: "Authorization not set")
+            Log.d("debug all header ====>>", "${response.request.headers.names()}")
+
+            if (response.status == HttpStatusCode.OK) {
                 val res = GetAllTrainingProgramSuccessResponse(response.body())
-                Log.d("response ::: " , res.trainingPrograms.toString())
-                GetAllTrainingProgramResponse.Success(data = GetAllTrainingProgramSuccessResponse(response.body()))
-            }else{
+                Log.d("response of jwt get course ====>", res.trainingPrograms.toString())
+                GetAllTrainingProgramResponse.Success(data = res)
+            } else {
                 GetAllTrainingProgramResponse.Failure(data = response.body())
             }
-        }catch (e : Exception){
+        } catch (e: Exception) {
+            Log.e("response of jwt get course Exception", "error => ${e.localizedMessage}", e)
+            Log.e("response of jwt get course Exception", "error => ${e.cause} ${e.message} ", e)
             GetAllTrainingProgramResponse.Exception(e)
         }
     }
+
 
     override suspend fun requestForCourse(request: RequestForCourseRequest): RequestForCourseResponse {
         return try {
